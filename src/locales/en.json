@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "home": "Home",
+    "markets": "Markets",
+    "tools": "Tools",
+    "budget": "Budget Tracker",
+    "recommendations": "Best Cards",
+    "login": "Login",
+    "profile": "Profile"
+  },
+  "hero": {
+    "title": "Master Your Financial Life",
+    "subtitle": "Expert advice, intelligent tools, and daily routines to grow your net worth."
+  }
+}

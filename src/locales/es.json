@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "markets": "Mercados",
+    "tools": "Herramientas",
+    "budget": "Presupuesto",
+    "recommendations": "Mejores Tarjetas",
+    "login": "Acceder",
+    "profile": "Perfil"
+  },
+  "hero": {
+    "title": "Domina tu vida financiera",
+    "subtitle": "Asesoramiento experto, herramientas inteligentes y rutinas diarias para aumentar tu patrimonio neto."
+  }
+}

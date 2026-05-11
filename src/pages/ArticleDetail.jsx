@@ -1,0 +1,174 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { BLOG_POSTS, TRENDING } from '../data/mockData';
+import CatTag from '../components/CatTag';
+import Byline from '../components/Byline';
+import Sidebar from '../components/Sidebar';
+import CrossLinks from '../components/CrossLinks';
+
+export default function ArticleDetail() {
+  const { slug } = useParams();
+  const [post, setPost] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const found = BLOG_POSTS.find(p => p.slug === slug);
+    setPost(found);
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.pageYOffset / totalHeight) * 100;
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!post) {
+    return (
+      <div className="container py-5 text-center">
+        <h2 className="ls-heading ls-heading-lg">Article Not Found</h2>
+        <Link to="/" className="ls-btn ls-btn-teal mt-4 text-decoration-none">Return Home</Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="article-page">
+      {/* Reading Progress Bar */}
+      <div 
+        className="reading-progress-bar" 
+        style={{ 
+          position: 'fixed', 
+          top: 0, 
+          left: 0, 
+          height: '4px', 
+          background: 'var(--teal)', 
+          width: `${scrollProgress}%`, 
+          zIndex: 1060,
+          transition: 'width 0.1s ease'
+        }} 
+      />
+
+      <article className="py-5">
+        <div className="container">
+          <div className="row g-5">
+            {/* Main content */}
+            <div className="col-lg-8">
+              <header className="mb-5">
+                <CatTag cat={post.cat} color={post.catColor} bg={post.catBg} style={{ marginBottom: '1rem' }} />
+                <h1 className="ls-heading mb-3" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', lineHeight: 1.1 }}>
+                  {post.title}
+                </h1>
+                <p className="ls-text-muted fs-4 mb-4" style={{ fontFamily: 'var(--serif2)', fontWeight: 400 }}>
+                  {post.deck}
+                </p>
+                <hr className="my-4" />
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                  <Byline author={post.author} avatar={post.avatar} date={post.date} readTime={post.readTime} />
+                  <div className="d-flex gap-2">
+                    <button className="ls-btn ls-btn-outline px-3 py-2"><i className="bi bi-share"></i></button>
+                    <button className="ls-btn ls-btn-outline px-3 py-2"><i className="bi bi-bookmark"></i></button>
+                  </div>
+                </div>
+              </header>
+
+              <div 
+                className="article-hero-img rounded-4 mb-5" 
+                style={{ 
+                  background: post.bg, 
+                  height: '400px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  fontSize: '6rem' 
+                }}
+              >
+                {post.icon}
+              </div>
+
+              <div className="article-content ls-text-muted" style={{ fontSize: '1.15rem', lineHeight: 1.8 }}>
+                <p>
+                  In the rapidly evolving financial landscape of 2026, managing your money effectively requires more than just traditional wisdom. 
+                  As inflation fluctuates and new digital asset classes emerge, the strategy outlined in <strong>"{post.title}"</strong> 
+                  provides a critical roadmap for stability and growth.
+                </p>
+                
+                <h3 className="ls-heading ls-heading-md mt-5 mb-3">The Fundamentals of {post.cat}</h3>
+                <p>
+                  Most experts agree that the first step toward financial intelligence is awareness. By understanding the core mechanics of 
+                  how money flows in and out of your accounts, you gain the "LifeScore" necessary to make informed decisions under pressure. 
+                  Whether you are focused on {post.cat} or broader wealth building, the principles remain the same: discipline, 
+                  automation, and continuous education.
+                </p>
+
+                <div className="ls-card p-4 my-5 bg-light border-0" style={{ borderLeft: '5px solid var(--teal) !important' }}>
+                  <h5 className="ls-heading ls-heading-sm mb-2">Key Takeaway</h5>
+                  <p className="mb-0 italic">"Financial freedom isn't about how much you earn, but how much you keep and how effectively that money works for you while you sleep."</p>
+                </div>
+
+                <h3 className="ls-heading ls-heading-md mt-5 mb-3">Implementation Strategy</h3>
+                <p>
+                  To apply these concepts effectively, we recommend starting with small, measurable "Micro-Actions." 
+                  These daily habits build the psychological momentum needed for long-term success. Over the next 30 days, 
+                  try to track every transaction related to {post.cat.toLowerCase()} and look for patterns of inefficiency.
+                </p>
+
+                <p>
+                  Stay tuned for our follow-up guide next week, where we'll dive deeper into advanced strategies and real-world case studies 
+                  from the LifeScore community.
+                </p>
+              </div>
+
+              <footer className="mt-5 pt-5 border-top">
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <div className="bg-teal text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px', fontSize: '1.2rem', fontWeight: 700 }}>
+                    {post.avatar}
+                  </div>
+                  <div>
+                    <h6 className="ls-heading ls-heading-sm mb-0">Written by {post.author}</h6>
+                    <span className="ls-text-muted small">Financial Columnist at LifeScore</span>
+                  </div>
+                </div>
+                
+                <div className="ls-card p-4 bg-navy text-white mt-4">
+                  <h4 className="ls-heading mb-2 text-white">Enjoyed this guide?</h4>
+                  <p className="opacity-75 mb-3">Subscribe to our newsletter and never miss a money move.</p>
+                  <div className="d-flex gap-2">
+                    <input type="email" placeholder="Your email" className="form-control" style={{ maxWidth: '300px' }} />
+                    <button className="ls-btn ls-btn-teal">Join 10k+ Readers</button>
+                  </div>
+                </div>
+              </footer>
+
+              <section className="mt-5">
+                <CrossLinks currentCategory={post.cat} />
+              </section>
+            </div>
+
+            {/* Sidebar */}
+            <div className="col-lg-4">
+              <div className="sticky-top" style={{ top: '100px' }}>
+                <Sidebar />
+                <div className="ls-card p-4 mt-4">
+                  <h5 className="ls-heading ls-heading-sm mb-3">Trending in {post.cat}</h5>
+                  <ul className="list-unstyled mb-0">
+                    {TRENDING.slice(0,3).map(t => (
+                      <li key={t.id} className="mb-3">
+                        <Link to="#" className="text-decoration-none text-dark fw-bold small hover-teal">{t.title}</Link>
+                        <div className="ls-text-muted mt-1" style={{ fontSize: '0.7rem' }}>{t.time} read · {t.date}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  );
+}
