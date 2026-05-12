@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
             }, 6000); // 6 seconds for push
           }
         }
-      } catch (err) {
+      } catch {
         // Silently fail if backend is down
       }
     };
@@ -176,7 +176,7 @@ export const AuthProvider = ({ children }) => {
     setTimeout(() => {
       setNotifications((prev) => prev.slice(0, -1));
     }, 3000);
-  }, []);
+  }, [user]);
 
   // Convenience action helpers
   const awardReadArticle  = useCallback(() => addXp(XP_REWARDS.READ_ARTICLE,     "Article Read"),      [addXp]);

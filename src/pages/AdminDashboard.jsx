@@ -19,6 +19,13 @@ export default function AdminDashboard() {
     }
   }, [user]);
 
+  // --- Mock State for "News in 30s" Management ---
+  const [newsItems] = useState([
+    { id: 1, icon: "📉", title: "Fed holds interest rates steady", time: "2h ago", status: "Published" },
+    { id: 2, icon: "💹", title: "S&P 500 closes at a new all-time high", time: "4h ago", status: "Published" },
+    { id: 3, icon: "🏡", title: "Home sales cool for 3rd straight month", time: "5h ago", status: "Draft" },
+  ]);
+
   if (!user || user.role !== "admin") {
     return (
       <div className="container py-5 text-center">
@@ -43,13 +50,6 @@ export default function AdminDashboard() {
     ],
   };
   const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-
-  // --- Mock State for "News in 30s" Management ---
-  const [newsItems, setNewsItems] = useState([
-    { id: 1, icon: "📉", title: "Fed holds interest rates steady", time: "2h ago", status: "Published" },
-    { id: 2, icon: "💹", title: "S&P 500 closes at a new all-time high", time: "4h ago", status: "Published" },
-    { id: 3, icon: "🏡", title: "Home sales cool for 3rd straight month", time: "5h ago", status: "Draft" },
-  ]);
 
   return (
     <div style={{ background: "var(--cream)", minHeight: "100vh", paddingBottom: "3rem" }}>
@@ -377,7 +377,7 @@ export default function AdminDashboard() {
                           alert('Notification broadcasted to backend successfully!');
                           document.getElementById('pushTitle').value = '';
                           document.getElementById('pushMessage').value = '';
-                        } catch (e) {
+                        } catch {
                           alert('Failed to send notification.');
                         }
                       }}>

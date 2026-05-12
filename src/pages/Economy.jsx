@@ -1,6 +1,5 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
-import CrossLinks from "../components/CrossLinks";
 
 export default function Economy() {
   const indicators = [

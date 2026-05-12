@@ -48,20 +48,19 @@ export default function BudgetTracker() {
       navigate('/login');
       return;
     }
+    const fetchEntries = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/budget/${user.id}`);
+        const data = await res.json();
+        setEntries(data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
     fetchEntries();
-  }, [user]);
-
-  const fetchEntries = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/budget/${user.id}`);
-      const data = await res.json();
-      setEntries(data);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  };
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

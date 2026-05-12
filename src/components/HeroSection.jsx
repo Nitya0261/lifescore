@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  BLOG_POSTS,
-  TRENDING,
-  SIM_SCENARIOS,
-  GEO_TIPS,
-  MICRO_ACTIONS,
-} from "../data/mockData";
+import React, { useState, useEffect } from "react";
+import { BLOG_POSTS } from "../data/mockData";
 import CatTag from "./CatTag";
 import Byline from "./Byline";
 import AdSlot from "./AdSlot";

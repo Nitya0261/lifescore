@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  BLOG_POSTS,
-  TRENDING,
-  SIM_SCENARIOS,
-  GEO_TIPS,
-  MICRO_ACTIONS,
-} from "../data/mockData";
+import { SIM_SCENARIOS } from "../data/mockData";
 import MicroFeed from "./MicroFeed";
 import XPWidget from "./XPWidget";
 import BurnoutWidget from "./BurnoutWidget";
@@ -74,7 +68,7 @@ export default function SimulatorSection() {
         },
       },
     });
-  }, [active]);
+  }, [active, scenario.color, scenario.data]);
 
   return (
     <section

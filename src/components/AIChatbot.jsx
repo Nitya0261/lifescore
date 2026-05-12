@@ -45,7 +45,7 @@ export default function AIChatbot() {
       } else {
         setMessages((prev) => [...prev, { sender: "ai", text: data.msg || "Sorry, I ran into an error." }]);
       }
-    } catch (err) {
+    } catch {
       setMessages((prev) => [...prev, { sender: "ai", text: "Failed to connect to the server." }]);
     } finally {
       setLoading(false);

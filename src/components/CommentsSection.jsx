@@ -11,20 +11,20 @@ export default function CommentsSection({ slug }) {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/comments/${slug}`);
+        const data = await res.json();
+        setComments(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchComments();
   }, [slug]);
-
-  const fetchComments = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/comments/${slug}`);
-      const data = await res.json();
-      setComments(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

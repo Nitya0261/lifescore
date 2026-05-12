@@ -1,20 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  BLOG_POSTS,
-  TRENDING,
-  SIM_SCENARIOS,
-  GEO_TIPS,
-  MICRO_ACTIONS,
-} from "../data/mockData";
+import { BLOG_POSTS } from "../data/mockData";
 import CatTag from "./CatTag";
 import Byline from "./Byline";
 import AdSlot from "./AdSlot";
 import Sidebar from "./Sidebar";
-import { useAuth } from "../context/AuthContext";
 
 export default function BlogGrid() {
-  const { awardReadArticle, user } = useAuth();
   const [activeTab, setActiveTab] = useState("All");
   const tabs = [
     "All",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 
 export default function Byline({ author, avatar, date, readTime }) {
   return (

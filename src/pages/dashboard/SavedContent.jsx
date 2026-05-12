@@ -14,20 +14,19 @@ export default function SavedContent() {
       navigate('/login');
       return;
     }
+    const fetchBookmarks = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/bookmarks/${user.id}`);
+        const data = await res.json();
+        setBookmarks(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchBookmarks();
-  }, [user]);
-
-  const fetchBookmarks = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/bookmarks/${user.id}`);
-      const data = await res.json();
-      setBookmarks(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [user, navigate]);
 
   const removeBookmark = async (id) => {
     try {

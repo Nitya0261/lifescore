@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  BLOG_POSTS,
-  TRENDING,
-  SIM_SCENARIOS,
-  GEO_TIPS,
-  MICRO_ACTIONS,
-} from "../data/mockData";
+import React, { useState } from "react";
+import { MICRO_ACTIONS } from "../data/mockData";
 
 export default function MicroFeed() {
   const [items, setItems] = useState(

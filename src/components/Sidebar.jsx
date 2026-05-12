@@ -1,12 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import {
-  BLOG_POSTS,
-  TRENDING,
-  SIM_SCENARIOS,
-  GEO_TIPS,
-  MICRO_ACTIONS,
-} from "../data/mockData";
+import { TRENDING } from "../data/mockData";
 import AdSlot from "./AdSlot";
 import EMICalculator from "./EMICalculator";
 import GeoTips from "./GeoTips";

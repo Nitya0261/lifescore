@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  BLOG_POSTS,
-  TRENDING,
-  SIM_SCENARIOS,
-  GEO_TIPS,
-  MICRO_ACTIONS,
-} from "../data/mockData";
+import React, { useState } from "react";
+import { GEO_TIPS } from "../data/mockData";
 
 export default function GeoTips() {
   const [geo, setGeo] = useState("us");

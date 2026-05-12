@@ -1,15 +1,8 @@
-import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
+import React, { useEffect, useRef, lazy, Suspense } from "react";
 import { initThreeBackground } from "./ThreeBackground.js";
 import Topbar from "./components/Topbar";
 import Navbar from "./components/Navbar";
 import NewsTicker from "./components/NewsTicker";
-import MoodBar from "./components/MoodBar";
-import HeroSection from "./components/HeroSection";
-import SmartAlerts from "./components/SmartAlerts";
-import BlogGrid from "./components/BlogGrid";
-import SimulatorSection from "./components/SimulatorSection";
-import NewsSection from "./components/NewsSection";
-import CommunitySection from "./components/CommunitySection";
 import Footer from "./components/Footer";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
