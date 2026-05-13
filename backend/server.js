@@ -147,7 +147,7 @@ app.post('/api/auth/google', async (req, res) => {
     });
   } catch (err) {
     console.error('Google Auth Error:', err.message);
-    res.status(500).send('Server error during Google Sign-In');
+    res.status(500).json({ msg: 'Server error during Google Sign-In' });
   }
 });
 
@@ -949,7 +949,7 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 
 // Initialize MongoDB Connection asynchronously without blocking the hosting health check
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/lifescore';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://Nitya%400261:Nitya%400261@cluster0.4hwfcy4.mongodb.net/lifescore?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB connected successfully'))
   .catch(err => console.error('❌ MongoDB connection error:', err.message));
