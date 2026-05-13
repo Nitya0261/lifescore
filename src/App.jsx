@@ -6,8 +6,6 @@ import NewsTicker from "./components/NewsTicker";
 import Footer from "./components/Footer";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-import { ThemeProvider } from "./context/ThemeContext";
 import Home from "./pages/Home";
 import Markets from "./pages/Markets";
 import Economy from "./pages/Economy";
@@ -127,11 +125,5 @@ export default function App() {
     }
   }, []);
 
-  return (
-    <ThemeProvider>
-      <AuthProvider>
-        <AppContent canvasRef={canvasRef} />
-      </AuthProvider>
-    </ThemeProvider>
-  );
+  return <AppContent canvasRef={canvasRef} />;
 }
