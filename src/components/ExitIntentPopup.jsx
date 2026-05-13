@@ -41,21 +41,30 @@ export default function ExitIntentPopup() {
     <div 
       className="modal show d-block" 
       tabIndex="-1" 
+      onClick={(e) => {
+        // If clicking directly on the dark outer background, dismiss instantly
+        if (e.target === e.currentTarget) setShow(false);
+      }}
       style={{ 
         background: 'rgba(10, 25, 41, 0.85)', 
         backdropFilter: 'blur(8px)',
-        zIndex: 2000 
+        zIndex: 99999,
+        pointerEvents: 'auto',
+        cursor: 'default'
       }}
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="ls-card p-0 overflow-hidden" style={{ border: 'none', maxWidth: '500px', margin: '0 auto' }}>
+      <div className="modal-dialog modal-dialog-centered" style={{ pointerEvents: 'none' }}>
+        <div className="ls-card p-0 overflow-hidden shadow-lg" style={{ border: 'none', maxWidth: '500px', margin: '0 auto', pointerEvents: 'auto', position: 'relative' }}>
           <div className="modal-body p-0 position-relative">
             <button 
               type="button" 
               className="btn-close position-absolute top-0 end-0 m-3 shadow-none" 
-              onClick={() => setShow(false)} 
+              onClick={(e) => {
+                e.stopPropagation();
+                setShow(false);
+              }} 
               aria-label="Close"
-              style={{ zIndex: 10 }}
+              style={{ zIndex: 9999, pointerEvents: 'auto', cursor: 'pointer' }}
             ></button>
             
             <div className="p-4 p-md-5 text-center">
@@ -74,7 +83,15 @@ export default function ExitIntentPopup() {
                 </div>
               </div>
               
-              <button className="btn btn-link text-muted mt-4 text-decoration-none small" onClick={() => setShow(false)}>
+              <button 
+                type="button"
+                className="btn btn-link text-muted mt-4 text-decoration-none small" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShow(false);
+                }}
+                style={{ pointerEvents: 'auto', cursor: 'pointer', zIndex: 10 }}
+              >
                 No thanks, I'll pay more taxes instead
               </button>
             </div>
