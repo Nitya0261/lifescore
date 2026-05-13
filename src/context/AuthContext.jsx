@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ firstName, lastName, email, password })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || "Registration failed");
+      if (!res.ok) throw new Error(data.errorTrace || data.msg || "Registration failed");
 
       localStorage.setItem("token", data.token);
       setToken(data.token);
@@ -136,7 +136,7 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email, password })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || "Login failed");
+      if (!res.ok) throw new Error(data.errorTrace || data.msg || "Login failed");
 
       localStorage.setItem("token", data.token);
       setToken(data.token);
@@ -163,7 +163,7 @@ export const AuthProvider = ({ children }) => {
         })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || "Google authentication handshake failed");
+      if (!res.ok) throw new Error(data.errorTrace || data.msg || "Google authentication handshake failed");
 
       localStorage.setItem("token", data.token);
       setToken(data.token);
