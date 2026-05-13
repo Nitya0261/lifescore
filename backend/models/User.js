@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['standard', 'premium', 'admin'], default: 'standard' },
   xp: { type: Number, default: 0 },
   lifeScore: { type: Number, default: 0 },
+  isSuspended: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

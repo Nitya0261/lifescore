@@ -354,8 +354,174 @@ fetchNews();
 // Refresh news every 30 minutes
 cron.schedule('*/30 * * * *', fetchNews);
 
-app.get('/api/news', (req, res) => {
-  res.json(cachedNews);
+const NewsItem = require('./models/NewsItem');
+const Announcement = require('./models/Announcement');
+
+// Public/Client: Get combined DB + RSS news
+app.get('/api/news', async (req, res) => {
+  try {
+    const dbNews = await NewsItem.find({ status: 'Published' }).sort({ pubDate: -1 });
+    // Format DB news to match RSS interface
+    const formattedDbNews = dbNews.map(item => ({
+      _id: item._id,
+      icon: item.icon,
+      title: item.title,
+      summary: item.summary,
+      category: item.category,
+      link: item.link,
+      pubDate: item.pubDate,
+      source: item.source || 'LifeScore Official'
+    }));
+    
+    // Combine and sort newest first
+    const combined = [...formattedDbNews, ...cachedNews].sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    res.json(combined.slice(0, 30));
+  } catch (err) {
+    console.error('Fetch News Error:', err.message);
+    res.json(cachedNews); // fallback to just RSS
+  }
+});
+
+// Admin: Get all DB news items (including Drafts)
+app.get('/api/news/admin', async (req, res) => {
+  try {
+    const items = await NewsItem.find().sort({ createdAt: -1 });
+    res.json(items);
+  } catch (err) {
+    console.error('Admin News Fetch Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Admin: Create new news item
+app.post('/api/news/admin', async (req, res) => {
+  try {
+    const { icon, title, summary, category, status, link } = req.body;
+    const newItem = new NewsItem({ icon, title, summary, category, status, link, pubDate: new Date() });
+    await newItem.save();
+    res.json(newItem);
+  } catch (err) {
+    console.error('Create News Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Admin: Update news item
+app.put('/api/news/:id', async (req, res) => {
+  try {
+    const updated = await NewsItem.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updated);
+  } catch (err) {
+    console.error('Update News Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Admin: Delete news item
+app.delete('/api/news/:id', async (req, res) => {
+  try {
+    await NewsItem.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Delete News Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// --- USER MANAGEMENT API (Admin & Profile) ---
+
+// Get current user by header token
+app.get('/api/user/me', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ msg: 'No token provided' });
+    }
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+    
+    res.json({
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      xp: user.xp,
+      lifeScore: user.lifeScore,
+      isSuspended: user.isSuspended
+    });
+  } catch (err) {
+    console.error('User Me Error:', err.message);
+    res.status(401).json({ msg: 'Token is not valid' });
+  }
+});
+
+// Admin: Get all users
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find().select('-password').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    console.error('Fetch Users Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Admin: Update user role/xp/suspension
+app.put('/api/users/:id', async (req, res) => {
+  try {
+    const { role, xp, isSuspended } = req.body;
+    const updateFields = {};
+    if (role !== undefined) updateFields.role = role;
+    if (xp !== undefined) updateFields.xp = xp;
+    if (isSuspended !== undefined) updateFields.isSuspended = isSuspended;
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updateFields, { new: true }).select('-password');
+    res.json(updatedUser);
+  } catch (err) {
+    console.error('Update User Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// --- ANNOUNCEMENTS API ---
+
+// Public: Get active announcements
+app.get('/api/announcements', async (req, res) => {
+  try {
+    const active = await Announcement.find({ isActive: true }).sort({ createdAt: -1 });
+    res.json(active);
+  } catch (err) {
+    console.error('Fetch Announcements Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Admin: Create announcement
+app.post('/api/announcements', async (req, res) => {
+  try {
+    const { message, type, link, linkText } = req.body;
+    const item = new Announcement({ message, type, link, linkText });
+    await item.save();
+    res.json(item);
+  } catch (err) {
+    console.error('Create Announcement Error:', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Admin: Delete/disable announcement
+app.delete('/api/announcements/:id', async (req, res) => {
+  try {
+    await Announcement.findByIdAndUpdate(req.params.id, { isActive: false });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Delete Announcement Error:', err.message);
+    res.status(500).send('Server error');
+  }
 });
 
 // --- MARKET DATA TICKER ---
@@ -408,13 +574,37 @@ app.get('/api/market-data', (req, res) => {
   res.json(cachedMarketData);
 });
 
-// Admin: Create new push notification
+// Admin: Create new push notification with active web-push broadcast loop
 app.post('/api/notifications', async (req, res) => {
   try {
     const { title, message, audience } = req.body;
     const newNotif = new Notification({ title, message, audience });
     await newNotif.save();
-    res.json({ success: true, notification: newNotif });
+
+    // Broadcast loop to Web-Push subscribers
+    const subs = await PushSubscription.find();
+    if (subs.length > 0) {
+      const payload = JSON.stringify({
+        title: title || 'LifeScore Alert',
+        body: message,
+        icon: '/vite.svg',
+        url: '/'
+      });
+
+      subs.forEach(sub => {
+        webpush.sendNotification(
+          { endpoint: sub.endpoint, keys: sub.keys },
+          payload
+        ).catch(err => {
+          if (err.statusCode === 410 || err.statusCode === 404) {
+            PushSubscription.deleteOne({ endpoint: sub.endpoint }).exec();
+          }
+        });
+      });
+      console.log(`[Push] Broadcasted alert to ${subs.length} subscribers.`);
+    }
+
+    res.json({ success: true, notification: newNotif, subscribersReached: subs.length });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

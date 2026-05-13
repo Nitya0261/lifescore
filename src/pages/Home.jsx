@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MoodBar from "../components/MoodBar";
 import HeroSection from "../components/HeroSection";
@@ -7,8 +7,22 @@ import BlogGrid from "../components/BlogGrid";
 import SimulatorSection from "../components/SimulatorSection";
 import NewsSection from "../components/NewsSection";
 import CommunitySection from "../components/CommunitySection";
+import API_BASE_URL from "../config/api";
 
 export default function Home() {
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/announcements`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setAnnouncements(data);
+        }
+      })
+      .catch(err => console.error("Failed to fetch announcements", err));
+  }, []);
+
   const quickLinks = [
     { icon: "bi-calculator-fill", label: "SIP Calculator", path: "/tools/sip-calculator", color: "#0d9488" },
     { icon: "bi-graph-up-arrow", label: "Compound Interest", path: "/tools/compound-interest", color: "#6366f1" },
@@ -23,6 +37,42 @@ export default function Home() {
   return (
     <>
       <MoodBar />
+      
+      {/* Global Live Announcements Broadcast Banner */}
+      {announcements.length > 0 && (
+        <div style={{ borderBottom: "1px solid var(--border)" }}>
+          {announcements.map((ann) => (
+            <div 
+              key={ann._id} 
+              style={{ 
+                padding: "0.6rem 1rem", 
+                background: ann.type === 'danger' ? '#fef2f2' : ann.type === 'warning' ? '#fffbeb' : ann.type === 'success' ? '#f0fdf4' : '#eff6ff',
+                color: ann.type === 'danger' ? '#991b1b' : ann.type === 'warning' ? '#b45309' : ann.type === 'success' ? '#166534' : '#1e40af',
+                borderBottom: "1px solid rgba(0,0,0,0.05)",
+                textAlign: "center",
+                fontWeight: 700,
+                fontSize: "0.85rem"
+              }}
+              className="d-flex justify-content-center align-items-center gap-2 flex-wrap"
+            >
+              <i className="bi bi-megaphone-fill"></i>
+              <span>{ann.message}</span>
+              {ann.link && (
+                <a 
+                  href={ann.link} 
+                  target={ann.link.startsWith("http") ? "_blank" : "_self"} 
+                  rel="noreferrer" 
+                  className="ms-2 text-decoration-underline fw-bold"
+                  style={{ color: "inherit" }}
+                >
+                  {ann.linkText || "Learn More"} →
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
       <HeroSection />
       <SmartAlerts />
 

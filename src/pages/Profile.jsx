@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import XPWidget from "../components/XPWidget";
 import LifeScoreWidget from "../components/LifeScoreWidget";
 import BurnoutWidget from "../components/BurnoutWidget";
+import API_BASE_URL from "../config/api";
 
 export default function Profile() {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/user/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok && data) {
+          if (data.isSuspended) {
+            alert("Your account has been suspended by an Administrator.");
+            logout();
+            navigate("/");
+            return;
+          }
+          setProfileData(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch live profile data:", err);
+      }
+    };
+    fetchMe();
+  }, [token, logout, navigate]);
 
   if (!user || user.role === "guest" || user.role === "admin") {
     return (
@@ -23,6 +49,12 @@ export default function Profile() {
     logout();
     navigate("/");
   };
+
+  const displayName = profileData 
+    ? `${profileData.firstName} ${profileData.lastName}` 
+    : (user?.firstName ? `${user.firstName} ${user.lastName}` : "Alex Johnson");
+
+  const displayEmail = profileData?.email || user?.email || "alex.j@example.com";
 
   const tabs = [
     { id: "overview", label: "Overview", icon: "bi-grid-1x2" },
@@ -63,7 +95,7 @@ export default function Profile() {
                 <i className={`bi ${user.role === "premium" ? "bi-star-fill" : "bi-person-fill"}`}></i>
               </div>
               <h4 style={{ fontFamily: "var(--serif)", fontWeight: 700, margin: 0 }}>
-                Alex Johnson
+                {displayName}
               </h4>
               <p style={{ fontSize: "0.8rem", color: "var(--ink3)" }}>
                 {user.role === "premium" ? "Pro Member" : "Standard User"}
@@ -253,15 +285,15 @@ export default function Profile() {
                   <div className="row g-3 mb-4">
                     <div className="col-md-6">
                       <label className="form-label" style={{ fontSize: "0.85rem", fontWeight: 600 }}>First Name</label>
-                      <input type="text" className="form-control" defaultValue="Alex" />
+                      <input type="text" className="form-control" defaultValue={profileData?.firstName || user?.firstName || "Alex"} />
                     </div>
                     <div className="col-md-6">
                       <label className="form-label" style={{ fontSize: "0.85rem", fontWeight: 600 }}>Last Name</label>
-                      <input type="text" className="form-control" defaultValue="Johnson" />
+                      <input type="text" className="form-control" defaultValue={profileData?.lastName || user?.lastName || "Johnson"} />
                     </div>
                     <div className="col-12">
                       <label className="form-label" style={{ fontSize: "0.85rem", fontWeight: 600 }}>Email Address</label>
-                      <input type="email" className="form-control" defaultValue="alex.j@example.com" />
+                      <input type="email" className="form-control" defaultValue={displayEmail} />
                     </div>
                   </div>
                   

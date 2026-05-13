@@ -10,21 +10,52 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("content");
   const [analytics, setAnalytics] = useState(null);
 
+  // Live database records state
+  const [newsItems, setNewsItems] = useState([]);
+  const [usersList, setUsersList] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+
+  // Form states for News
+  const [newTitle, setNewTitle] = useState("");
+  const [newSummary, setNewSummary] = useState("");
+  const [newIcon, setNewIcon] = useState("📈");
+  const [newCategory, setNewCategory] = useState("Markets");
+  const [newStatus, setNewStatus] = useState("Published");
+  const [newLink, setNewLink] = useState("");
+
+  // Form states for Announcement
+  const [annMsg, setAnnMsg] = useState("");
+  const [annType, setAnnType] = useState("info");
+  const [annLink, setAnnLink] = useState("");
+  const [annLinkText, setAnnLinkText] = useState("");
+
   useEffect(() => {
     if (user && user.role === "admin") {
+      // Analytics
       fetch(`${API_BASE_URL}/api/analytics`)
         .then(res => res.json())
         .then(data => setAnalytics(data))
         .catch(err => console.error("Failed to fetch analytics", err));
+
+      // Fetch live Admin News
+      fetch(`${API_BASE_URL}/api/news/admin`)
+        .then(res => res.json())
+        .then(data => setNewsItems(Array.isArray(data) ? data : []))
+        .catch(err => console.error("Failed to fetch news", err));
+
+      // Fetch live Users
+      fetch(`${API_BASE_URL}/api/users`)
+        .then(res => res.json())
+        .then(data => setUsersList(Array.isArray(data) ? data : []))
+        .catch(err => console.error("Failed to fetch users", err));
+
+      // Fetch active Announcements
+      fetch(`${API_BASE_URL}/api/announcements`)
+        .then(res => res.json())
+        .then(data => setAnnouncements(Array.isArray(data) ? data : []))
+        .catch(err => console.error("Failed to fetch announcements", err));
     }
   }, [user]);
-
-  // --- Mock State for "News in 30s" Management ---
-  const [newsItems] = useState([
-    { id: 1, icon: "📉", title: "Fed holds interest rates steady", time: "2h ago", status: "Published" },
-    { id: 2, icon: "💹", title: "S&P 500 closes at a new all-time high", time: "4h ago", status: "Published" },
-    { id: 3, icon: "🏡", title: "Home sales cool for 3rd straight month", time: "5h ago", status: "Draft" },
-  ]);
 
   if (!user || user.role !== "admin") {
     return (
@@ -34,6 +65,163 @@ export default function AdminDashboard() {
       </div>
     );
   }
+
+  // --- CRUD Actions for News ---
+  const handleCreateNews = async (e) => {
+    e.preventDefault();
+    if (!newTitle || !newSummary) {
+      alert("Please provide both headline and summary.");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/news/admin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          icon: newIcon,
+          title: newTitle,
+          summary: newSummary,
+          category: newCategory,
+          status: newStatus,
+          link: newLink
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setNewsItems(prev => [data, ...prev]);
+        setNewTitle("");
+        setNewSummary("");
+        setNewLink("");
+        alert("News successfully published to Live Site Database!");
+      }
+    } catch (err) {
+      alert("Error creating news item.");
+    }
+  };
+
+  const handleToggleNewsStatus = async (item) => {
+    const nextStatus = item.status === "Published" ? "Draft" : "Published";
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/news/${item._id || item.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: nextStatus })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setNewsItems(prev => prev.map(n => (n._id === item._id || n.id === item.id) ? { ...n, status: updated.status } : n));
+      }
+    } catch (err) {
+      alert("Failed to update status.");
+    }
+  };
+
+  const handleDeleteNews = async (id) => {
+    if (!confirm("Are you sure you want to permanently delete this news item?")) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/news/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setNewsItems(prev => prev.filter(n => n._id !== id && n.id !== id));
+      }
+    } catch (err) {
+      alert("Failed to delete item.");
+    }
+  };
+
+  // --- Actions for User Management ---
+  const handleUpdateUserRole = async (id, currentRole) => {
+    const newRole = prompt("Enter new role (standard, premium, admin):", currentRole);
+    if (!newRole || newRole === currentRole) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/users/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role: newRole.toLowerCase() })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setUsersList(prev => prev.map(u => u._id === id ? { ...u, role: updated.role } : u));
+      }
+    } catch (err) {
+      alert("Failed to update user role.");
+    }
+  };
+
+  const handleUpdateUserXp = async (id, currentXp) => {
+    const newXp = prompt("Enter new total XP amount:", currentXp);
+    if (newXp === null || isNaN(newXp)) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/users/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ xp: Number(newXp) })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setUsersList(prev => prev.map(u => u._id === id ? { ...u, xp: updated.xp } : u));
+      }
+    } catch (err) {
+      alert("Failed to update XP.");
+    }
+  };
+
+  const handleToggleBan = async (userObj) => {
+    const nextSuspended = !userObj.isSuspended;
+    const actionStr = nextSuspended ? "suspend/ban" : "restore access for";
+    if (!confirm(`Are you sure you want to ${actionStr} user ${userObj.firstName} ${userObj.lastName}?`)) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/users/${userObj._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isSuspended: nextSuspended })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setUsersList(prev => prev.map(u => u._id === userObj._id ? { ...u, isSuspended: updated.isSuspended } : u));
+      }
+    } catch (err) {
+      alert("Failed to update ban status.");
+    }
+  };
+
+  // --- CRUD Actions for Announcements ---
+  const handleCreateAnnouncement = async (e) => {
+    e.preventDefault();
+    if (!annMsg) return alert("Announcement message is required.");
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/announcements`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: annMsg,
+          type: annType,
+          link: annLink,
+          linkText: annLinkText
+        })
+      });
+      if (res.ok) {
+        const item = await res.json();
+        setAnnouncements(prev => [item, ...prev]);
+        setAnnMsg("");
+        setAnnLink("");
+        setAnnLinkText("");
+        alert("Global Announcement broadcast active!");
+      }
+    } catch (err) {
+      alert("Failed to publish announcement.");
+    }
+  };
+
+  const handleDeleteAnnouncement = async (id) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/announcements/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setAnnouncements(prev => prev.filter(a => a._id !== id));
+      }
+    } catch (err) {
+      alert("Failed to disable announcement.");
+    }
+  };
 
   // --- Mock Chart Data for Revenue ---
   const chartData = {
@@ -76,6 +264,7 @@ export default function AdminDashboard() {
               {[
                 { id: "overview", label: "Dashboard", icon: "bi-grid-1x2" },
                 { id: "content", label: "News & Articles", icon: "bi-newspaper" },
+                { id: "announcements", label: "Announcements Banner", icon: "bi-megaphone" },
                 { id: "users", label: "Users & Profiles", icon: "bi-people" },
                 { id: "revenue", label: "Subscriptions & Rev", icon: "bi-currency-dollar" },
                 { id: "push", label: "Push Notifications", icon: "bi-bell" },
@@ -124,32 +313,43 @@ export default function AdminDashboard() {
                   <div className="col-lg-4">
                     <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)" }}>
                       <h5 style={{ fontWeight: 700, marginBottom: "1.5rem" }}>Publish New "News in 30s"</h5>
-                      <form>
+                      <form onSubmit={handleCreateNews}>
                         <div className="mb-3">
                           <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>Headline / Title</label>
-                          <input type="text" className="form-control" placeholder="e.g. S&P 500 hits record high" />
+                          <input type="text" className="form-control" value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="e.g. S&P 500 hits record high" />
                         </div>
                         <div className="mb-3">
                           <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>30-Second Summary</label>
-                          <textarea className="form-control" rows="3" placeholder="Write the simplified summary here..."></textarea>
+                          <textarea className="form-control" rows="3" value={newSummary} onChange={e => setNewSummary(e.target.value)} placeholder="Write the simplified summary here..."></textarea>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>Optional Source URL</label>
+                          <input type="url" className="form-control" value={newLink} onChange={e => setNewLink(e.target.value)} placeholder="https://..." />
                         </div>
                         <div className="row g-2 mb-4">
-                          <div className="col-6">
+                          <div className="col-4">
                             <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>Emoji Icon</label>
-                            <input type="text" className="form-control" placeholder="📈" />
+                            <input type="text" className="form-control" value={newIcon} onChange={e => setNewIcon(e.target.value)} placeholder="📈" />
                           </div>
-                          <div className="col-6">
-                            <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>Category Tag</label>
-                            <select className="form-select">
-                              <option>Markets</option>
-                              <option>Economy</option>
-                              <option>Crypto</option>
-                              <option>Real Estate</option>
+                          <div className="col-4">
+                            <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>Category</label>
+                            <select className="form-select" value={newCategory} onChange={e => setNewCategory(e.target.value)}>
+                              <option value="Markets">Markets</option>
+                              <option value="Economy">Economy</option>
+                              <option value="Crypto">Crypto</option>
+                              <option value="Real Estate">Real Estate</option>
+                            </select>
+                          </div>
+                          <div className="col-4">
+                            <label className="form-label" style={{ fontSize: "0.8rem", fontWeight: 600 }}>Status</label>
+                            <select className="form-select" value={newStatus} onChange={e => setNewStatus(e.target.value)}>
+                              <option value="Published">Published</option>
+                              <option value="Draft">Draft</option>
                             </select>
                           </div>
                         </div>
-                        <button type="button" className="btn btn-dark w-100" onClick={() => alert("Added to mock database!")}>
-                          <i className="bi bi-cloud-arrow-up me-2"></i>Publish to Live Site
+                        <button type="submit" className="btn btn-dark w-100">
+                          <i className="bi bi-cloud-arrow-up me-2"></i>Publish to Live Site Database
                         </button>
                       </form>
                     </div>
@@ -160,7 +360,7 @@ export default function AdminDashboard() {
                     <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", height: "100%" }}>
                       <div className="d-flex justify-content-between align-items-center mb-4">
                         <h5 style={{ fontWeight: 700, margin: 0 }}>Live News Feed Database</h5>
-                        <input type="text" className="form-control form-control-sm w-25" placeholder="Search news..." />
+                        <span className="badge bg-secondary">{newsItems.length} items loaded</span>
                       </div>
                       <table className="table align-middle">
                         <thead className="table-light">
@@ -168,25 +368,143 @@ export default function AdminDashboard() {
                             <th>Icon</th>
                             <th>Headline</th>
                             <th>Status</th>
-                            <th>Published</th>
+                            <th>Category</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {newsItems.map(item => (
-                            <tr key={item.id}>
+                            <tr key={item._id || item.id}>
                               <td style={{ fontSize: "1.5rem" }}>{item.icon}</td>
                               <td style={{ fontWeight: 600, fontSize: "0.9rem" }}>{item.title}</td>
-                              <td><span className={`badge ${item.status === 'Published' ? 'bg-success' : 'bg-warning text-body'}`}>{item.status}</span></td>
-                              <td style={{ fontSize: "0.8rem", color: "var(--ink3)" }}>{item.time}</td>
                               <td>
-                                <button className="btn btn-sm btn-outline-secondary me-1"><i className="bi bi-pencil"></i></button>
-                                <button className="btn btn-sm btn-outline-danger"><i className="bi bi-trash"></i></button>
+                                <span 
+                                  className={`badge ${item.status === 'Published' ? 'bg-success' : 'bg-warning text-body'}`}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => handleToggleNewsStatus(item)}
+                                  title="Click to toggle Status"
+                                >
+                                  {item.status} <i className="bi bi-arrow-repeat ms-1"></i>
+                                </span>
+                              </td>
+                              <td style={{ fontSize: "0.85rem", color: "var(--ink3)" }}>{item.category}</td>
+                              <td>
+                                <button 
+                                  className="btn btn-sm btn-outline-secondary me-1"
+                                  onClick={() => handleToggleNewsStatus(item)}
+                                  title="Toggle Status"
+                                >
+                                  <i className="bi bi-pencil"></i>
+                                </button>
+                                <button 
+                                  className="btn btn-sm btn-outline-danger"
+                                  onClick={() => handleDeleteNews(item._id || item.id)}
+                                >
+                                  <i className="bi bi-trash"></i>
+                                </button>
                               </td>
                             </tr>
                           ))}
+                          {newsItems.length === 0 && (
+                            <tr>
+                              <td colSpan="5" className="text-center py-4 text-muted">No news items found in database.</td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* --- ANNOUNCEMENTS BANNER TAB --- */}
+            {activeTab === "announcements" && (
+              <div className="d-flex flex-column gap-4">
+                <h2 style={{ fontFamily: "var(--serif)", fontWeight: 900, margin: 0 }}>Global Announcements Control</h2>
+                <div className="row g-4">
+                  <div className="col-lg-5">
+                    <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)" }}>
+                      <h5 style={{ fontWeight: 700, marginBottom: "1.5rem" }}>Broadcast New Site Banner</h5>
+                      <form onSubmit={handleCreateAnnouncement}>
+                        <div className="mb-3">
+                          <label className="form-label fw-bold small">Announcement Message</label>
+                          <textarea 
+                            className="form-control" 
+                            rows="3" 
+                            value={annMsg} 
+                            onChange={e => setAnnMsg(e.target.value)}
+                            placeholder="e.g. Scheduled site maintenance on Saturday at 2 AM EST."
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label fw-bold small">Banner Urgency / Color</label>
+                          <select className="form-select" value={annType} onChange={e => setAnnType(e.target.value)}>
+                            <option value="info">Blue (Informational)</option>
+                            <option value="warning">Yellow (Warning)</option>
+                            <option value="success">Green (Success / Promo)</option>
+                            <option value="danger">Red (Urgent / Alert)</option>
+                          </select>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label fw-bold small">Optional Link URL</label>
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            value={annLink} 
+                            onChange={e => setAnnLink(e.target.value)}
+                            placeholder="/dashboard/budget or https://..."
+                          />
+                        </div>
+                        <div className="mb-4">
+                          <label className="form-label fw-bold small">Optional Link Text</label>
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            value={annLinkText} 
+                            onChange={e => setAnnLinkText(e.target.value)}
+                            placeholder="Learn More"
+                          />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100 fw-bold">
+                          <i className="bi bi-megaphone-fill me-2"></i> Activate Live Banner
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-7">
+                    <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", height: "100%" }}>
+                      <h5 style={{ fontWeight: 700, marginBottom: "1.5rem" }}>Active Banners Displayed to Users</h5>
+                      <div className="d-flex flex-column gap-3">
+                        {announcements.map(ann => (
+                          <div 
+                            key={ann._id} 
+                            style={{ 
+                              padding: "1rem", 
+                              borderRadius: "var(--radius)", 
+                              borderLeft: `4px solid var(--${ann.type === 'danger' ? 'accent' : ann.type === 'warning' ? 'gold' : 'teal'})`,
+                              background: "var(--cream2)"
+                            }}
+                            className="d-flex justify-content-between align-items-center"
+                          >
+                            <div>
+                              <p className="mb-1 fw-bold">{ann.message}</p>
+                              {ann.link && (
+                                <a href={ann.link} target="_blank" rel="noreferrer" className="small fw-bold text-decoration-underline">
+                                  {ann.linkText || ann.link}
+                                </a>
+                              )}
+                            </div>
+                            <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteAnnouncement(ann._id)}>
+                              Disable
+                            </button>
+                          </div>
+                        ))}
+                        {announcements.length === 0 && (
+                          <p className="text-muted small">No global announcements are currently broadcasting.</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -197,27 +515,10 @@ export default function AdminDashboard() {
             {activeTab === "users" && (
               <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)", minHeight: "700px" }}>
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h2 style={{ fontFamily: "var(--serif)", fontWeight: 900, margin: 0 }}>User Database</h2>
+                  <h2 style={{ fontFamily: "var(--serif)", fontWeight: 900, margin: 0 }}>Live User Database</h2>
                   <div className="d-flex gap-2">
+                    <span className="badge bg-secondary align-self-center">{usersList.length} total users</span>
                     <button className="btn btn-outline-success"><i className="bi bi-file-earmark-excel me-1"></i> Export CSV</button>
-                    <button className="btn btn-dark"><i className="bi bi-person-plus me-1"></i> Add User</button>
-                  </div>
-                </div>
-                
-                <div className="row mb-4">
-                  <div className="col-md-3"><input type="text" className="form-control" placeholder="Search by name, email, ID..." /></div>
-                  <div className="col-md-2">
-                    <select className="form-select">
-                      <option>All Roles</option>
-                      <option>Premium Only</option>
-                      <option>Standard Only</option>
-                    </select>
-                  </div>
-                  <div className="col-md-2">
-                    <select className="form-select">
-                      <option>Status: Active</option>
-                      <option>Status: Suspended</option>
-                    </select>
                   </div>
                 </div>
                 
@@ -227,38 +528,76 @@ export default function AdminDashboard() {
                       <tr>
                         <th>ID</th>
                         <th>User Info</th>
-                        <th>Subscription</th>
+                        <th>Role / Tier</th>
                         <th>Total XP</th>
-                        <th>Last Login</th>
+                        <th>Status</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        { id: "USR-9921", name: "John Doe", email: "john.d@mail.com", role: "Premium ($9.99/mo)", xp: 1240, date: "2 mins ago" },
-                        { id: "USR-8832", name: "Emma Smith", email: "emma.s@mail.com", role: "Standard (Free)", xp: 450, date: "1 hr ago" },
-                        { id: "USR-7743", name: "Robert Chen", email: "rob.chen@mail.com", role: "Premium ($9.99/mo)", xp: 3200, date: "3 hrs ago" },
-                        { id: "USR-6654", name: "Lisa Wong", email: "lisa.w@mail.com", role: "Standard (Free)", xp: 890, date: "Yesterday" },
-                        { id: "USR-5565", name: "Marcus Johnson", email: "marcus.j@mail.com", role: "Premium ($99/yr)", xp: 5400, date: "2 days ago" },
-                      ].map((u, i) => (
-                        <tr key={i}>
-                          <td style={{ fontSize: "0.8rem", color: "var(--ink3)" }}>{u.id}</td>
+                      {usersList.map((u) => (
+                        <tr key={u._id} className={u.isSuspended ? "table-danger" : ""}>
+                          <td style={{ fontSize: "0.8rem", color: "var(--ink3)", fontFamily: "monospace" }}>{u._id.substring(0,8)}...</td>
                           <td>
-                            <div style={{ fontWeight: 600 }}>{u.name}</div>
+                            <div style={{ fontWeight: 600 }}>{u.firstName} {u.lastName}</div>
                             <div style={{ fontSize: "0.75rem", color: "var(--ink3)" }}>{u.email}</div>
                           </td>
                           <td>
-                            <span className={`badge ${u.role.includes('Premium') ? 'bg-warning text-body' : 'bg-secondary'}`}>{u.role}</span>
+                            <span 
+                              className={`badge ${u.role === 'premium' ? 'bg-warning text-body' : u.role === 'admin' ? 'bg-danger' : 'bg-secondary'}`}
+                              style={{ cursor: "pointer" }}
+                              onClick={() => handleUpdateUserRole(u._id, u.role)}
+                              title="Click to edit role"
+                            >
+                              {u.role.toUpperCase()} <i className="bi bi-pencil small ms-1"></i>
+                            </span>
                           </td>
-                          <td><strong style={{ color: "var(--teal)" }}>{u.xp}</strong></td>
-                          <td style={{ fontSize: "0.85rem", color: "var(--ink3)" }}>{u.date}</td>
                           <td>
-                            <button className="btn btn-sm btn-light border me-1">View</button>
-                            <button className="btn btn-sm btn-light border me-1">Edit</button>
-                            <button className="btn btn-sm btn-outline-danger"><i className="bi bi-ban"></i></button>
+                            <strong 
+                              style={{ color: "var(--teal)", cursor: "pointer" }}
+                              onClick={() => handleUpdateUserXp(u._id, u.xp)}
+                              title="Click to edit XP"
+                            >
+                              {u.xp} <i className="bi bi-pencil small"></i>
+                            </strong>
+                          </td>
+                          <td>
+                            {u.isSuspended ? (
+                              <span className="badge bg-danger">Suspended</span>
+                            ) : (
+                              <span className="badge bg-success">Active</span>
+                            )}
+                          </td>
+                          <td>
+                            <button 
+                              className="btn btn-sm btn-light border me-1"
+                              onClick={() => handleUpdateUserRole(u._id, u.role)}
+                              title="Edit Role"
+                            >
+                              Role
+                            </button>
+                            <button 
+                              className="btn btn-sm btn-light border me-1"
+                              onClick={() => handleUpdateUserXp(u._id, u.xp)}
+                              title="Edit XP"
+                            >
+                              XP
+                            </button>
+                            <button 
+                              className={`btn btn-sm ${u.isSuspended ? 'btn-success' : 'btn-outline-danger'}`}
+                              onClick={() => handleToggleBan(u)}
+                              title={u.isSuspended ? "Restore access" : "Suspend User"}
+                            >
+                              <i className={`bi ${u.isSuspended ? 'bi-check-circle' : 'bi-ban'}`}></i>
+                            </button>
                           </td>
                         </tr>
                       ))}
+                      {usersList.length === 0 && (
+                        <tr>
+                          <td colSpan="6" className="text-center py-4 text-muted">No live users fetched from MongoDB yet.</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -338,6 +677,7 @@ export default function AdminDashboard() {
                 </div>
               </div>
             )}
+
             {/* --- PUSH NOTIFICATIONS TAB --- */}
             {activeTab === "push" && (
               <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)", minHeight: "700px" }}>
@@ -369,12 +709,13 @@ export default function AdminDashboard() {
                         const audience = document.getElementById('pushAudience').value;
                         if (!title || !message) return alert('Title and Message required');
                         try {
-                          await fetch(`${API_BASE_URL}/api/notifications`, {
+                          const res = await fetch(`${API_BASE_URL}/api/notifications`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ title, message, audience })
                           });
-                          alert('Notification broadcasted to backend successfully!');
+                          const data = await res.json();
+                          alert(`Notification broadcasted successfully! Active web-push endpoints reached: ${data.subscribersReached || 0}`);
                           document.getElementById('pushTitle').value = '';
                           document.getElementById('pushMessage').value = '';
                         } catch {
@@ -531,6 +872,28 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* --- SYSTEM CONFIG TAB --- */}
+            {activeTab === "settings" && (
+              <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)" }}>
+                <h2 style={{ fontFamily: "var(--serif)", fontWeight: 900, marginBottom: "1.5rem" }}>System Configuration</h2>
+                <div className="d-flex flex-column gap-3">
+                  <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" id="cfg1" defaultChecked />
+                    <label className="form-check-label fw-bold" htmlFor="cfg1">Enable automated RSS Feed imports for News in 30s</label>
+                  </div>
+                  <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" id="cfg2" defaultChecked />
+                    <label className="form-check-label fw-bold" htmlFor="cfg2">Enforce strict Content Security Policy (CSP) headers</label>
+                  </div>
+                  <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" id="cfg3" />
+                    <label className="form-check-label fw-bold" htmlFor="cfg3">Put website into Maintenance Mode</label>
+                  </div>
+                  <button className="btn btn-dark w-25 mt-3" onClick={() => alert("Settings updated.")}>Save Configuration</button>
                 </div>
               </div>
             )}
