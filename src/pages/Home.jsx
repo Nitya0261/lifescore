@@ -7,6 +7,7 @@ import BlogGrid from "../components/BlogGrid";
 import SimulatorSection from "../components/SimulatorSection";
 import NewsSection from "../components/NewsSection";
 import CommunitySection from "../components/CommunitySection";
+import SEO from "../components/SEO";
 import API_BASE_URL from "../config/api";
 
 export default function Home() {
@@ -28,14 +29,33 @@ export default function Home() {
     { icon: "bi-graph-up-arrow", label: "Compound Interest", path: "/tools/compound-interest", color: "#6366f1" },
     { icon: "bi-bar-chart-line-fill", label: "Budget Tracker", path: "/dashboard/budget", color: "#22c55e" },
     { icon: "bi-book-fill", label: "Glossary", path: "/glossary", color: "#f59e0b" },
-    { icon: "bi-arrow-left-right", label: "Compare", path: "/compare/roth-ira-vs-401k", color: "#ec4899" },
-    { icon: "bi-person-badge-fill", label: "Find Advisor", path: "/find-advisor", color: "#3b82f6" },
-    { icon: "bi-credit-card-fill", label: "Best Cards", path: "/recommendations/credit-cards", color: "#ef4444" },
-    { icon: "bi-piggy-bank-fill", label: "HY Savings", path: "/recommendations/high-yield-savings", color: "#8b5cf6" },
+    { icon: "bi-arrow-left-right", label: "Compare", path: "/compare", color: "#ec4899" },
+    { icon: "bi-person-badge-fill", label: "Find Advisor", path: "/advisor", color: "#3b82f6" },
+    { icon: "bi-credit-card-fill", label: "Best Cards", path: "/recommendations/cards", color: "#ef4444" },
+    { icon: "bi-piggy-bank-fill", label: "HY Savings", path: "/recommendations/savings", color: "#8b5cf6" },
   ];
 
   return (
     <>
+      <SEO 
+        title="Personal Finance & Life Intelligence Platform" 
+        description="LifeScore helps you track your real net worth, calculate SIP trajectories, and compare ultimate retirement options using tailored financial telemetry."
+        url="https://lifescore.app"
+      >
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "LifeScore",
+            "url": "https://lifescore.app",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://lifescore.app/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
+      </SEO>
       <MoodBar />
       
       {/* Global Live Announcements Broadcast Banner */}

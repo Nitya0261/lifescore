@@ -34,7 +34,7 @@ export default function Tools() {
     { icon: "bi-calculator", name: "SIP Calculator", desc: "Calculate your Systematic Investment Plan returns over time.", path: "/tools/sip-calculator", color: "#0d9488" },
     { icon: "bi-graph-up-arrow", name: "Compound Interest", desc: "See the power of compounding on your savings and investments.", path: "/tools/compound-interest", color: "#6366f1" },
     { icon: "bi-piggy-bank", name: "Retirement Number", desc: "Find out exactly how much you need to retire comfortably.", path: "/tools/retirement-number", color: "#f59e0b" },
-    { icon: "bi-wallet2", name: "Net Worth Tracker", desc: "Track your assets minus liabilities to see your true net worth.", path: "/tools/net-worth-tracker", color: "#ec4899" },
+    { icon: "bi-wallet2", name: "Net Worth Tracker", desc: "Track your assets minus liabilities to see your true net worth.", path: "/tools/net-worth", color: "#ec4899" },
     { icon: "bi-receipt", name: "Tax Estimator", desc: "Estimate your federal and state tax liability for the year.", path: "/tools/tax-estimator", color: "#ef4444" },
     { icon: "bi-bar-chart-line", name: "Budget Tracker", desc: "Track income vs expenses and see your savings rate over time.", path: "/dashboard/budget", color: "#22c55e" },
   ];
@@ -146,17 +146,17 @@ export default function Tools() {
                 </Link>
               </div>
               <div className="col-md-3 col-6">
-                <Link to="/compare/roth-ira-vs-401k" className="btn btn-outline-dark w-100 py-3 rounded-3">
+                <Link to="/compare" className="btn btn-outline-dark w-100 py-3 rounded-3">
                   <i className="bi bi-arrow-left-right me-2"></i>Compare Options
                 </Link>
               </div>
               <div className="col-md-3 col-6">
-                <Link to="/find-advisor" className="btn btn-outline-dark w-100 py-3 rounded-3">
+                <Link to="/advisor" className="btn btn-outline-dark w-100 py-3 rounded-3">
                   <i className="bi bi-person-badge me-2"></i>Find an Advisor
                 </Link>
               </div>
               <div className="col-md-3 col-6">
-                <Link to="/recommendations/credit-cards" className="btn btn-outline-dark w-100 py-3 rounded-3">
+                <Link to="/recommendations/cards" className="btn btn-outline-dark w-100 py-3 rounded-3">
                   <i className="bi bi-credit-card me-2"></i>Best Credit Cards
                 </Link>
               </div>

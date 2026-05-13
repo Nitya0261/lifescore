@@ -42,9 +42,10 @@ const DUMMY_COMPARISONS = {
 
 export default function ComparisonPage() {
   const { slug } = useParams();
+  const activeSlug = slug || "roth-ira-vs-401k";
   
-  const data = DUMMY_COMPARISONS[slug] || {
-    title: slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+  const data = DUMMY_COMPARISONS[activeSlug] || {
+    title: activeSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
     optionA: "Option A",
     optionB: "Option B",
     tldr: "This is a placeholder comparison page. In a live environment, this highly profitable VS page content is dynamically rendered from Sanity CMS.",
@@ -65,7 +66,20 @@ export default function ComparisonPage() {
         title={`${data.title} - Comprehensive Financial Comparison`}
         description={data.tldr}
         type="article"
-      />
+      >
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": data.title,
+            "description": data.tldr,
+            "author": {
+              "@type": "Organization",
+              "name": "LifeScore Platform"
+            }
+          })}
+        </script>
+      </SEO>
 
       <div style={{ background: "var(--cream)", minHeight: "100vh", padding: "4rem 0" }}>
         <div className="container">
@@ -73,6 +87,24 @@ export default function ComparisonPage() {
           <div className="row justify-content-center">
             <div className="col-lg-10">
               
+              {/* Quick Switcher Tabs */}
+              <div className="d-flex justify-content-center gap-2 mb-5">
+                <Link 
+                  to="/compare/roth-ira-vs-401k" 
+                  className={`btn rounded-pill px-4 py-2 fw-bold ${activeSlug === 'roth-ira-vs-401k' ? 'btn-dark' : 'btn-outline-secondary'}`}
+                  style={{ transition: "all 0.2s" }}
+                >
+                  Roth IRA vs 401(k)
+                </Link>
+                <Link 
+                  to="/compare/etf-vs-mutual-fund" 
+                  className={`btn rounded-pill px-4 py-2 fw-bold ${activeSlug === 'etf-vs-mutual-fund' ? 'btn-dark' : 'btn-outline-secondary'}`}
+                  style={{ transition: "all 0.2s" }}
+                >
+                  ETF vs Mutual Fund
+                </Link>
+              </div>
+
               <div className="text-center mb-5">
                 <span className="badge mb-3 px-3 py-2" style={{ background: "var(--teal-light)", color: "var(--teal)", fontSize: "0.9rem", letterSpacing: "1px" }}>
                   VERSUS

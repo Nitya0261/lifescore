@@ -40,6 +40,8 @@ const AuthorProfile = lazy(() => import("./pages/AuthorProfile"));
 const GlossaryIndex = lazy(() => import("./pages/GlossaryIndex"));
 const GlossaryTerm = lazy(() => import("./pages/GlossaryTerm"));
 const ComparisonPage = lazy(() => import("./pages/ComparisonPage"));
+const IraVs401k = lazy(() => import("./pages/compare/IraVs401k"));
+const EtfVsMutualFund = lazy(() => import("./pages/compare/EtfVsMutualFund"));
 const FindAdvisor = lazy(() => import("./pages/FindAdvisor"));
 
 import AIChatbot from "./components/AIChatbot";
@@ -88,7 +90,10 @@ const AppContent = ({ canvasRef }) => {
               <Route path="/author/:id" element={<AuthorProfile />} />
               <Route path="/glossary" element={<GlossaryIndex />} />
               <Route path="/glossary/:term" element={<GlossaryTerm />} />
-              <Route path="/compare" element={<ComparisonPage />} />
+              <Route path="/compare" element={<IraVs401k />} />
+              <Route path="/compare/roth-ira-vs-401k" element={<IraVs401k />} />
+              <Route path="/compare/etf-vs-mutual-fund" element={<EtfVsMutualFund />} />
+              <Route path="/compare/:slug" element={<ComparisonPage />} />
               <Route path="/advisor" element={<FindAdvisor />} />
               <Route path="/article/:slug" element={<ArticleDetail />} />
               <Route path="/login" element={<Login />} />

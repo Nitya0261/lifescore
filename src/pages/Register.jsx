@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Register() {
-  const { registerUser } = useAuth();
+  const { registerUser, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,6 +25,23 @@ export default function Register() {
       navigate("/profile");
     } else {
       setError(res.error || "Registration failed");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
+    if (loginWithGoogle) {
+      const res = await loginWithGoogle();
+      setLoading(false);
+      if (res?.success) {
+        navigate("/profile");
+      } else {
+        setError(res?.error || "Google sign-up flow failed");
+      }
+    } else {
+      setLoading(false);
+      setError("Google Sign-In is not initialized");
     }
   };
 
@@ -119,7 +136,7 @@ export default function Register() {
                 {loading ? "Creating Account..." : "Create Account"}
               </button>
               
-              <button type="button" className="btn btn-outline-secondary w-100 mb-4" style={{ padding: "0.75rem", fontWeight: 600, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+              <button type="button" onClick={handleGoogleLogin} disabled={loading} className="btn btn-outline-secondary w-100 mb-4" style={{ padding: "0.75rem", fontWeight: 600, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
                 <i className="bi bi-google text-danger"></i> Sign up with Google
               </button>
             </form>

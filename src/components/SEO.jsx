@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 export default function SEO({ title, description, image, url, type = 'website', children }) {
   const siteName = 'LifeScore';
   const defaultDesc = 'Track your net worth, get personalized AI advice, and access premium tools.';
-  const defaultImage = 'https://yourwebsite.com/og-image.jpg';
+  const defaultImage = 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80';
 
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
 

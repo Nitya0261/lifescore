@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
-  const { loginUser } = useAuth();
+  const { loginUser, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,6 @@ export default function Login() {
     setLoading(false);
     
     if (res.success) {
-      // Direct them based on role or email for now since we just set it up
       if (email.toLowerCase().includes("admin")) {
         navigate("/admin");
       } else {
@@ -28,6 +27,23 @@ export default function Login() {
       }
     } else {
       setError(res.error || "Login failed");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
+    if (loginWithGoogle) {
+      const res = await loginWithGoogle();
+      setLoading(false);
+      if (res?.success) {
+        navigate("/profile");
+      } else {
+        setError(res?.error || "Google sign-in flow failed");
+      }
+    } else {
+      setLoading(false);
+      setError("Google Sign-In is not initialized");
     }
   };
 
@@ -101,7 +117,7 @@ export default function Login() {
                 {loading ? "Signing in..." : "Sign In"}
               </button>
               
-              <button type="button" className="btn btn-outline-secondary w-100 mb-4" style={{ padding: "0.75rem", fontWeight: 600, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+              <button type="button" onClick={handleGoogleLogin} disabled={loading} className="btn btn-outline-secondary w-100 mb-4" style={{ padding: "0.75rem", fontWeight: 600, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
                 <i className="bi bi-google text-danger"></i> Sign in with Google
               </button>
             </form>

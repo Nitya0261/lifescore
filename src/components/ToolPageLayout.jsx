@@ -98,7 +98,7 @@ export default function ToolPageLayout({
                     <div style={{ width: "40px", height: "40px", borderRadius: "8px", background: "rgba(237, 137, 54, 0.1)", color: "#ed8936", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem" }}><i className="bi bi-umbrella"></i></div>
                     <span className="fw-bold">Retirement Number</span>
                   </Link>
-                  <Link to="/tools/net-worth-tracker" className="text-decoration-none p-3" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", display: "flex", alignItems: "center", gap: "1rem", color: "var(--ink)", transition: "all 0.2s" }}>
+                  <Link to="/tools/net-worth" className="text-decoration-none p-3" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", display: "flex", alignItems: "center", gap: "1rem", color: "var(--ink)", transition: "all 0.2s" }}>
                     <div style={{ width: "40px", height: "40px", borderRadius: "8px", background: "var(--accent-light)", color: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem" }}><i className="bi bi-wallet2"></i></div>
                     <span className="fw-bold">Net Worth Tracker</span>
                   </Link>

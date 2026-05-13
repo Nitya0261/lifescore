@@ -1,8 +1,10 @@
 import React, { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import API_BASE_URL from "../config/api";
+import { useAuth } from "../context/AuthContext";
 
 export default function LifeScoreWidget() {
+  const { user, awardLifeScore, updateUserProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [sharing, setSharing] = useState(false);
   const widgetRef = useRef(null);
@@ -66,6 +68,10 @@ export default function LifeScoreWidget() {
 
   const handleSaveScore = () => {
     setIsEditing(false);
+    if (updateUserProfile) {
+      updateUserProfile({ lifeScore: score });
+      if (awardLifeScore) awardLifeScore();
+    }
     
     // Only ask if not already denied or granted
     if (window.Notification && Notification.permission === 'default') {

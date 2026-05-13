@@ -80,8 +80,9 @@ export default function BlogGrid() {
             >
               <CatTag cat="Editor's Pick" color="#c0392b" bg="#fdf0ef" />
               <h3
-                className="blog-card-title text-dark"
+                className="blog-card-title"
                 style={{
+                  color: "var(--ink)",
                   fontFamily: "var(--serif)",
                   fontSize: "1.45rem",
                   fontWeight: 900,
@@ -234,7 +235,7 @@ export default function BlogGrid() {
                       bg={post.catBg}
                       style={{ marginBottom: "0.4rem" }}
                     />
-                    <h4 className="blog-card-title text-dark">{post.title}</h4>
+                    <h4 className="blog-card-title" style={{ color: "var(--ink)" }}>{post.title}</h4>
                     <p
                       className="blog-card-deck"
                       style={{

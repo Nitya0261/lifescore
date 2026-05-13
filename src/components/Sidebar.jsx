@@ -27,7 +27,7 @@ export default function Sidebar() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <div className="sidebar-article-title text-dark fw-bold" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                <div className="sidebar-article-title fw-bold" style={{ color: "var(--ink)", fontSize: '0.9rem', lineHeight: '1.4' }}>
                   {a.title}
                 </div>
                 <div className="sidebar-article-meta mt-1 opacity-75" style={{ fontSize: '0.7rem' }}>

@@ -4,20 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
 
 export default function BookmarkButton({ itemType, title, slug, initialIsBookmarked = false, className = "" }) {
-  const { user, addXp } = useAuth();
+  const { user, addXp, updateUserProfile } = useAuth();
   const navigate = useNavigate();
-  const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked);
+  
+  // Directly evaluate dynamic flag from context arrays to sync multi-card displays natively
+  const isBookmarked = user?.bookmarks?.includes(slug) || initialIsBookmarked;
   const [loading, setLoading] = useState(false);
 
-  // If we don't know the initial state, we could fetch it, but usually it's better 
-  // to fetch all user bookmarks once in context and pass them down. 
-  // For simplicity, we'll assume the parent handles initial state or we just let them toggle.
-
   const handleToggle = async (e) => {
-    e.preventDefault(); // Prevent navigating if this button is inside a Link card
+    e.preventDefault();
     e.stopPropagation();
 
-    if (!user) {
+    if (!user || user.role === "guest") {
       navigate('/login');
       return;
     }
@@ -36,11 +34,12 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
       });
       const data = await res.json();
       
+      if (data.bookmarks && updateUserProfile) {
+        updateUserProfile({ bookmarks: data.bookmarks });
+      }
+      
       if (data.status === 'added') {
-        setIsBookmarked(true);
         addXp(5, "Saved an item!");
-      } else if (data.status === 'removed') {
-        setIsBookmarked(false);
       }
     } catch (err) {
       console.error(err);
