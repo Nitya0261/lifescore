@@ -661,57 +661,7 @@ app.put('/api/users/:id', async (req, res) => {
   }
 });
 
-// --- BUDGET TRACKER API ---
-const BudgetEntry = require('./models/BudgetEntry');
 
-// Get all entries for a specific user
-app.get('/api/budget/:userId', async (req, res) => {
-  try {
-    const entries = await BudgetEntry.find({ userId: req.params.userId }).sort({ createdAt: -1 });
-    res.json(entries);
-  } catch (err) {
-    console.error('Fetch Budget Error:', err.message);
-    res.status(500).send('Server error');
-  }
-});
-
-// Create a new budget entry
-app.post('/api/budget', async (req, res) => {
-  try {
-    const { userId, month, type, category, amount } = req.body;
-    if (!userId || !month || !type || !category || amount === undefined) {
-      return res.status(400).json({ msg: 'Please enter all required fields' });
-    }
-
-    const newEntry = new BudgetEntry({
-      userId,
-      month,
-      type,
-      category,
-      amount: Number(amount)
-    });
-
-    await newEntry.save();
-    res.status(201).json(newEntry);
-  } catch (err) {
-    console.error('Create Budget Error:', err.message);
-    res.status(500).send('Server error');
-  }
-});
-
-// Delete a budget entry
-app.delete('/api/budget/:id', async (req, res) => {
-  try {
-    const entry = await BudgetEntry.findById(req.params.id);
-    if (!entry) return res.status(404).json({ msg: 'Entry not found' });
-
-    await BudgetEntry.findByIdAndDelete(req.params.id);
-    res.json({ success: true, msg: 'Entry removed' });
-  } catch (err) {
-    console.error('Delete Budget Error:', err.message);
-    res.status(500).send('Server error');
-  }
-});
 
 // --- ANNOUNCEMENTS API ---
 
