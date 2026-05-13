@@ -51,28 +51,42 @@ export default function NewsletterForm({ source = "website" }) {
         </div>
       ) : (
         <form onSubmit={handleSubscribe} className="d-flex flex-column gap-2">
-          <div className="d-flex gap-2">
+          <div className="d-flex flex-column flex-sm-row gap-2">
             <input 
               type="email" 
-              className="form-control" 
+              className="form-control shadow-none border-0 flex-grow-1" 
               placeholder="Enter your email address" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={status === 'loading'}
-              style={{ padding: "0.8rem 1rem", borderRadius: "8px" }}
+              style={{ 
+                padding: "0.65rem 0.85rem", 
+                borderRadius: "8px", 
+                background: "var(--cream2)", 
+                color: "var(--ink)", 
+                border: "1px solid var(--border) !important",
+                fontSize: "0.85rem"
+              }}
             />
             <button 
               type="submit" 
-              className="btn fw-bold" 
+              className="btn fw-bold flex-shrink-0 shadow-sm" 
               disabled={status === 'loading'}
-              style={{ background: "var(--teal)", color: "#fff", padding: "0 1.5rem", borderRadius: "8px", whiteSpace: "nowrap" }}
+              style={{ 
+                background: "var(--accent)", 
+                color: "#fff", 
+                padding: "0.65rem 1.25rem", 
+                borderRadius: "8px", 
+                fontSize: "0.85rem",
+                border: "none"
+              }}
             >
               {status === 'loading' ? <span className="spinner-border spinner-border-sm"></span> : "Subscribe"}
             </button>
           </div>
           {status === 'error' && <small className="text-danger mt-1"><i className="bi bi-exclamation-circle me-1"></i>{message}</small>}
-          <small className="text-muted mt-1" style={{ fontSize: "0.8rem" }}>Join 10,000+ readers. No spam, ever. Unsubscribe anytime.</small>
+          <small className="text-muted mt-1" style={{ fontSize: "0.72rem" }}>Join 10,000+ readers. No spam, ever. Unsubscribe anytime.</small>
         </form>
       )}
     </div>

@@ -27,127 +27,221 @@ export default function Navbar() {
     { name: t("nav.tools") || "Tools", path: "/tools" },
   ];
 
-  // Mega menu dropdowns for desktop
-  const moreLinks = [
-    { name: "📊 Markets", path: "/markets" },
-    { name: "💰 Crypto", path: "/crypto" },
-    { name: "📈 Economy", path: "/economy" },
-    { name: "📖 Glossary", path: "/glossary" },
-    { name: "⚖️ Compare", path: "/compare/roth-ira-vs-401k" },
-    { name: "🧑‍💼 Find Advisor", path: "/find-advisor" },
-    { name: "💳 Best Credit Cards", path: "/recommendations/credit-cards" },
-    { name: "🏦 High-Yield Savings", path: "/recommendations/high-yield-savings" },
-    { name: "📋 Budget Tracker", path: "/dashboard/budget" },
-    { name: "🔖 Saved Articles", path: "/dashboard/saved" },
+  // Grouped High-Fidelity navigation mapping
+  const menuGroups = [
+    {
+      title: "Guidance & Compare",
+      items: [
+        { name: "⚖️ Compare Hub Overview", path: "/compare" },
+        { name: "▪️ Roth IRA vs 401(k)", path: "/compare/roth-ira-vs-401k" },
+        { name: "▪️ ETF vs Mutual Fund", path: "/compare/etf-vs-mutual-fund" },
+        { name: "🧑‍💼 Find Professional Advisor", path: "/advisor" },
+      ]
+    },
+    {
+      title: "Top Yield Recommendations",
+      items: [
+        { name: "🏦 High-Yield Savings Accounts", path: "/recommendations/savings" },
+        { name: "💳 Best Premium Credit Cards", path: "/recommendations/cards" },
+      ]
+    },
+    {
+      title: "Market Intelligence",
+      items: [
+        { name: "📊 Markets Terminal", path: "/markets" },
+        { name: "💰 Crypto Dashboard", path: "/crypto" },
+        { name: "📈 Macro Economy", path: "/economy" },
+        { name: "📖 Glossary Dictionary A–Z", path: "/glossary" },
+      ]
+    },
+    {
+      title: "Member Dashboards",
+      items: [
+        { name: "📋 Personal Budget Tracker", path: "/dashboard/budget" },
+        { name: "🔖 Saved Bookmarks Console", path: "/dashboard/saved" },
+      ]
+    }
   ];
 
+  // Flat array for quick mapping inside mobile drawer
+  const flatMoreLinks = menuGroups.flatMap(g => g.items);
+
   return (
-    <nav className="main-nav">
+    <nav className="main-nav sticky-top shadow-sm" style={{ background: "var(--card-bg)", transition: "background 0.3s" }}>
       <div className="container">
         <div
           className="d-flex justify-content-between align-items-center py-3 border-bottom"
           style={{ borderColor: "var(--border)" }}
         >
-          <Link to="/" className="nav-logo">
-            Life<span>Score</span>
-            <small>Personal Finance &amp; Life Intelligence</small>
+          <Link to="/" className="nav-logo" style={{ textDecoration: "none" }}>
+            Life<span style={{ color: "var(--accent)" }}>Score</span>
+            <small style={{ color: "var(--ink3)" }}>Personal Finance &amp; Life Intelligence</small>
           </Link>
+          
           <div className="d-flex align-items-center gap-3">
             <div className="nav-search d-none d-md-block">
-              <input type="text" placeholder="Search articles, tools…" />
+              <input 
+                type="text" 
+                placeholder="Search articles, tools…" 
+                style={{ 
+                  background: "var(--cream)", 
+                  color: "var(--ink)", 
+                  border: "1px solid var(--border)", 
+                  borderRadius: "20px", 
+                  padding: "4px 16px",
+                  fontSize: "0.85rem"
+                }} 
+              />
             </div>
 
             {/* Language Selector */}
             <div className="dropdown">
               <button 
-                className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center justify-content-center" 
+                className="btn btn-sm dropdown-toggle d-flex align-items-center justify-content-center fw-bold" 
                 type="button" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
-                style={{ height: "32px", border: "none", background: "var(--card-bg)" }}
+                style={{ 
+                  height: "32px", 
+                  border: "1px solid var(--border)", 
+                  background: "var(--cream2)", 
+                  color: "var(--ink)",
+                  borderRadius: "16px",
+                  fontSize: "0.8rem"
+                }}
               >
-                <i className="bi bi-globe me-1"></i> {i18n.language?.substring(0, 2).toUpperCase() || 'EN'}
+                <i className="bi bi-globe me-1 text-primary"></i> {i18n.language?.substring(0, 2).toUpperCase() || 'EN'}
               </button>
-              <ul className="dropdown-menu dropdown-menu-end shadow-sm border-0" style={{ minWidth: "120px" }}>
-                <li><button className={`dropdown-item ${i18n.language?.startsWith('en') ? 'active' : ''}`} onClick={() => changeLanguage('en')}>English</button></li>
-                <li><button className={`dropdown-item ${i18n.language?.startsWith('es') ? 'active' : ''}`} onClick={() => changeLanguage('es')}>Español</button></li>
-                <li><button className={`dropdown-item ${i18n.language?.startsWith('hi') ? 'active' : ''}`} onClick={() => changeLanguage('hi')}>हिंदी</button></li>
+              <ul className="dropdown-menu dropdown-menu-end shadow border-0 p-2 rounded-3" style={{ minWidth: "130px", background: "var(--card-bg)", border: "1px solid var(--border)" }}>
+                {['en', 'es', 'hi'].map((lang) => {
+                  const labelMap = { en: "English", es: "Español", hi: "हिंदी" };
+                  const isActive = i18n.language?.startsWith(lang);
+                  return (
+                    <li key={lang}>
+                      <button 
+                        className="dropdown-item rounded py-1.5 small fw-bold" 
+                        style={{ 
+                          background: isActive ? "var(--ink)" : "transparent",
+                          color: isActive ? "#fff" : "var(--ink)",
+                          fontSize: "0.85rem"
+                        }}
+                        onClick={() => changeLanguage(lang)}
+                      >
+                        {labelMap[lang]}
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
+            {/* Dark/Light mode trigger */}
             <button 
-              className="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center"
-              style={{ width: "32px", height: "32px", border: "none" }}
+              className="btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
+              style={{ width: "32px", height: "32px", border: "1px solid var(--border)", background: "var(--cream2)", color: "var(--ink)" }}
               onClick={toggleTheme}
+              title="Toggle design mode"
             >
-              <i className={`bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-fill"}`}></i>
+              <i className={`bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-stars-fill text-primary"}`} style={{ fontSize: "0.9rem" }}></i>
             </button>
             
+            {/* Authenticated user control */}
             {user && user.role !== "guest" ? (
               <button 
-                className="btn btn-dark btn-sm rounded-pill px-3"
+                className="btn btn-sm rounded-pill px-3 fw-bold shadow-sm"
+                style={{ background: "var(--ink)", color: "var(--card-bg)", border: "none" }}
                 onClick={() => navigate(user.role === "admin" ? "/admin" : "/profile")}
               >
-                <i className={`bi ${user.role === "admin" ? "bi-shield-lock" : "bi-person-circle"} me-1`}></i>
-                {user.role === "admin" ? "Admin" : t("nav.profile") || "My Profile"}
+                <i className={`bi ${user.role === "admin" ? "bi-shield-lock-fill text-warning" : "bi-person-circle text-teal"} me-1`}></i>
+                {user.role === "admin" ? "Admin Panel" : t("nav.profile") || "My Profile"}
               </button>
             ) : (
               <button 
-                className="subscribe-btn"
+                className="btn btn-sm rounded-pill px-3 fw-bold shadow-sm"
+                style={{ background: "var(--accent)", color: "#fff", border: "none" }}
                 onClick={() => navigate("/login")}
               >
-                <i className="bi bi-box-arrow-in-right me-1"></i>{t("nav.login") || "Login"}
+                <i className="bi bi-box-arrow-in-right me-1"></i>{t("nav.login") || "Member Login"}
               </button>
             )}
 
             <button
-              className="btn btn-sm btn-outline-secondary d-lg-none"
+              className="btn btn-sm d-lg-none"
               data-bs-toggle="collapse"
               data-bs-target="#mobileMenu"
+              style={{ background: "var(--cream2)", color: "var(--ink)", border: "1px solid var(--border)" }}
             >
               <i className="bi bi-list"></i>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Responsive Mobile Drawer */}
         <div className="collapse d-lg-none" id="mobileMenu">
           <div className="py-3 d-flex flex-column gap-1">
-            <p className="text-muted small fw-bold text-uppercase mb-1 mt-2" style={{ letterSpacing: "1px" }}>Categories</p>
+            <p className="text-muted small fw-bold text-uppercase mb-1 mt-2 px-2" style={{ letterSpacing: "1px", fontSize: "0.7rem" }}>
+              Main Categories
+            </p>
             {cats.map((c) => (
               <Link
                 key={c.name}
                 to={c.path}
-                className={`cat-tab ${currentPath === c.path ? "active" : ""}`}
-                style={{ textDecoration: 'none' }}
+                className="rounded px-3 py-2 fw-bold"
+                style={{ 
+                  textDecoration: 'none', 
+                  color: currentPath === c.path ? "var(--accent)" : "var(--ink)",
+                  background: currentPath === c.path ? "var(--cream2)" : "transparent",
+                  fontSize: "0.95rem"
+                }}
               >
                 {c.name}
               </Link>
             ))}
-            <hr className="my-2" />
-            <p className="text-muted small fw-bold text-uppercase mb-1" style={{ letterSpacing: "1px" }}>More</p>
-            {moreLinks.map((l) => (
-              <Link
-                key={l.name}
-                to={l.path}
-                className={`cat-tab ${currentPath === l.path ? "active" : ""}`}
-                style={{ textDecoration: 'none' }}
-              >
-                {l.name}
-              </Link>
+            
+            <hr className="my-2" style={{ borderColor: "var(--border)" }} />
+            
+            {menuGroups.map((group, gIdx) => (
+              <div key={gIdx} className="mb-2">
+                <p className="text-muted small fw-bold text-uppercase mb-1 px-2" style={{ letterSpacing: "1px", fontSize: "0.7rem", color: "var(--accent) !important" }}>
+                  {group.title}
+                </p>
+                {group.items.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className="rounded px-3 py-1.5 d-block"
+                    style={{ 
+                      textDecoration: 'none', 
+                      color: currentPath === item.path ? "var(--accent)" : "var(--ink2)",
+                      background: currentPath === item.path ? "var(--cream2)" : "transparent",
+                      fontSize: "0.85rem"
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Desktop Nav */}
-        <div className="d-none d-lg-flex align-items-center justify-content-between">
-          <ul className="nav-cats">
+        {/* Desktop Cat Ribbon */}
+        <div className="d-none d-lg-flex align-items-center justify-content-between py-1">
+          <ul className="nav-cats m-0 p-0 d-flex align-items-center gap-4 list-unstyled">
             {cats.map((c) => (
               <li key={c.name}>
                 <Link
                   to={c.path}
-                  className={currentPath === c.path ? "active" : ""}
-                  style={{ textDecoration: 'none' }}
+                  className="fw-bold pb-1"
+                  style={{ 
+                    textDecoration: 'none',
+                    color: currentPath === c.path ? "var(--accent)" : "var(--ink)",
+                    borderBottom: currentPath === c.path ? "2px solid var(--accent)" : "none",
+                    fontSize: "0.9rem",
+                    transition: "color 0.2s"
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.color = "var(--accent)"}
+                  onMouseOut={(e) => e.currentTarget.style.color = currentPath === c.path ? "var(--accent)" : "var(--ink)"}
                 >
                   {c.name}
                 </Link>
@@ -155,29 +249,72 @@ export default function Navbar() {
             ))}
           </ul>
           
-          {/* More Dropdown */}
+          {/* Advanced Section Mega Dropdown */}
           <div className="dropdown">
             <button 
-              className="btn btn-sm d-flex align-items-center gap-1 fw-bold"
+              className="btn btn-sm d-flex align-items-center gap-1 fw-bold rounded-pill px-3 py-1"
               data-bs-toggle="dropdown"
-              style={{ color: "var(--ink2)", fontSize: "0.9rem", background: "transparent", border: "none" }}
+              style={{ 
+                color: "var(--ink)", 
+                background: "var(--cream2)", 
+                border: "1px solid var(--border)",
+                fontSize: "0.85rem" 
+              }}
             >
-              More <i className="bi bi-chevron-down" style={{ fontSize: "0.7rem" }}></i>
+              Explore Services <i className="bi bi-chevron-down" style={{ fontSize: "0.7rem" }}></i>
             </button>
-            <ul className="dropdown-menu dropdown-menu-end shadow border-0 p-2" style={{ minWidth: "240px" }}>
-              {moreLinks.map((l) => (
-                <li key={l.name}>
-                  <Link 
-                    to={l.path} 
-                    className="dropdown-item rounded-2 py-2"
-                    style={{ fontSize: "0.9rem" }}
-                  >
-                    {l.name}
-                  </Link>
-                </li>
+            
+            {/* Themed luxurious absolute menu block */}
+            <ul 
+              className="dropdown-menu dropdown-menu-end shadow-lg border-0 p-3 rounded-4 mt-2 animate__animated animate__fadeIn animate__faster" 
+              style={{ 
+                minWidth: "320px", 
+                background: "var(--card-bg)", 
+                border: "1px solid var(--border)",
+                boxShadow: "var(--shadow)" 
+              }}
+            >
+              {menuGroups.map((group, idx) => (
+                <React.Fragment key={idx}>
+                  {idx > 0 && <hr className="my-2" style={{ borderColor: "var(--border2)" }} />}
+                  <li className="px-2 pt-1 pb-1">
+                    <span className="text-uppercase fw-bold small d-block" style={{ fontSize: "0.68rem", letterSpacing: "1px", color: "var(--accent)" }}>
+                      {group.title}
+                    </span>
+                  </li>
+                  {group.items.map((item) => {
+                    const isSelected = currentPath === item.path;
+                    return (
+                      <li key={item.name}>
+                        <Link 
+                          to={item.path} 
+                          className="dropdown-item rounded-3 py-2 px-3 fw-medium d-flex align-items-center justify-content-between"
+                          style={{ 
+                            fontSize: "0.85rem",
+                            color: isSelected ? "var(--accent)" : "var(--ink)",
+                            background: isSelected ? "var(--cream2)" : "transparent",
+                            transition: "all 0.15s"
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.background = "var(--cream2)";
+                            e.currentTarget.style.color = "var(--accent)";
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.background = isSelected ? "var(--cream2)" : "transparent";
+                            e.currentTarget.style.color = isSelected ? "var(--accent)" : "var(--ink)";
+                          }}
+                        >
+                          <span>{item.name}</span>
+                          {isSelected && <i className="bi bi-check-circle-fill text-accent small"></i>}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </React.Fragment>
               ))}
             </ul>
           </div>
+
         </div>
       </div>
     </nav>

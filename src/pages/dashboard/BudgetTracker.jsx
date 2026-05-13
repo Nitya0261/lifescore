@@ -186,7 +186,7 @@ export default function BudgetTracker() {
         <div className="col-md-3 col-6">
           <div className="card border-0 p-3 h-100" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius-lg)" }}>
             <div className="text-muted small fw-bold text-uppercase mb-1">Savings</div>
-            <h3 className="mb-0 text-ink">${savings.toLocaleString()}</h3>
+            <h3 className="mb-0" style={{ color: "var(--ink)" }}>${savings.toLocaleString()}</h3>
           </div>
         </div>
         <div className="col-md-3 col-6">
@@ -202,7 +202,7 @@ export default function BudgetTracker() {
         <div className="col-lg-5">
           <div className="card border-0 mb-4" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius-lg)" }}>
             <div className="card-body p-4">
-              <h5 className="fw-bold mb-3">Add Entry</h5>
+              <h5 className="fw-bold mb-3" style={{ color: "var(--ink)" }}>Add Entry</h5>
               <form onSubmit={handleSubmit}>
                 <div className="row g-2 mb-3">
                   <div className="col-4">
@@ -226,7 +226,7 @@ export default function BudgetTracker() {
 
           <div className="card border-0" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius-lg)", maxHeight: "400px", overflowY: "auto" }}>
             <div className="card-body p-4">
-              <h5 className="fw-bold mb-3">Transactions</h5>
+              <h5 className="fw-bold mb-3" style={{ color: "var(--ink)" }}>Transactions</h5>
               {monthEntries.length === 0 ? (
                 <p className="text-muted small">No entries for this month yet.</p>
               ) : (
@@ -234,7 +234,7 @@ export default function BudgetTracker() {
                   {monthEntries.map(entry => (
                     <li key={entry._id} className="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent border-light">
                       <div>
-                        <div className="fw-bold" style={{ fontSize: "0.9rem" }}>{entry.category}</div>
+                        <div className="fw-bold" style={{ fontSize: "0.9rem", color: "var(--ink)" }}>{entry.category}</div>
                         <small className="text-muted">{new Date(entry.createdAt).toLocaleDateString()}</small>
                       </div>
                       <div className="d-flex align-items-center gap-3">
@@ -257,7 +257,7 @@ export default function BudgetTracker() {
         <div className="col-lg-7">
           <div className="card border-0 mb-4" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius-lg)" }}>
             <div className="card-body p-4">
-              <h5 className="fw-bold mb-4">Cash Flow ({new Date(selectedMonth + '-01').toLocaleString('default', { month: 'long' })})</h5>
+              <h5 className="fw-bold mb-4" style={{ color: "var(--ink)" }}>Cash Flow ({new Date(selectedMonth + '-01').toLocaleString('default', { month: 'long' })})</h5>
               <div style={{ height: "250px" }}>
                 <Bar 
                   data={barData} 
@@ -273,7 +273,7 @@ export default function BudgetTracker() {
 
           <div className="card border-0" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius-lg)" }}>
             <div className="card-body p-4">
-              <h5 className="fw-bold mb-4">6-Month Savings Trend</h5>
+              <h5 className="fw-bold mb-4" style={{ color: "var(--ink)" }}>6-Month Savings Trend</h5>
               <div style={{ height: "250px" }}>
                 <Line 
                   data={trendData} 
