@@ -44,6 +44,7 @@
   "reactSnap": {
     "source": "dist",
     "inlineCss": true,
+    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
     "include": ["/", "/saving-money", "/investing", "/debt-freedom", "/real-estate", "/retirement", "/side-income", "/glossary"]
   }
 }
