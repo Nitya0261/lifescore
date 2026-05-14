@@ -192,7 +192,7 @@ export default function Markets() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`btn rounded-pill px-4 py-2 text-start transition-all ${activeTab === tab.id ? 'btn-primary shadow-sm fw-bold' : 'btn-light text-muted'}`}
+                  className={`btn rounded-pill px-2 px-sm-4 py-1 py-sm-2 text-start transition-all ${activeTab === tab.id ? 'btn-primary shadow-sm fw-bold' : 'btn-light text-muted'}`}
                   style={{ 
                     flex: "1 1 auto",
                     border: "1px solid transparent", 

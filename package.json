@@ -8,7 +8,7 @@
     "server": "node backend/server.js",
     "start": "node backend/server.js",
     "build": "vite build",
-    "postbuild": "react-snap",
+    "postbuild": "node scripts/generate-indexed-pages.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -38,13 +38,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
-    "react-snap": "^1.23.0",
+    "puppeteer": "^24.43.1",
     "vite": "^8.0.10"
-  },
-  "reactSnap": {
-    "source": "dist",
-    "inlineCss": true,
-    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
-    "include": ["/", "/saving-money", "/investing", "/debt-freedom", "/real-estate", "/retirement", "/side-income", "/glossary"]
   }
 }

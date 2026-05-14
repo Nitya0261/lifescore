@@ -74,11 +74,11 @@ export default function Navbar() {
           style={{ borderColor: "var(--border)" }}
         >
           <Link to="/" className="nav-logo" style={{ textDecoration: "none" }}>
-            Life<span style={{ color: "var(--accent)" }}>Score</span>
-            <small style={{ color: "var(--ink3)" }}>Personal Finance &amp; Life Intelligence</small>
+            <span style={{ fontWeight: 900, fontSize: "1.25rem" }}>Life<span style={{ color: "var(--accent)" }}>Score</span></span>
+            <small className="d-none d-sm-block" style={{ color: "var(--ink3)", fontSize: "0.7rem", marginTop: "-2px" }}>Personal Finance &amp; Life Intelligence</small>
           </Link>
           
-          <div className="d-flex align-items-center gap-3">
+          <div className="d-flex align-items-center gap-2 gap-sm-3">
             <div className="nav-search d-none d-md-block">
               <input 
                 type="text" 
@@ -97,7 +97,7 @@ export default function Navbar() {
             {/* Language Selector */}
             <div className="dropdown">
               <button 
-                className="btn btn-sm dropdown-toggle d-flex align-items-center justify-content-center fw-bold" 
+                className="btn btn-sm dropdown-toggle d-flex align-items-center justify-content-center fw-bold px-2 px-sm-2.5" 
                 type="button" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
@@ -110,7 +110,7 @@ export default function Navbar() {
                   fontSize: "0.8rem"
                 }}
               >
-                <i className="bi bi-globe me-1 text-primary"></i> {i18n.language?.substring(0, 2).toUpperCase() || 'EN'}
+                <i className="bi bi-globe me-1 text-primary"></i> <span className="d-none d-xs-inline">{i18n.language?.substring(0, 2).toUpperCase() || 'EN'}</span>
               </button>
               <ul className="dropdown-menu dropdown-menu-end shadow border-0 p-2 rounded-3" style={{ minWidth: "130px", background: "var(--card-bg)", border: "1px solid var(--border)" }}>
                 {['en', 'es', 'hi'].map((lang) => {
@@ -137,7 +137,7 @@ export default function Navbar() {
 
             {/* Dark/Light mode trigger */}
             <button 
-              className="btn btn-sm rounded-circle d-flex align-items-center justify-content-center"
+              className="btn btn-sm rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
               style={{ width: "32px", height: "32px", border: "1px solid var(--border)", background: "var(--cream2)", color: "var(--ink)" }}
               onClick={toggleTheme}
               title="Toggle design mode"
@@ -148,30 +148,33 @@ export default function Navbar() {
             {/* Authenticated user control */}
             {user && user.role !== "guest" ? (
               <button 
-                className="btn btn-sm rounded-pill px-3 fw-bold shadow-sm"
-                style={{ background: "var(--ink)", color: "var(--card-bg)", border: "none" }}
+                className="btn btn-sm rounded-pill px-2.5 px-sm-3 fw-bold shadow-sm text-truncate"
+                style={{ background: "var(--ink)", color: "var(--card-bg)", border: "none", maxWidth: "130px" }}
                 onClick={() => navigate(user.role === "admin" ? "/admin" : "/profile")}
               >
                 <i className={`bi ${user.role === "admin" ? "bi-shield-lock-fill text-warning" : "bi-person-circle text-teal"} me-1`}></i>
-                {user.role === "admin" ? "Admin Panel" : t("nav.profile") || "My Profile"}
+                <span className="d-none d-sm-inline">{user.role === "admin" ? "Admin Panel" : t("nav.profile") || "My Profile"}</span>
+                <span className="d-inline d-sm-none">{user.role === "admin" ? "Admin" : "Profile"}</span>
               </button>
             ) : (
               <button 
-                className="btn btn-sm rounded-pill px-3 fw-bold shadow-sm"
+                className="btn btn-sm rounded-pill px-2.5 px-sm-3 fw-bold shadow-sm text-truncate"
                 style={{ background: "var(--accent)", color: "#fff", border: "none" }}
                 onClick={() => navigate("/login")}
               >
-                <i className="bi bi-box-arrow-in-right me-1"></i>{t("nav.login") || "Member Login"}
+                <i className="bi bi-box-arrow-in-right me-1"></i>
+                <span className="d-none d-sm-inline">{t("nav.login") || "Member Login"}</span>
+                <span className="d-inline d-sm-none">Login</span>
               </button>
             )}
 
             <button
-              className="btn btn-sm d-lg-none"
+              className="btn btn-sm d-lg-none flex-shrink-0"
               data-bs-toggle="collapse"
               data-bs-target="#mobileMenu"
-              style={{ background: "var(--cream2)", color: "var(--ink)", border: "1px solid var(--border)" }}
+              style={{ background: "var(--cream2)", color: "var(--ink)", border: "1px solid var(--border)", width: "32px", height: "32px", padding: 0 }}
             >
-              <i className="bi bi-list"></i>
+              <i className="bi bi-list" style={{ fontSize: "1.1rem" }}></i>
             </button>
           </div>
         </div>
@@ -186,6 +189,10 @@ export default function Navbar() {
               <Link
                 key={c.name}
                 to={c.path}
+                onClick={() => {
+                  const menu = document.getElementById("mobileMenu");
+                  if (menu) menu.classList.remove("show");
+                }}
                 className="rounded px-3 py-2 fw-bold"
                 style={{ 
                   textDecoration: 'none', 
@@ -209,6 +216,10 @@ export default function Navbar() {
                   <Link
                     key={item.name}
                     to={item.path}
+                    onClick={() => {
+                      const menu = document.getElementById("mobileMenu");
+                      if (menu) menu.classList.remove("show");
+                    }}
                     className="rounded px-3 py-1.5 d-block"
                     style={{ 
                       textDecoration: 'none', 

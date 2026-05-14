@@ -66,31 +66,31 @@ export default function CreditCards() {
               <div className="row g-4">
                 {creditCards.map(card => (
                   <div className="col-12" key={card.id}>
-                    <div className="card border-0 p-4 p-lg-5" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
-                      <div className="row align-items-center">
-                        <div className="col-lg-3 col-md-4 mb-4 mb-md-0 text-center text-md-start">
+                    <div className="card border-0 p-3 p-sm-4 p-lg-5" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
+                      <div className="row align-items-center g-3">
+                        <div className="col-lg-3 col-md-4 text-center text-md-start">
                           <span className="badge mb-2" style={{ background: "var(--ink)", color: "var(--cream)" }}>{card.badge}</span>
-                          <h3 className="fw-bold mb-0" style={{ fontSize: "1.5rem" }}>{card.name}</h3>
+                          <h3 className="fw-bold mb-0" style={{ fontSize: "clamp(1.2rem, 3vw, 1.5rem)" }}>{card.name}</h3>
                         </div>
                         
-                        <div className="col-lg-6 col-md-5 mb-4 mb-md-0">
-                          <div className="row text-center text-md-start g-3">
+                        <div className="col-lg-6 col-md-5">
+                          <div className="row text-center text-md-start g-2 g-sm-3">
                             <div className="col-4">
-                              <div className="text-muted small fw-bold text-uppercase">Annual Fee</div>
-                              <div className="fs-4 fw-bold text-ink">{card.annualFee}</div>
+                              <div className="text-muted fw-bold text-uppercase" style={{ fontSize: "0.65rem" }}>Annual Fee</div>
+                              <div className="fw-bold text-ink" style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)" }}>{card.annualFee}</div>
                             </div>
                             <div className="col-4">
-                              <div className="text-muted small fw-bold text-uppercase">Intro Offer</div>
-                              <div className="fs-5 fw-bold text-teal">{card.introOffer}</div>
+                              <div className="text-muted fw-bold text-uppercase" style={{ fontSize: "0.65rem" }}>Intro Offer</div>
+                              <div className="fw-bold text-teal" style={{ fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>{card.introOffer}</div>
                             </div>
                             <div className="col-4">
-                              <div className="text-muted small fw-bold text-uppercase">Credit Req.</div>
-                              <div className="fs-6 fw-bold mt-1">{card.creditNeeded}</div>
+                              <div className="text-muted fw-bold text-uppercase" style={{ fontSize: "0.65rem" }}>Credit Req.</div>
+                              <div className="fw-bold mt-1" style={{ fontSize: "clamp(0.8rem, 1.8vw, 1rem)" }}>{card.creditNeeded}</div>
                             </div>
                           </div>
                           
-                          <div className="mt-4">
-                            <ul className="list-unstyled mb-0 d-flex flex-column gap-2 text-muted small">
+                          <div className="mt-3 mt-sm-4">
+                            <ul className="list-unstyled mb-0 d-flex flex-column gap-2 text-muted small" style={{ fontSize: "0.85rem" }}>
                               {card.features.map((feature, idx) => (
                                 <li key={idx}><i className="bi bi-star-fill text-warning me-2"></i> {feature}</li>
                               ))}
@@ -98,17 +98,17 @@ export default function CreditCards() {
                           </div>
                         </div>
 
-                        <div className="col-lg-3 col-md-3 text-center text-md-end">
+                        <div className="col-lg-3 col-md-3 text-center text-md-end mt-3 mt-md-0">
                           <a 
                             href={card.link} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="btn btn-lg w-100 fw-bold text-white shadow-sm"
-                            style={{ background: "var(--teal)" }}
+                            className="btn btn-lg w-100 fw-bold text-white shadow-sm py-2 py-sm-3"
+                            style={{ background: "var(--teal)", fontSize: "0.95rem" }}
                           >
                             Apply Now
                           </a>
-                          <small className="text-muted d-block mt-2">Terms Apply</small>
+                          <small className="text-muted d-block mt-1" style={{ fontSize: "0.7rem" }}>Terms Apply</small>
                         </div>
                       </div>
                     </div>

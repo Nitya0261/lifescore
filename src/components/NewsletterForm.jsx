@@ -65,7 +65,8 @@ export default function NewsletterForm({ source = "website" }) {
                 height: "46px",
                 color: "var(--ink)", 
                 fontSize: "0.85rem",
-                fontWeight: 500
+                fontWeight: 500,
+                paddingRight: "75px"
               }}
             />
             <button 

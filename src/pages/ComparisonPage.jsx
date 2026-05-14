@@ -88,34 +88,34 @@ export default function ComparisonPage() {
             <div className="col-lg-10">
               
               {/* Quick Switcher Tabs */}
-              <div className="d-flex justify-content-center gap-2 mb-5">
+              <div className="d-flex justify-content-center flex-wrap gap-2 mb-4 mb-lg-5">
                 <Link 
                   to="/compare/roth-ira-vs-401k" 
-                  className={`btn rounded-pill px-4 py-2 fw-bold ${activeSlug === 'roth-ira-vs-401k' ? 'btn-dark' : 'btn-outline-secondary'}`}
-                  style={{ transition: "all 0.2s" }}
+                  className={`btn rounded-pill px-3 px-sm-4 py-1.5 py-sm-2 fw-bold ${activeSlug === 'roth-ira-vs-401k' ? 'btn-dark' : 'btn-outline-secondary'}`}
+                  style={{ transition: "all 0.2s", fontSize: "0.9rem" }}
                 >
                   Roth IRA vs 401(k)
                 </Link>
                 <Link 
                   to="/compare/etf-vs-mutual-fund" 
-                  className={`btn rounded-pill px-4 py-2 fw-bold ${activeSlug === 'etf-vs-mutual-fund' ? 'btn-dark' : 'btn-outline-secondary'}`}
-                  style={{ transition: "all 0.2s" }}
+                  className={`btn rounded-pill px-3 px-sm-4 py-1.5 py-sm-2 fw-bold ${activeSlug === 'etf-vs-mutual-fund' ? 'btn-dark' : 'btn-outline-secondary'}`}
+                  style={{ transition: "all 0.2s", fontSize: "0.9rem" }}
                 >
                   ETF vs Mutual Fund
                 </Link>
               </div>
 
-              <div className="text-center mb-5">
-                <span className="badge mb-3 px-3 py-2" style={{ background: "var(--teal-light)", color: "var(--teal)", fontSize: "0.9rem", letterSpacing: "1px" }}>
+              <div className="text-center mb-4 mb-lg-5">
+                <span className="badge mb-3 px-3 py-2" style={{ background: "var(--teal-light)", color: "var(--teal)", fontSize: "0.85rem", letterSpacing: "1px" }}>
                   VERSUS
                 </span>
-                <h1 className="fw-bold mb-4" style={{ fontFamily: "var(--serif)", color: "var(--ink)", fontSize: "3.5rem" }}>
+                <h1 className="fw-bold mb-4" style={{ fontFamily: "var(--serif)", color: "var(--ink)", fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
                   {data.optionA} <span className="text-muted" style={{ fontStyle: "italic", fontWeight: 400 }}>vs</span> {data.optionB}
                 </h1>
               </div>
 
               {/* TLDR Box */}
-              <div className="card border-0 mb-5 p-4" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "0 10px 30px rgba(0,0,0,0.05)", borderTop: "4px solid var(--teal)" }}>
+              <div className="card border-0 mb-5 p-3 p-sm-4" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "0 10px 30px rgba(0,0,0,0.05)", borderTop: "4px solid var(--teal)" }}>
                 <h4 className="fw-bold d-flex align-items-center mb-3" style={{ color: "var(--ink)" }}>
                   <i className="bi bi-lightning-charge text-warning me-2"></i> The Short Answer (TL;DR)
                 </h4>
@@ -151,10 +151,10 @@ export default function ComparisonPage() {
               <div className="row g-4 mb-5">
                 <div className="col-md-6">
                   <div className="card h-100 border-0" style={{ background: "var(--card-bg)", borderRadius: "var(--radius)" }}>
-                    <div className="card-header bg-transparent border-0 pt-4 pb-0 px-4">
+                    <div className="card-header bg-transparent border-0 pt-4 pb-0 px-3 px-sm-4">
                       <h4 className="fw-bold mb-0">{data.optionA}</h4>
                     </div>
-                    <div className="card-body p-4">
+                    <div className="card-body p-3 p-sm-4">
                       <h6 className="text-success fw-bold mb-3"><i className="bi bi-plus-circle me-2"></i>Pros</h6>
                       <ul className="text-muted mb-4" style={{ lineHeight: "1.7", paddingLeft: "1.2rem" }}>
                         {data.prosA.map((p, i) => <li key={i}>{p}</li>)}
@@ -169,10 +169,10 @@ export default function ComparisonPage() {
                 
                 <div className="col-md-6">
                   <div className="card h-100 border-0" style={{ background: "var(--card-bg)", borderRadius: "var(--radius)" }}>
-                    <div className="card-header bg-transparent border-0 pt-4 pb-0 px-4">
+                    <div className="card-header bg-transparent border-0 pt-4 pb-0 px-3 px-sm-4">
                       <h4 className="fw-bold mb-0">{data.optionB}</h4>
                     </div>
-                    <div className="card-body p-4">
+                    <div className="card-body p-3 p-sm-4">
                       <h6 className="text-success fw-bold mb-3"><i className="bi bi-plus-circle me-2"></i>Pros</h6>
                       <ul className="text-muted mb-4" style={{ lineHeight: "1.7", paddingLeft: "1.2rem" }}>
                         {data.prosB.map((p, i) => <li key={i}>{p}</li>)}
@@ -188,12 +188,12 @@ export default function ComparisonPage() {
 
               {/* Final Verdict */}
               <div className="card border-0 mb-5 text-center" style={{ background: "var(--teal)", color: "white", borderRadius: "var(--radius-lg)" }}>
-                <div className="card-body p-5">
-                  <h3 className="fw-bold mb-4" style={{ fontFamily: "var(--serif)" }}>The Final Verdict</h3>
-                  <p className="mb-4" style={{ fontSize: "1.2rem", lineHeight: "1.8", opacity: 0.9 }}>
+                <div className="card-body p-3 p-sm-5">
+                  <h3 className="fw-bold mb-3 mb-sm-4" style={{ fontFamily: "var(--serif)" }}>The Final Verdict</h3>
+                  <p className="mb-4 px-2" style={{ fontSize: "clamp(1rem, 3vw, 1.2rem)", lineHeight: "1.8", opacity: 0.9 }}>
                     {data.verdict}
                   </p>
-                  <Link to="/tools" className="btn btn-light btn-lg rounded-pill fw-bold px-5">
+                  <Link to="/tools" className="btn btn-light btn-lg rounded-pill fw-bold px-4 px-sm-5">
                     Explore Financial Tools
                   </Link>
                 </div>

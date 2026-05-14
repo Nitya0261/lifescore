@@ -138,8 +138,8 @@ export default function ArticleDetail() {
                 <div className="ls-card p-4 bg-navy text-white mt-4">
                   <h4 className="ls-heading mb-2 text-white">Enjoyed this guide?</h4>
                   <p className="opacity-75 mb-3">Subscribe to our newsletter and never miss a money move.</p>
-                  <div className="d-flex gap-2">
-                    <input type="email" placeholder="Your email" className="form-control" style={{ maxWidth: '300px' }} />
+                  <div className="d-flex flex-wrap gap-2">
+                    <input type="email" placeholder="Your email" className="form-control flex-grow-1" style={{ minWidth: '200px', maxWidth: '300px' }} />
                     <button className="ls-btn ls-btn-teal">Join 10k+ Readers</button>
                   </div>
                 </div>

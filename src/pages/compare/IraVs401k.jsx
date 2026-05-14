@@ -30,17 +30,18 @@ export default function IraVs401k() {
         <div className="container">
           
           {/* Internal Compare Switcher Navigation */}
-          <div className="d-flex justify-content-center gap-2 mb-4">
+          <div className="d-flex flex-wrap justify-content-center gap-2 mb-4">
             <Link 
               to="/compare/roth-ira-vs-401k" 
-              className="btn btn-dark rounded-pill px-4 py-2 fw-bold shadow-sm"
+              className="btn btn-dark rounded-pill px-3 px-sm-4 py-2 fw-bold shadow-sm"
+              style={{ fontSize: "0.9rem" }}
             >
               Roth IRA vs 401(k)
             </Link>
             <Link 
               to="/compare/etf-vs-mutual-fund" 
-              className="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold"
-              style={{ background: "var(--card-bg)" }}
+              className="btn btn-outline-secondary rounded-pill px-3 px-sm-4 py-2 fw-bold"
+              style={{ background: "var(--card-bg)", fontSize: "0.9rem" }}
             >
               ETF vs Mutual Fund
             </Link>
@@ -66,7 +67,7 @@ export default function IraVs401k() {
           <div className="row justify-content-center mb-5">
             <div className="col-lg-10">
               <div 
-                className="card border-0 p-4 p-md-5" 
+                className="card border-0 p-3 p-sm-4 p-md-5" 
                 style={{ 
                   background: "var(--card-bg)", 
                   borderRadius: "var(--radius-lg)", 
@@ -74,10 +75,10 @@ export default function IraVs401k() {
                   borderLeft: "5px solid var(--accent)"
                 }}
               >
-                <h4 className="fw-bold mb-3 d-flex align-items-center" style={{ color: "var(--ink)" }}>
+                <h4 className="fw-bold mb-3 d-flex align-items-center" style={{ color: "var(--ink)", fontSize: "clamp(1.2rem, 3vw, 1.5rem)" }}>
                   <i className="bi bi-lightbulb-fill text-warning me-2"></i> Quick Answer (TL;DR)
                 </h4>
-                <p className="mb-0" style={{ fontSize: "1.05rem", color: "var(--ink2)", lineHeight: 1.6 }}>
+                <p className="mb-0" style={{ fontSize: "clamp(0.95rem, 2vw, 1.05rem)", color: "var(--ink2)", lineHeight: 1.6 }}>
                   <strong>Always capture the complete 401(k) employer match first.</strong> That is immediate, guaranteed free compensation. Once you maximize the matched money, redirect remaining savings to fully fund a <strong>Roth IRA</strong> for unmatched tax-free withdrawal flexibility and customized equity asset controls.
                 </p>
               </div>
@@ -87,10 +88,10 @@ export default function IraVs401k() {
           {/* Interactive Calculator Component */}
           <div className="row justify-content-center mb-5">
             <div className="col-lg-10">
-              <div className="card border-0 p-4 p-md-5 overflow-hidden" style={{ background: "var(--cream2)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
+              <div className="card border-0 p-3 p-sm-4 p-md-5 overflow-hidden" style={{ background: "var(--cream2)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
                 <div className="text-center mb-4">
                   <span className="badge bg-dark text-white px-2 py-1 mb-2">INTERACTIVE TOOL</span>
-                  <h3 className="fw-bold" style={{ fontFamily: "var(--serif)", color: "var(--ink)" }}>
+                  <h3 className="fw-bold" style={{ fontFamily: "var(--serif)", color: "var(--ink)", fontSize: "clamp(1.3rem, 3vw, 1.75rem)" }}>
                     Growth Impact Simulator
                   </h3>
                   <p className="text-muted small">
@@ -150,10 +151,10 @@ export default function IraVs401k() {
                   </div>
 
                   <div className="col-md-6">
-                    <div className="p-4 rounded-4" style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}>
+                    <div className="p-3 p-sm-4 rounded-4" style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}>
                       <div className="mb-4 pb-3 border-bottom">
                         <span className="text-muted small fw-bold d-block mb-1">ROTH IRA FUTURE TOTAL</span>
-                        <h2 className="fw-bold mb-0" style={{ color: "var(--ink)", fontFamily: "var(--serif)" }}>
+                        <h2 className="fw-bold mb-0" style={{ color: "var(--ink)", fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>
                           ${Math.round(iraTotal).toLocaleString()}
                         </h2>
                         <span className="text-success small fw-bold">✓ 100% Tax-Free at Withdrawal</span>
@@ -161,7 +162,7 @@ export default function IraVs401k() {
 
                       <div>
                         <span className="text-muted small fw-bold d-block mb-1">401(k) WITH MATCH TOTAL</span>
-                        <h2 className="fw-bold mb-0" style={{ color: "var(--teal)", fontFamily: "var(--serif)" }}>
+                        <h2 className="fw-bold mb-0" style={{ color: "var(--teal)", fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>
                           ${Math.round(k401Total).toLocaleString()}
                         </h2>
                         <span className="text-muted small">
@@ -276,8 +277,8 @@ export default function IraVs401k() {
           {/* Action Call */}
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <div className="card border-0 text-center p-5 rounded-4" style={{ background: "var(--ink)", color: "#fff" }}>
-                <h3 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)" }}>
+              <div className="card border-0 text-center p-4 p-sm-5 rounded-4" style={{ background: "var(--ink)", color: "#fff" }}>
+                <h3 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>
                   Ready to optimize your portfolio layout?
                 </h3>
                 <p className="text-muted max-w-xl mx-auto mb-4" style={{ fontSize: "0.95rem" }}>

@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 export default function XPWidget() {
   const { user, xp: contextXp, addXp, updateUserProfile } = useAuth() || {};
   const navigate = useNavigate();
-  const [claimed, setClaimed] = useState(false);
+  
+  const todayDateStr = new Date().toDateString();
+  const [claimed, setClaimed] = useState(() => {
+    return localStorage.getItem("daily_claim_date") === todayDateStr;
+  });
 
   // Use active auth context XP if available, fallback to user.xp
   const liveXp = contextXp !== undefined ? contextXp : (user?.xp || 0);
@@ -24,13 +28,14 @@ export default function XPWidget() {
 
   const handleClaim = async () => {
     if (claimed) return;
+    localStorage.setItem("daily_claim_date", todayDateStr);
+    setClaimed(true);
     if (addXp) {
       await addXp(50, "Daily XP Bonus Claimed!");
       if (updateUserProfile) {
         await updateUserProfile({ xp: liveXp + 50 });
       }
     }
-    setClaimed(true);
   };
 
   const isGuest = !user || user.role === "guest";
@@ -41,18 +46,23 @@ export default function XPWidget() {
       style={{ 
         position: "relative", 
         overflow: "hidden", 
-        background: "linear-gradient(145deg, var(--card-bg) 0%, var(--cream) 100%)",
+        background: "var(--card-bg)",
         border: "1px solid var(--border)",
         borderRadius: "var(--radius-md)",
-        boxShadow: "0 8px 24px rgba(0,0,0,0.04)"
+        boxShadow: "var(--shadow)"
       }}
     >
       <div 
-        className="sidebar-widget-header" 
         style={{ 
           borderBottom: "1px dashed var(--border)", 
-          paddingBottom: "1rem",
-          background: "transparent"
+          padding: "1rem 1.25rem 0.5rem",
+          background: "transparent",
+          fontFamily: "var(--serif)",
+          fontWeight: 800,
+          fontSize: "1rem",
+          color: "var(--ink)",
+          display: "flex",
+          alignItems: "center"
         }}
       >
         <i className="bi bi-trophy-fill me-2" style={{ color: "var(--gold)" }}></i>Your Progress

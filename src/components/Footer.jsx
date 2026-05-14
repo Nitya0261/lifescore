@@ -85,6 +85,12 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
+          <div className="d-flex justify-content-center gap-3 gap-sm-4 mb-3 flex-wrap" style={{ fontSize: "0.9rem" }}>
+            <Link to="/about" className="text-muted text-decoration-none fw-semibold">About Us</Link>
+            <Link to="/contact" className="text-muted text-decoration-none fw-semibold">Contact Desk</Link>
+            <Link to="/privacy" className="text-muted text-decoration-none fw-semibold">Privacy Policy</Link>
+            <Link to="/terms" className="text-muted text-decoration-none fw-semibold">Terms & Conditions</Link>
+          </div>
           <span className="footer-bottom-text">
             © 2026 LifeScore · Personal Finance & Life Intelligence · All rights
             reserved · Built with React & Bootstrap

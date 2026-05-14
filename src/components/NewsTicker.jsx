@@ -30,7 +30,7 @@ export default function NewsTicker() {
       borderBottom: "1px solid rgba(255,255,255,0.1)",
       fontSize: "0.85rem"
     }}>
-      <div className="container-fluid px-4 d-flex align-items-center">
+      <div className="container-fluid px-2 px-sm-4 d-flex align-items-center">
         <div className="fw-bold me-3 text-uppercase d-flex align-items-center" style={{ color: "var(--teal)", letterSpacing: "1px", zIndex: 2, background: "var(--ink)" }}>
           <i className="bi bi-lightning-charge-fill me-1"></i> Live
         </div>

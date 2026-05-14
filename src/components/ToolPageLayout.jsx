@@ -31,36 +31,36 @@ export default function ToolPageLayout({
       
       <div style={{ background: "var(--cream)", minHeight: "100vh", paddingBottom: "4rem" }}>
         {/* Header */}
-        <div style={{ background: "linear-gradient(135deg, #0f1923 0%, #1a3a5c 100%)", color: "#fff", padding: "4rem 0" }}>
-          <div className="container text-center">
-            <h1 style={{ fontFamily: "var(--serif)", fontSize: "3rem", fontWeight: 900, marginBottom: "1rem" }}>
+        <div style={{ background: "linear-gradient(135deg, #0f1923 0%, #1a3a5c 100%)", color: "#fff", padding: "clamp(2rem, 5vw, 4rem) 0" }}>
+          <div className="container text-center px-3">
+            <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 900, marginBottom: "1rem" }}>
               {keyword}
             </h1>
-            <p style={{ fontSize: "1.1rem", opacity: 0.8, maxWidth: "600px", margin: "0 auto", fontFamily: "var(--serif2)" }}>
+            <p style={{ fontSize: "clamp(0.95rem, 2.5vw, 1.1rem)", opacity: 0.8, maxWidth: "600px", margin: "0 auto", fontFamily: "var(--serif2)" }}>
               {description}
             </p>
           </div>
         </div>
 
-        <div className="container mt-5">
-          <div className="row g-5">
+        <div className="container mt-4 mt-lg-5">
+          <div className="row g-4 g-lg-5">
             {/* Main Content Area */}
             <div className="col-lg-8">
               {/* The Calculator Widget */}
-              <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)", padding: "2rem", marginBottom: "3rem" }}>
+              <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)", padding: "clamp(1.2rem, 4vw, 2.5rem)", marginBottom: "2.5rem" }}>
                 {children}
               </div>
 
               {/* Explainer Article */}
-              <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", padding: "2.5rem", boxShadow: "var(--shadow)", marginBottom: "3rem", color: "var(--ink2)", lineHeight: "1.8" }}>
-                <h2 style={{ fontFamily: "var(--serif)", fontWeight: 900, marginBottom: "1.5rem", color: "var(--ink)" }}>Everything you need to know about {keyword}</h2>
+              <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", padding: "clamp(1.2rem, 4vw, 2.5rem)", boxShadow: "var(--shadow)", marginBottom: "2.5rem", color: "var(--ink2)", lineHeight: "1.8" }}>
+                <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.4rem, 4vw, 2rem)", fontWeight: 900, marginBottom: "1.5rem", color: "var(--ink)" }}>Everything you need to know about {keyword}</h2>
                 {articleContent}
               </div>
 
               {/* FAQ Section */}
               {faq && faq.length > 0 && (
-                <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", padding: "2.5rem", boxShadow: "var(--shadow)" }}>
-                  <h3 style={{ fontFamily: "var(--serif)", fontWeight: 800, marginBottom: "2rem" }}>Frequently Asked Questions</h3>
+                <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", padding: "clamp(1.2rem, 4vw, 2.5rem)", boxShadow: "var(--shadow)" }}>
+                  <h3 style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.3rem, 3.5vw, 1.75rem)", fontWeight: 800, marginBottom: "1.5rem" }}>Frequently Asked Questions</h3>
                   <div className="accordion" id="faqAccordion">
                     {faq.map((item, index) => (
                       <div className="accordion-item mb-3 border-0" key={index} style={{ background: "var(--cream2)", borderRadius: "8px", overflow: "hidden" }}>

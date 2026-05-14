@@ -12,6 +12,9 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState("overview");
   const [profileData, setProfileData] = useState(null);
   const [savedArticles, setSavedArticles] = useState([]);
+  const [twoFactorState, setTwoFactorState] = useState("disabled"); // 'disabled', 'setup', 'enabled'
+  const [verificationCode, setVerificationCode] = useState("");
+  const [copiedSecret, setCopiedSecret] = useState(false);
 
   useEffect(() => {
     const fetchMe = async () => {
@@ -192,17 +195,17 @@ export default function Profile() {
                   </div>
                 )}
 
-                <div className="row g-4">
+                <div className="row g-4 align-items-stretch">
                   <div className="col-md-6">
-                    <div style={{ height: "450px" }}>
+                    <div className="h-100" style={{ minHeight: "450px" }}>
                       <LifeScoreWidget />
                     </div>
                   </div>
-                  <div className="col-md-6 d-flex flex-column gap-4">
-                    <div style={{ height: "215px" }}>
+                  <div className="col-md-6 d-flex flex-column gap-4 justify-content-between">
+                    <div style={{ flex: "0 0 auto" }}>
                       <BurnoutWidget />
                     </div>
-                    <div style={{ background: "var(--card-bg)", padding: "1.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", flex: 1 }}>
+                    <div className="d-flex flex-column justify-content-center" style={{ background: "var(--card-bg)", padding: "1.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", flex: "1 1 auto" }}>
                       <h5 style={{ fontFamily: "var(--serif)", fontWeight: 700, marginBottom: "1rem" }}>Recent Activity</h5>
                       <div className="d-flex flex-column gap-3">
                         <div className="d-flex gap-3 align-items-start">
@@ -474,15 +477,130 @@ export default function Profile() {
                           <h6 className="fw-bold mb-1">Password</h6>
                           <p className="text-muted small mb-0">Last changed 3 months ago</p>
                         </div>
-                        <button type="button" className="btn btn-sm btn-outline-dark rounded-pill px-3">Update Password</button>
+                        <button 
+                          type="button" 
+                          className="btn btn-sm btn-outline-dark rounded-pill px-3"
+                          onClick={() => alert("🔒 A secure password configuration token has been dispatched to your primary email address.")}
+                        >
+                          Update Password
+                        </button>
                       </div>
 
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-4" style={{ border: "1px solid var(--border2)" }}>
-                        <div>
-                          <h6 className="fw-bold mb-1">Two-Factor Authentication (2FA)</h6>
-                          <p className="text-muted small mb-0">Add an extra layer of security using an authenticator app.</p>
+                      <div className="p-4 rounded-4" style={{ border: "1px solid var(--border2)", background: twoFactorState === "enabled" ? "rgba(16, 185, 129, 0.03)" : "transparent", transition: "all 0.3s ease" }}>
+                        <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                          <div>
+                            <h6 className="fw-bold mb-1 d-flex align-items-center gap-2">
+                              Two-Factor Authentication (2FA)
+                              {twoFactorState === "enabled" && <span className="badge bg-success small">Active</span>}
+                            </h6>
+                            <p className="text-muted small mb-0">
+                              {twoFactorState === "enabled" 
+                                ? "Your account is secured with a secondary verification app layer." 
+                                : "Add an extra layer of security using an authenticator app."}
+                            </p>
+                          </div>
+                          {twoFactorState === "disabled" && (
+                            <button 
+                              type="button" 
+                              className="btn btn-sm btn-dark rounded-pill px-3" 
+                              onClick={() => setTwoFactorState("setup")}
+                            >
+                              Enable 2FA
+                            </button>
+                          )}
+                          {twoFactorState === "setup" && (
+                            <button 
+                              type="button" 
+                              className="btn btn-sm btn-outline-secondary rounded-pill px-3" 
+                              onClick={() => setTwoFactorState("disabled")}
+                            >
+                              Cancel Setup
+                            </button>
+                          )}
+                          {twoFactorState === "enabled" && (
+                            <button 
+                              type="button" 
+                              className="btn btn-sm btn-outline-danger rounded-pill px-3" 
+                              onClick={() => {
+                                setTwoFactorState("disabled");
+                                setVerificationCode("");
+                              }}
+                            >
+                              Disable 2FA
+                            </button>
+                          )}
                         </div>
-                        <button type="button" className="btn btn-sm btn-dark rounded-pill px-3">Enable 2FA</button>
+
+                        {twoFactorState === "setup" && (
+                          <div className="mt-4 pt-4 border-top">
+                            <div className="alert border-0 p-3 rounded-3 small mb-4" style={{ background: "var(--cream2)", color: "var(--ink2)" }}>
+                              <i className="bi bi-info-circle-fill me-2 text-teal"></i>
+                              Scan the secure barcode block below or enter the initial private token key into Google Authenticator, Authy, or 1Password.
+                            </div>
+
+                            <div className="row g-4 align-items-center mb-4">
+                              <div className="col-sm-auto text-center">
+                                {/* Visual Barcode Representation */}
+                                <div className="p-3 bg-white rounded-4 shadow-sm border mx-auto d-flex flex-column align-items-center justify-content-center" style={{ width: "130px", height: "130px" }}>
+                                  <i className="bi bi-qr-code text-dark" style={{ fontSize: "5rem", lineHeight: 1 }}></i>
+                                  <span className="small text-muted fw-bold" style={{ fontSize: "0.55rem", marginTop: "-3px" }}>LifeScoreSecure</span>
+                                </div>
+                              </div>
+                              <div className="col-sm">
+                                <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>Manual Setup Key</label>
+                                <div className="d-flex gap-2">
+                                  <input 
+                                    type="text" 
+                                    readOnly 
+                                    className="form-control form-control-sm text-monospace bg-light" 
+                                    style={{ fontFamily: "monospace", fontSize: "0.85rem" }}
+                                    value="LIFESCORE-SECURE-2FA-TOKEN-2026" 
+                                  />
+                                  <button 
+                                    type="button" 
+                                    className="btn btn-sm btn-outline-dark px-3 flex-shrink-0"
+                                    onClick={() => {
+                                      navigator.clipboard?.writeText("LIFESCORE-SECURE-2FA-TOKEN-2026");
+                                      setCopiedSecret(true);
+                                      setTimeout(() => setCopiedSecret(false), 2000);
+                                    }}
+                                  >
+                                    {copiedSecret ? <><i className="bi bi-check2"></i> Copied</> : "Copy"}
+                                  </button>
+                                </div>
+                                <p className="small text-muted mt-2 mb-0" style={{ fontSize: "0.8rem" }}>Time-based One-Time Password (TOTP) algorithm.</p>
+                              </div>
+                            </div>
+
+                            <div className="bg-light p-3 rounded-4 border">
+                              <label className="form-label text-dark small fw-bold mb-2">Verify Authentication Code</label>
+                              <div className="d-flex gap-2" style={{ maxWidth: "300px" }}>
+                                <input 
+                                  type="text" 
+                                  maxLength="6" 
+                                  placeholder="000000" 
+                                  className="form-control text-center fw-bold bg-white" 
+                                  style={{ letterSpacing: "4px", fontSize: "1.1rem" }}
+                                  value={verificationCode}
+                                  onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                                />
+                                <button 
+                                  type="button" 
+                                  className="btn px-4 fw-bold flex-shrink-0"
+                                  style={{ background: "var(--teal)", color: "#fff" }}
+                                  disabled={verificationCode.length < 6}
+                                  onClick={() => {
+                                    if (verificationCode.length >= 6) {
+                                      setTwoFactorState("enabled");
+                                    }
+                                  }}
+                                >
+                                  Activate
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

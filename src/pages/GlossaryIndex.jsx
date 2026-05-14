@@ -114,29 +114,29 @@ export default function GlossaryIndex() {
             <div className="col-lg-10">
               <div className="card border-0 overflow-hidden rounded-4 shadow-sm" style={{ background: "linear-gradient(135deg, var(--ink) 0%, var(--dark-surface) 100%)", color: "#fff" }}>
                 <div className="row g-0 align-items-center">
-                  <div className="col-md-8 p-4 p-md-5">
+                  <div className="col-md-8 p-3 p-sm-4 p-md-5">
                     <div className="d-flex align-items-center gap-2 mb-3">
                       <span className="badge bg-warning text-dark fw-bold px-2 py-1 small">TERM OF THE DAY</span>
                       <span className="text-white-50 small">• {featuredTerm.cat}</span>
                     </div>
                     
-                    <h2 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)", fontSize: "2.2rem" }}>
+                    <h2 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
                       {featuredTerm.term}
                     </h2>
                     
-                    <p className="mb-4" style={{ color: "rgba(255,255,255,0.85)", fontSize: "1.05rem", lineHeight: 1.6 }}>
+                    <p className="mb-4" style={{ color: "rgba(255,255,255,0.85)", fontSize: "clamp(0.95rem, 2vw, 1.05rem)", lineHeight: 1.6 }}>
                       "{featuredTerm.desc}"
                     </p>
 
-                    <div className="d-flex align-items-center gap-3 flex-wrap">
+                    <div className="d-flex align-items-center gap-2 gap-sm-3 flex-wrap">
                       <Link 
                         to={`/glossary/${featuredTerm.slug}`} 
-                        className="btn btn-sm fw-bold px-4 py-2 rounded-pill"
+                        className="btn btn-sm fw-bold px-3 px-sm-4 py-2 rounded-pill text-wrap text-start"
                         style={{ background: "var(--accent)", color: "#fff", border: "none" }}
                       >
                         Explore Deep Analysis & Formulas →
                       </Link>
-                      <span className="badge px-3 py-2 rounded-pill" style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>
+                      <span className="badge px-3 py-2 rounded-pill mt-1 mt-sm-0" style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>
                         ⚡ High Engagement Topic
                       </span>
                     </div>
@@ -157,7 +157,7 @@ export default function GlossaryIndex() {
           {/* Multi-Facet Filter Console */}
           <div className="row justify-content-center mb-5">
             <div className="col-lg-10">
-              <div className="card border-0 p-4 rounded-4 shadow-sm" style={{ background: "var(--card-bg)" }}>
+              <div className="card border-0 p-3 p-sm-4 rounded-4 shadow-sm" style={{ background: "var(--card-bg)" }}>
                 
                 {/* Search string input */}
                 <div className="mb-4">
@@ -269,7 +269,7 @@ export default function GlossaryIndex() {
                       <div key={item.slug} className="col-md-6">
                         <Link 
                           to={`/glossary/${item.slug}`} 
-                          className="card border-0 h-100 text-decoration-none transition-all p-4 rounded-4"
+                          className="card border-0 h-100 text-decoration-none transition-all p-3 p-sm-4 rounded-4"
                           style={{ 
                             background: "var(--card-bg)", 
                             boxShadow: "var(--shadow)", 

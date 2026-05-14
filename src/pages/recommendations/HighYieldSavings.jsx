@@ -66,31 +66,31 @@ export default function HighYieldSavings() {
               <div className="row g-4">
                 {savingsAccounts.map(account => (
                   <div className="col-12" key={account.id}>
-                    <div className="card border-0 p-4 p-lg-5" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
-                      <div className="row align-items-center">
-                        <div className="col-lg-3 col-md-4 mb-4 mb-md-0 text-center text-md-start">
+                    <div className="card border-0 p-3 p-sm-4 p-lg-5" style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
+                      <div className="row align-items-center g-3">
+                        <div className="col-lg-3 col-md-4 text-center text-md-start">
                           <span className="badge mb-2" style={{ background: "var(--ink)", color: "var(--cream)" }}>{account.badge}</span>
-                          <h3 className="fw-bold mb-0">{account.name}</h3>
+                          <h3 className="fw-bold mb-0" style={{ fontSize: "clamp(1.2rem, 3vw, 1.5rem)" }}>{account.name}</h3>
                         </div>
                         
-                        <div className="col-lg-6 col-md-5 mb-4 mb-md-0">
-                          <div className="row text-center text-md-start g-3">
+                        <div className="col-lg-6 col-md-5">
+                          <div className="row text-center text-md-start g-2 g-sm-3">
                             <div className="col-4">
-                              <div className="text-muted small fw-bold text-uppercase">APY</div>
-                              <div className="fs-4 fw-bold text-teal">{account.apy}</div>
+                              <div className="text-muted fw-bold text-uppercase" style={{ fontSize: "0.65rem" }}>APY</div>
+                              <div className="fw-bold text-teal" style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)" }}>{account.apy}</div>
                             </div>
                             <div className="col-4">
-                              <div className="text-muted small fw-bold text-uppercase">Min. Balance</div>
-                              <div className="fs-5 fw-bold">{account.minBalance}</div>
+                              <div className="text-muted fw-bold text-uppercase" style={{ fontSize: "0.65rem" }}>Min. Balance</div>
+                              <div className="fw-bold" style={{ fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>{account.minBalance}</div>
                             </div>
                             <div className="col-4">
-                              <div className="text-muted small fw-bold text-uppercase">Monthly Fee</div>
-                              <div className="fs-5 fw-bold">{account.monthlyFee}</div>
+                              <div className="text-muted fw-bold text-uppercase" style={{ fontSize: "0.65rem" }}>Monthly Fee</div>
+                              <div className="fw-bold" style={{ fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>{account.monthlyFee}</div>
                             </div>
                           </div>
                           
-                          <div className="mt-4">
-                            <ul className="list-unstyled mb-0 d-flex flex-wrap gap-3 justify-content-center justify-content-md-start text-muted small">
+                          <div className="mt-3 mt-sm-4">
+                            <ul className="list-unstyled mb-0 d-flex flex-wrap gap-2 gap-sm-3 justify-content-center justify-content-md-start text-muted small" style={{ fontSize: "0.85rem" }}>
                               {account.features.map((feature, idx) => (
                                 <li key={idx}><i className="bi bi-check-circle-fill text-teal me-1"></i> {feature}</li>
                               ))}
@@ -98,17 +98,17 @@ export default function HighYieldSavings() {
                           </div>
                         </div>
 
-                        <div className="col-lg-3 col-md-3 text-center text-md-end">
+                        <div className="col-lg-3 col-md-3 text-center text-md-end mt-3 mt-md-0">
                           <a 
                             href={account.link} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="btn btn-lg w-100 fw-bold text-white shadow-sm"
-                            style={{ background: "var(--teal)" }}
+                            className="btn btn-lg w-100 fw-bold text-white shadow-sm py-2 py-sm-3"
+                            style={{ background: "var(--teal)", fontSize: "0.95rem" }}
                           >
                             Open Account
                           </a>
-                          <small className="text-muted d-block mt-2">Secure site</small>
+                          <small className="text-muted d-block mt-1" style={{ fontSize: "0.7rem" }}>Secure site</small>
                         </div>
                       </div>
                     </div>

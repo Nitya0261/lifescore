@@ -19,28 +19,33 @@ export default function BurnoutWidget() {
 
   return (
     <div 
-      className="sidebar-widget mb-0 d-flex flex-column"
+      className="sidebar-widget mb-0 d-flex flex-column h-100"
       style={{ 
         position: "relative", 
         overflow: "hidden", 
-        background: "linear-gradient(145deg, var(--card-bg) 0%, var(--cream) 100%)",
+        background: "var(--card-bg)",
         border: "1px solid var(--border)",
         borderRadius: "var(--radius-md)",
-        boxShadow: "0 8px 24px rgba(0,0,0,0.04)"
+        boxShadow: "var(--shadow)"
       }}
     >
       <div 
-        className="sidebar-widget-header" 
         style={{ 
           borderBottom: "1px dashed var(--border)", 
-          paddingBottom: "1rem",
-          background: "transparent"
+          padding: "1rem 1.25rem 0.5rem",
+          background: "transparent",
+          fontFamily: "var(--serif)",
+          fontWeight: 800,
+          fontSize: "1rem",
+          color: "var(--ink)",
+          display: "flex",
+          alignItems: "center"
         }}
       >
         <i className="bi bi-heart-pulse-fill me-2" style={{ color: "var(--accent)" }}></i>Burnout Risk
       </div>
-      <div className="sidebar-widget-body flex-grow-1 d-flex flex-column p-4">
-        <div className="d-flex align-items-center gap-2 mb-4">
+      <div className="sidebar-widget-body flex-grow-1 d-flex flex-column p-4 pt-3">
+        <div className="d-flex align-items-center gap-2 mb-3">
           <span
             className="badge rounded-pill"
             style={{
@@ -60,8 +65,8 @@ export default function BurnoutWidget() {
           {meters.map((m) => (
             <div key={m.label} className="d-flex flex-column gap-1">
               <div className="d-flex justify-content-between align-items-center">
-                <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--ink2)" }}>{m.label}</span>
-                <span style={{ fontSize: "0.75rem", fontWeight: 800, color: m.color }}>{m.val}%</span>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--ink)" }}>{m.label}</span>
+                <span style={{ fontSize: "0.78rem", fontWeight: 800, color: m.color }}>{m.val}%</span>
               </div>
               <div style={{ background: "var(--border)", height: "6px", borderRadius: "10px", overflow: "hidden" }}>
                 <div
@@ -89,7 +94,7 @@ export default function BurnoutWidget() {
             cursor: detoxed ? "default" : "pointer",
             padding: "0.75rem",
             borderRadius: "8px",
-            fontSize: "0.8rem",
+            fontSize: "0.82rem",
             transition: "all 0.2s ease",
             boxShadow: detoxed ? "none" : "0 2px 8px rgba(0,0,0,0.05)"
           }}

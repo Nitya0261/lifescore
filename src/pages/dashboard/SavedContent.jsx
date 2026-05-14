@@ -83,8 +83,8 @@ export default function SavedContent() {
               <div className="d-flex flex-column gap-3">
                 {articles.map(b => (
                   <div key={b._id} className="card border-0" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius)" }}>
-                    <div className="card-body p-3 d-flex justify-content-between align-items-center">
-                      <div>
+                    <div className="card-body p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                      <div className="flex-grow-1" style={{ minWidth: "150px" }}>
                         <h6 className="fw-bold mb-1">
                           {b.slug.startsWith('http') ? (
                             <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none hover-underline">{b.title}</a>
@@ -94,7 +94,7 @@ export default function SavedContent() {
                         </h6>
                         <small className="text-muted">Saved on {new Date(b.createdAt).toLocaleDateString()}</small>
                       </div>
-                      <button className="btn btn-sm btn-outline-danger" onClick={() => removeBookmark(b._id)}>
+                      <button className="btn btn-sm btn-outline-danger flex-shrink-0" onClick={() => removeBookmark(b._id)}>
                         <i className="bi bi-heartbreak"></i> Remove
                       </button>
                     </div>
@@ -113,8 +113,8 @@ export default function SavedContent() {
               <div className="d-flex flex-column gap-3">
                 {tools.map(b => (
                   <div key={b._id} className="card border-0" style={{ background: "var(--card-bg)", boxShadow: "var(--shadow)", borderRadius: "var(--radius)" }}>
-                    <div className="card-body p-3 d-flex justify-content-between align-items-center">
-                      <div>
+                    <div className="card-body p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                      <div className="flex-grow-1" style={{ minWidth: "150px" }}>
                         <h6 className="fw-bold mb-1">
                           {b.slug.startsWith('http') ? (
                             <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none hover-underline">{b.title}</a>
@@ -124,7 +124,7 @@ export default function SavedContent() {
                         </h6>
                         <small className="text-muted">Saved on {new Date(b.createdAt).toLocaleDateString()}</small>
                       </div>
-                      <button className="btn btn-sm btn-outline-danger" onClick={() => removeBookmark(b._id)}>
+                      <button className="btn btn-sm btn-outline-danger flex-shrink-0" onClick={() => removeBookmark(b._id)}>
                         <i className="bi bi-heartbreak"></i> Remove
                       </button>
                     </div>

@@ -103,7 +103,7 @@ export default function GlossaryTerm() {
           <div className="row justify-content-center g-4">
             {/* Primary Content Panel */}
             <div className="col-lg-8">
-              <div className="card border-0 p-4 p-md-5 rounded-4 shadow-sm mb-4" style={{ background: "var(--card-bg)" }}>
+              <div className="card border-0 p-3 p-sm-4 p-md-5 rounded-4 shadow-sm mb-4" style={{ background: "var(--card-bg)" }}>
                 
                 {/* Category Pill */}
                 <div className="d-flex align-items-center justify-content-between mb-3">
@@ -129,10 +129,10 @@ export default function GlossaryTerm() {
 
                 {/* Mathematical Formula / Structure Container */}
                 {termData.formula && (
-                  <div className="mb-4 p-4 rounded-4" style={{ background: "var(--cream2)", border: "1px solid var(--border)" }}>
+                  <div className="mb-4 p-3 p-sm-4 rounded-4" style={{ background: "var(--cream2)", border: "1px solid var(--border)" }}>
                     <span className="badge bg-dark text-white px-2 py-1 mb-2 small">STRUCTURAL FORMULA</span>
-                    <div className="text-center py-2 my-1">
-                      <code className="fw-bold d-block" style={{ fontSize: "1.35rem", color: "var(--accent)", fontFamily: "monospace" }}>
+                    <div className="text-center py-2 my-1 overflow-auto">
+                      <code className="fw-bold d-block" style={{ fontSize: "clamp(1rem, 2.5vw, 1.35rem)", color: "var(--accent)", fontFamily: "monospace" }}>
                         {termData.formula}
                       </code>
                     </div>
@@ -145,7 +145,7 @@ export default function GlossaryTerm() {
                 )}
 
                 {/* Applied Practical Example */}
-                <div className="mb-4 p-4 rounded-4" style={{ background: "var(--card-bg)", borderLeft: "4px solid var(--accent)", border: "1px solid var(--border)" }}>
+                <div className="mb-4 p-3 p-sm-4 rounded-4" style={{ background: "var(--card-bg)", borderLeft: "4px solid var(--accent)", border: "1px solid var(--border)" }}>
                   <h5 className="fw-bold mb-2 d-flex align-items-center" style={{ color: "var(--ink)" }}>
                     <i className="bi bi-lightbulb-fill text-warning me-2"></i> Practical Applied Case
                   </h5>
@@ -175,9 +175,9 @@ export default function GlossaryTerm() {
 
               {/* Related Scope Tags */}
               {termData.relatedTerms && termData.relatedTerms.length > 0 && (
-                <div className="card border-0 p-4 rounded-4 shadow-sm" style={{ background: "var(--card-bg)" }}>
+                <div className="card border-0 p-3 p-sm-4 rounded-4 shadow-sm" style={{ background: "var(--card-bg)" }}>
                   <h6 className="fw-bold mb-3" style={{ color: "var(--ink)" }}>Cross-Referenced Definitions</h6>
-                  <div className="d-flex flex-wrap gap-2">
+                  <div className="d-flex flex-wrap gap-2 align-items-center">
                     {termData.relatedTerms.map((t) => (
                       <Link 
                         key={t.slug} 
@@ -190,7 +190,7 @@ export default function GlossaryTerm() {
                     ))}
                     <Link 
                       to="/glossary" 
-                      className="btn btn-sm rounded-pill px-3 py-1 fw-bold ms-auto"
+                      className="btn btn-sm rounded-pill px-3 py-1 fw-bold ms-auto mt-2 mt-sm-0"
                       style={{ background: "transparent", color: "var(--accent)", border: "none", fontSize: "0.8rem" }}
                     >
                       View Full Index →
@@ -202,7 +202,7 @@ export default function GlossaryTerm() {
 
             {/* Sidebar Context panel */}
             <div className="col-lg-4">
-              <div className="card border-0 p-4 rounded-4 shadow-sm mb-4 sticky-lg-top" style={{ top: "100px", background: "var(--ink)", color: "#fff" }}>
+              <div className="card border-0 p-3 p-sm-4 rounded-4 shadow-sm mb-4 sticky-lg-top" style={{ top: "100px", background: "var(--ink)", color: "#fff" }}>
                 <span className="badge bg-white bg-opacity-10 text-white px-2 py-1 align-self-start mb-3 small">LIFESCORE SYSTEM</span>
                 
                 <h4 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)" }}>

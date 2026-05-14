@@ -43,6 +43,10 @@ const ComparisonPage = lazy(() => import("./pages/ComparisonPage"));
 const IraVs401k = lazy(() => import("./pages/compare/IraVs401k"));
 const EtfVsMutualFund = lazy(() => import("./pages/compare/EtfVsMutualFund"));
 const FindAdvisor = lazy(() => import("./pages/FindAdvisor"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsConditions = lazy(() => import("./pages/TermsConditions"));
 
 import AIChatbot from "./components/AIChatbot";
 import XPToast from "./components/XPToast";
@@ -101,6 +105,10 @@ const AppContent = ({ canvasRef }) => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsConditions />} />
             </Routes>
           </Suspense>
         </main>

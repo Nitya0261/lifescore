@@ -32,17 +32,18 @@ export default function EtfVsMutualFund() {
         <div className="container">
           
           {/* Compare Navigation Switcher */}
-          <div className="d-flex justify-content-center gap-2 mb-4">
+          <div className="d-flex flex-wrap justify-content-center gap-2 mb-4">
             <Link 
               to="/compare/roth-ira-vs-401k" 
-              className="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold"
-              style={{ background: "var(--card-bg)" }}
+              className="btn btn-outline-secondary rounded-pill px-3 px-sm-4 py-2 fw-bold"
+              style={{ background: "var(--card-bg)", fontSize: "0.9rem" }}
             >
               Roth IRA vs 401(k)
             </Link>
             <Link 
               to="/compare/etf-vs-mutual-fund" 
-              className="btn btn-dark rounded-pill px-4 py-2 fw-bold shadow-sm"
+              className="btn btn-dark rounded-pill px-3 px-sm-4 py-2 fw-bold shadow-sm"
+              style={{ fontSize: "0.9rem" }}
             >
               ETF vs Mutual Fund
             </Link>
@@ -68,7 +69,7 @@ export default function EtfVsMutualFund() {
           <div className="row justify-content-center mb-5">
             <div className="col-lg-10">
               <div 
-                className="card border-0 p-4 p-md-5" 
+                className="card border-0 p-3 p-sm-4 p-md-5" 
                 style={{ 
                   background: "var(--card-bg)", 
                   borderRadius: "var(--radius-lg)", 
@@ -76,10 +77,10 @@ export default function EtfVsMutualFund() {
                   borderLeft: "5px solid var(--teal)"
                 }}
               >
-                <h4 className="fw-bold mb-3 d-flex align-items-center" style={{ color: "var(--ink)" }}>
+                <h4 className="fw-bold mb-3 d-flex align-items-center" style={{ color: "var(--ink)", fontSize: "clamp(1.2rem, 3vw, 1.5rem)" }}>
                   <i className="bi bi-shield-check text-success me-2"></i> Quick Summary (TL;DR)
                 </h4>
-                <p className="mb-0" style={{ fontSize: "1.05rem", color: "var(--ink2)", lineHeight: 1.6 }}>
+                <p className="mb-0" style={{ fontSize: "clamp(0.95rem, 2vw, 1.05rem)", color: "var(--ink2)", lineHeight: 1.6 }}>
                   For individual taxable brokerage account investors, <strong>ETFs (Exchange-Traded Funds)</strong> represent the superior choice due to near-zero expense ratios, total intraday trading autonomy, and specialized structural creation mechanics that shield owners from unexpected phantom capital gain distribution taxes. <strong>Mutual funds</strong> remain perfectly viable inside automated 401(k) arrays where programmatic recurring fractional contributions take precedence over absolute intraday liquidity.
                 </p>
               </div>
@@ -89,10 +90,10 @@ export default function EtfVsMutualFund() {
           {/* Interactive Fee Drag & Net Yield Simulator */}
           <div className="row justify-content-center mb-5">
             <div className="col-lg-10">
-              <div className="card border-0 p-4 p-md-5 overflow-hidden" style={{ background: "var(--cream2)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
+              <div className="card border-0 p-3 p-sm-4 p-md-5 overflow-hidden" style={{ background: "var(--cream2)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)" }}>
                 <div className="text-center mb-4">
                   <span className="badge bg-dark text-white px-2 py-1 mb-2">FEE IMPACT TRACKER</span>
-                  <h3 className="fw-bold" style={{ fontFamily: "var(--serif)", color: "var(--ink)" }}>
+                  <h3 className="fw-bold" style={{ fontFamily: "var(--serif)", color: "var(--ink)", fontSize: "clamp(1.3rem, 3vw, 1.75rem)" }}>
                     Expense Ratio Drag Simulator
                   </h3>
                   <p className="text-muted small">
@@ -168,10 +169,10 @@ export default function EtfVsMutualFund() {
                   </div>
 
                   <div className="col-md-6">
-                    <div className="p-4 rounded-4" style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}>
+                    <div className="p-3 p-sm-4 rounded-4" style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}>
                       <div className="mb-4 pb-3 border-bottom">
                         <span className="text-muted small fw-bold d-block mb-1">LOW-COST ETF FINAL VALUE</span>
-                        <h2 className="fw-bold mb-0" style={{ color: "var(--ink)", fontFamily: "var(--serif)" }}>
+                        <h2 className="fw-bold mb-0" style={{ color: "var(--ink)", fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>
                           ${Math.round(etfNetTotal).toLocaleString()}
                         </h2>
                         <span className="text-success small fw-bold">✓ Preserves Maximum Capital Acceleration</span>
@@ -179,7 +180,7 @@ export default function EtfVsMutualFund() {
 
                       <div className="mb-4 pb-3 border-bottom">
                         <span className="text-muted small fw-bold d-block mb-1">MUTUAL FUND FINAL VALUE</span>
-                        <h2 className="fw-bold mb-0" style={{ color: "var(--ink3)", fontFamily: "var(--serif)" }}>
+                        <h2 className="fw-bold mb-0" style={{ color: "var(--ink3)", fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>
                           ${Math.round(mfNetTotal).toLocaleString()}
                         </h2>
                         <span className="text-danger small">Subjected to compounding basis-point management drag.</span>
@@ -187,7 +188,7 @@ export default function EtfVsMutualFund() {
 
                       <div className="pt-1 text-center">
                         <span className="text-muted small d-block">TOTAL ESTIMATED FEE DRAINS AVOIDED</span>
-                        <span className="fw-bold text-success" style={{ fontSize: "1.1rem" }}>
+                        <span className="fw-bold text-success" style={{ fontSize: "clamp(1rem, 2.5vw, 1.1rem)" }}>
                           +${Math.round(totalFeeSavings).toLocaleString()}
                         </span>
                       </div>
@@ -299,8 +300,8 @@ export default function EtfVsMutualFund() {
           {/* Call to Action Grid */}
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <div className="card border-0 text-center p-5 rounded-4" style={{ background: "var(--dark-surface)", color: "#fff" }}>
-                <h3 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)" }}>
+              <div className="card border-0 text-center p-4 p-sm-5 rounded-4" style={{ background: "var(--dark-surface)", color: "#fff" }}>
+                <h3 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>
                   Track Live Global Index Appreciations
                 </h3>
                 <p className="text-muted max-w-xl mx-auto mb-4" style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.7)" }}>
