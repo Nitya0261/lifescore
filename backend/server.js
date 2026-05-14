@@ -81,7 +81,7 @@ app.post('/api/auth/register', async (req, res) => {
     res.json({ token, user: { id: user._id, firstName, lastName, email, role: user.role, xp: user.xp, lifeScore: user.lifeScore, bookmarks: user.bookmarks, settings: user.settings } });
   } catch (err) {
     console.error('Register Error:', err.message);
-    res.status(500).json({ msg: 'Server error during registration' });
+    res.status(500).json({ msg: 'Server error during registration', errorTrace: err.message });
   }
 });
 
@@ -104,7 +104,7 @@ app.post('/api/auth/login', async (req, res) => {
     res.json({ token, user: { id: user._id, firstName: user.firstName, lastName: user.lastName, email, role: user.role, xp: user.xp, lifeScore: user.lifeScore, bookmarks: user.bookmarks, settings: user.settings } });
   } catch (err) {
     console.error('Login Error:', err.message);
-    res.status(500).json({ msg: 'Server error during login' });
+    res.status(500).json({ msg: 'Server error during login', errorTrace: err.message });
   }
 });
 
@@ -123,7 +123,8 @@ app.post('/api/auth/google', async (req, res) => {
         lastName: lastName || 'User',
         email,
         password: hashedPassword,
-        role: email.toLowerCase().includes('admin') ? 'admin' : email.toLowerCase().includes('pro') ? 'pro' : 'standard',
+        // Map strictly to valid Mongoose enum fields: ['standard', 'premium', 'admin']
+        role: email.toLowerCase().includes('admin') ? 'admin' : email.toLowerCase().includes('premium') ? 'premium' : 'standard',
         xp: 150
       });
       await user.save();
@@ -147,7 +148,7 @@ app.post('/api/auth/google', async (req, res) => {
     });
   } catch (err) {
     console.error('Google Auth Error:', err.message);
-    res.status(500).json({ msg: 'Server error during Google Sign-In' });
+    res.status(500).json({ msg: 'Server error during Google Sign-In', errorTrace: err.message });
   }
 });
 
@@ -164,7 +165,7 @@ app.post('/api/user/xp', async (req, res) => {
     res.json({ xp: user.xp });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -199,7 +200,7 @@ app.post('/api/push/subscribe', async (req, res) => {
     webpush.sendNotification(subscription, payload).catch(err => console.error(err));
   } catch (err) {
     console.error('Push Subscribe Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -247,7 +248,7 @@ app.get('/api/budget/:userId', async (req, res) => {
     res.json(entries);
   } catch (err) {
     console.error('Budget Fetch Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -268,7 +269,7 @@ app.post('/api/budget', async (req, res) => {
     res.json(entry);
   } catch (err) {
     console.error('Budget Add Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -279,7 +280,7 @@ app.delete('/api/budget/:id', async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error('Budget Delete Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -295,7 +296,7 @@ app.get('/api/comments/:slug', async (req, res) => {
     res.json(comments);
   } catch (err) {
     console.error('Fetch Comments Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -316,7 +317,7 @@ app.post('/api/comments', async (req, res) => {
     res.json(comment);
   } catch (err) {
     console.error('Post Comment Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -330,7 +331,7 @@ app.get('/api/bookmarks/:userId', async (req, res) => {
     res.json(bookmarks);
   } catch (err) {
     console.error('Fetch Bookmarks Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -362,7 +363,7 @@ app.post('/api/bookmarks/toggle', async (req, res) => {
     }
   } catch (err) {
     console.error('Toggle Bookmark Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -472,7 +473,7 @@ app.get('/api/news/admin', async (req, res) => {
     res.json(items);
   } catch (err) {
     console.error('Admin News Fetch Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -485,7 +486,7 @@ app.post('/api/news/admin', async (req, res) => {
     res.json(newItem);
   } catch (err) {
     console.error('Create News Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -496,7 +497,7 @@ app.put('/api/news/:id', async (req, res) => {
     res.json(updated);
   } catch (err) {
     console.error('Update News Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -507,7 +508,7 @@ app.delete('/api/news/:id', async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error('Delete News Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -580,7 +581,7 @@ app.put('/api/user/me', async (req, res) => {
     });
   } catch (err) {
     console.error('Update User Me Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -606,7 +607,7 @@ app.post('/api/bookmarks/toggle', async (req, res) => {
     res.json({ status, bookmarks: user.bookmarks });
   } catch (err) {
     console.error('Bookmarks Toggle Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -632,7 +633,7 @@ app.get('/api/bookmarks/:userId', async (req, res) => {
     res.json(hydratedBookmarks);
   } catch (err) {
     console.error('Fetch Bookmarks Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -643,7 +644,7 @@ app.get('/api/users', async (req, res) => {
     res.json(users);
   } catch (err) {
     console.error('Fetch Users Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -660,7 +661,7 @@ app.put('/api/users/:id', async (req, res) => {
     res.json(updatedUser);
   } catch (err) {
     console.error('Update User Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -675,7 +676,7 @@ app.get('/api/announcements', async (req, res) => {
     res.json(active);
   } catch (err) {
     console.error('Fetch Announcements Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -688,7 +689,7 @@ app.post('/api/announcements', async (req, res) => {
     res.json(item);
   } catch (err) {
     console.error('Create Announcement Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -699,7 +700,7 @@ app.delete('/api/announcements/:id', async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error('Delete Announcement Error:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -817,7 +818,7 @@ app.post('/api/notifications', async (req, res) => {
     res.json({ success: true, notification: newNotif, subscribersReached: subs.length });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -829,7 +830,7 @@ app.get('/api/notifications', async (req, res) => {
     res.json(notifications);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -857,7 +858,7 @@ app.get('/api/analytics', async (req, res) => {
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -904,7 +905,7 @@ app.post('/api/subscribe', async (req, res) => {
     res.json({ success: true, msg: 'Successfully subscribed to the newsletter!' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
