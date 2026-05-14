@@ -55,7 +55,7 @@ const EXTENDED_TERM_DICTIONARY = {
 };
 
 export default function GlossaryTerm() {
-  const { slug } = useParams();
+  const { term: slug } = useParams();
   const [understood, setUnderstood] = useState(false);
 
   // Fallback programmatic generation for items outside hardcoded primary deep entries

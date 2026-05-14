@@ -4,6 +4,7 @@ import { TRENDING } from "../data/mockData";
 import AdSlot from "./AdSlot";
 import EMICalculator from "./EMICalculator";
 import GeoTips from "./GeoTips";
+import BookmarkButton from "./BookmarkButton";
 
 export default function Sidebar() {
   return (
@@ -18,23 +19,28 @@ export default function Sidebar() {
         </div>
         <div className="sidebar-widget-body">
           {TRENDING.map((a, i) => (
-            <Link 
-              to={`/article/${a.slug}`} 
-              className="sidebar-article text-decoration-none d-flex gap-3 mb-3" 
-              key={a.id}
-            >
-              <span className="sidebar-num">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <div className="sidebar-article-title fw-bold" style={{ color: "var(--ink)", fontSize: '0.9rem', lineHeight: '1.4' }}>
-                  {a.title}
+            <div className="position-relative mb-3" key={a.id}>
+              <Link 
+                to={`/article/${a.slug}`} 
+                className="sidebar-article text-decoration-none d-flex gap-3 pr-4" 
+                style={{ paddingRight: "2rem" }}
+              >
+                <span className="sidebar-num">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <div className="sidebar-article-title fw-bold" style={{ color: "var(--ink)", fontSize: '0.9rem', lineHeight: '1.4' }}>
+                    {a.title}
+                  </div>
+                  <div className="sidebar-article-meta mt-1 opacity-75" style={{ fontSize: '0.7rem' }}>
+                    {a.date} · {a.time} read
+                  </div>
                 </div>
-                <div className="sidebar-article-meta mt-1 opacity-75" style={{ fontSize: '0.7rem' }}>
-                  {a.date} · {a.time} read
-                </div>
+              </Link>
+              <div style={{ position: "absolute", top: "50%", right: "0", transform: "translateY(-50%)", zIndex: 10 }}>
+                <BookmarkButton itemType="article" title={a.title} slug={`/article/${a.slug}`} />
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

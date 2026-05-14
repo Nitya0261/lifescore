@@ -110,49 +110,61 @@ export default function HeroSection() {
             {/* Fully Custom Premium Adaptive Weekly Wealth Card */}
             {showNewsletter && (
               <div 
-                className="card border-0 p-4 mt-3 position-relative overflow-hidden rounded-4 shadow-sm transition-all" 
+                className="card border-0 p-4 mt-3 position-relative overflow-hidden rounded-4 transition-all" 
                 style={{ 
-                  background: 'var(--card-bg)', 
-                  borderLeft: '4px solid var(--accent)',
-                  borderTop: '1px solid var(--border)',
-                  borderRight: '1px solid var(--border)',
-                  borderBottom: '1px solid var(--border)' 
+                  background: 'rgba(255, 255, 255, 0.85)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0,0,0,0.03)',
+                  border: '1px solid rgba(255,255,255,1)'
                 }}
               >
+                {/* Decorative background flare */}
+                <div 
+                  className="position-absolute rounded-circle" 
+                  style={{ 
+                    width: '150px', height: '150px', 
+                    background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)',
+                    opacity: 0.06, top: '-40px', right: '-40px', zIndex: 0
+                  }}
+                ></div>
+
                 <div 
                   className="position-absolute top-0 end-0 p-3" 
-                  style={{ zIndex: 5, cursor: 'pointer', color: 'var(--ink3)' }}
+                  style={{ zIndex: 5, cursor: 'pointer', transition: 'all 0.2s ease' }}
                   onClick={dismissNewsletter}
                   title="Dismiss intelligence block"
                 >
-                  <i className="bi bi-x-lg small"></i>
+                  <i className="bi bi-x-lg text-muted" style={{ fontSize: '0.9rem', opacity: 0.7 }}></i>
                 </div>
                 
-                <div className="d-flex align-items-center gap-2 mb-2">
-                  <div className="p-1.5 rounded-3 d-flex align-items-center justify-content-center" style={{ background: 'var(--cream2)', color: 'var(--accent)', border: '1px solid var(--border)' }}>
-                    <i className="bi bi-envelope-check-fill" style={{ fontSize: '0.85rem' }}></i>
+                <div className="position-relative" style={{ zIndex: 1 }}>
+                  <div className="d-flex align-items-center gap-2 mb-3">
+                    <div className="rounded-circle d-flex align-items-center justify-content-center shadow-sm" style={{ background: 'var(--accent)', color: '#fff', width: '26px', height: '26px' }}>
+                      <i className="bi bi-envelope-check-fill" style={{ fontSize: '0.75rem' }}></i>
+                    </div>
+                    <span className="text-uppercase fw-bold" style={{ fontSize: '0.65rem', letterSpacing: '1px', color: 'var(--accent)' }}>
+                      Smart Insights
+                    </span>
                   </div>
-                  <span className="text-uppercase fw-bold" style={{ fontSize: '0.68rem', letterSpacing: '1px', color: 'var(--accent)' }}>
-                    Smart Insights
-                  </span>
-                </div>
-                
-                <h5 className="fw-bold mb-2" style={{ fontFamily: 'var(--serif)', color: 'var(--ink)', fontSize: '1.15rem', lineHeight: 1.25 }}>
-                  Weekly Wealth Digest
-                </h5>
-                <p className="text-muted small mb-3" style={{ fontSize: '0.82rem', lineHeight: 1.5 }}>
-                  Curated high-impact equity strategies and portfolio stress-test summaries delivered every Monday.
-                </p>
-                
-                <NewsletterForm source="hero" />
-                
-                <div className="mt-3 pt-3 border-top d-flex justify-content-between align-items-center" style={{ borderColor: 'var(--border2) !important' }}>
-                  <span className="text-muted" style={{ fontSize: '0.65rem' }}>
-                    <i className="bi bi-shield-fill-check text-success me-1"></i>Zero tracking ads. Pure data.
-                  </span>
-                  <span className="badge px-2 py-0.5 rounded" style={{ background: 'var(--cream2)', color: 'var(--ink2)', border: '1px solid var(--border)', fontSize: '0.62rem', fontWeight: 600 }}>
-                    Free Base Access
-                  </span>
+                  
+                  <h5 className="fw-bold mb-2" style={{ fontFamily: 'var(--serif)', color: 'var(--ink)', fontSize: '1.25rem', lineHeight: 1.2, letterSpacing: '-0.3px' }}>
+                    Weekly Wealth Digest
+                  </h5>
+                  <p className="text-muted small mb-4" style={{ fontSize: '0.85rem', lineHeight: 1.6 }}>
+                    Curated high-impact equity strategies and portfolio stress-test summaries delivered every Monday.
+                  </p>
+                  
+                  <NewsletterForm source="hero" />
+                  
+                  <div className="mt-4 pt-3 border-top d-flex justify-content-between align-items-center" style={{ borderColor: 'rgba(0,0,0,0.06) !important' }}>
+                    <span className="text-muted d-flex align-items-center gap-1" style={{ fontSize: '0.65rem', fontWeight: 500 }}>
+                      <i className="bi bi-shield-fill-check text-success"></i> Zero tracking ads
+                    </span>
+                    <span className="badge px-3 py-1.5 rounded-pill" style={{ background: 'rgba(107, 53, 163, 0.06)', color: 'var(--accent)', fontSize: '0.65rem', fontWeight: 700 }}>
+                      Free Access
+                    </span>
+                  </div>
                 </div>
               </div>
             )}

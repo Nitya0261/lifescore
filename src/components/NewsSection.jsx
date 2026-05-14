@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API_BASE_URL from '../config/api';
+import BookmarkButton from './BookmarkButton';
 
 export default function NewsSection() {
   const [news, setNews] = useState([]);
@@ -43,8 +44,8 @@ export default function NewsSection() {
         <div className="row g-4">
           {news.slice(0, 6).map((item, idx) => (
             <div key={idx} className="col-md-6 col-lg-4">
-              <div className="ls-card">
-                <div className="card-body p-4 d-flex flex-column">
+              <div className="ls-card h-100 position-relative">
+                <div className="card-body p-4 d-flex flex-column h-100">
                   <div className="d-flex justify-content-between align-items-start mb-3">
                     <span className="ls-badge ls-badge-teal">
                       {item.source}
@@ -53,13 +54,14 @@ export default function NewsSection() {
                       {new Date(item.pubDate).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                     </small>
                   </div>
-                  <h5 className="ls-heading ls-heading-md mb-3" style={{ lineHeight: "1.4" }}>
-                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none stretched-link">
+                  <h5 className="ls-heading ls-heading-md mb-3" style={{ lineHeight: "1.4", flexGrow: 1 }}>
+                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-decoration-none stretched-link" style={{ color: "var(--ink)" }}>
                       {item.title}
                     </a>
                   </h5>
-                  <div className="mt-auto">
+                  <div className="d-flex justify-content-between align-items-center mt-3 position-relative" style={{ zIndex: 2 }}>
                     <span className="text-teal fw-bold" style={{ fontSize: "0.9rem" }}>Read Full Story &rarr;</span>
+                    <BookmarkButton itemType="article" title={item.title} slug={item.link} />
                   </div>
                 </div>
               </div>

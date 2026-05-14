@@ -86,12 +86,16 @@ export default function SavedContent() {
                     <div className="card-body p-3 d-flex justify-content-between align-items-center">
                       <div>
                         <h6 className="fw-bold mb-1">
-                          <Link to={b.slug} className="text-dark text-decoration-none">{b.title}</Link>
+                          {b.slug.startsWith('http') ? (
+                            <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none hover-underline">{b.title}</a>
+                          ) : (
+                            <Link to={b.slug} className="text-dark text-decoration-none hover-underline">{b.title}</Link>
+                          )}
                         </h6>
                         <small className="text-muted">Saved on {new Date(b.createdAt).toLocaleDateString()}</small>
                       </div>
                       <button className="btn btn-sm btn-outline-danger" onClick={() => removeBookmark(b._id)}>
-                        <i className="bi bi-trash"></i>
+                        <i className="bi bi-heartbreak"></i> Remove
                       </button>
                     </div>
                   </div>
@@ -112,12 +116,16 @@ export default function SavedContent() {
                     <div className="card-body p-3 d-flex justify-content-between align-items-center">
                       <div>
                         <h6 className="fw-bold mb-1">
-                          <Link to={b.slug} className="text-dark text-decoration-none">{b.title}</Link>
+                          {b.slug.startsWith('http') ? (
+                            <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none hover-underline">{b.title}</a>
+                          ) : (
+                            <Link to={b.slug} className="text-dark text-decoration-none hover-underline">{b.title}</Link>
+                          )}
                         </h6>
                         <small className="text-muted">Saved on {new Date(b.createdAt).toLocaleDateString()}</small>
                       </div>
                       <button className="btn btn-sm btn-outline-danger" onClick={() => removeBookmark(b._id)}>
-                        <i className="bi bi-trash"></i>
+                        <i className="bi bi-heartbreak"></i> Remove
                       </button>
                     </div>
                   </div>

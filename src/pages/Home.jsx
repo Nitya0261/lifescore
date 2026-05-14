@@ -121,11 +121,12 @@ export default function Home() {
         </div>
       </section>
 
+      <NewsSection />
+
       <div className="blog-grid-section">
         <BlogGrid />
       </div>
       <SimulatorSection />
-      <NewsSection />
 
       {/* Comparison Highlights */}
       <section className="ls-section-alt">

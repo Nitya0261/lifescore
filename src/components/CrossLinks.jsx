@@ -14,7 +14,7 @@ export default function CrossLinks({ currentCategory }) {
         { icon: "bi-calculator", label: "SIP Calculator", path: "/tools/sip-calculator" },
         { icon: "bi-graph-up-arrow", label: "Compound Interest", path: "/tools/compound-interest" },
         { icon: "bi-piggy-bank", label: "Retirement Number", path: "/tools/retirement-number" },
-        { icon: "bi-wallet2", label: "Net Worth Tracker", path: "/tools/net-worth-tracker" },
+        { icon: "bi-wallet2", label: "Net Worth Tracker", path: "/tools/net-worth" },
         { icon: "bi-receipt", label: "Tax Estimator", path: "/tools/tax-estimator" },
         { icon: "bi-bar-chart-line", label: "Budget Tracker", path: "/dashboard/budget" },
       ]
@@ -25,14 +25,14 @@ export default function CrossLinks({ currentCategory }) {
         { icon: "bi-arrow-left-right", label: "Roth IRA vs 401(k)", path: "/compare/roth-ira-vs-401k" },
         { icon: "bi-arrow-left-right", label: "ETF vs Mutual Fund", path: "/compare/etf-vs-mutual-fund" },
         { icon: "bi-book", label: "Finance Glossary A–Z", path: "/glossary" },
-        { icon: "bi-person-badge", label: "Find a Financial Advisor", path: "/find-advisor" },
+        { icon: "bi-person-badge", label: "Find a Financial Advisor", path: "/advisor" },
       ]
     },
     {
       title: "Recommendations",
       links: [
-        { icon: "bi-credit-card", label: "Best Credit Cards 2026", path: "/recommendations/credit-cards" },
-        { icon: "bi-bank", label: "Best High-Yield Savings", path: "/recommendations/high-yield-savings" },
+        { icon: "bi-credit-card", label: "Best Credit Cards 2026", path: "/recommendations/cards" },
+        { icon: "bi-bank", label: "Best High-Yield Savings", path: "/recommendations/savings" },
         { icon: "bi-bookmark-heart", label: "My Saved Articles", path: "/dashboard/saved" },
       ]
     },
@@ -64,8 +64,15 @@ export default function CrossLinks({ currentCategory }) {
               <Link 
                 key={link.path} 
                 to={link.path} 
-                className="btn btn-sm btn-outline-dark rounded-pill px-3"
-                style={{ fontSize: "0.85rem" }}
+                className="btn btn-sm rounded-pill px-3 transition-all"
+                style={{ 
+                  fontSize: "0.85rem", 
+                  color: "var(--ink)", 
+                  border: "1px solid rgba(128,128,128,0.3)", 
+                  background: "transparent" 
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.background = "var(--cream2)"; e.currentTarget.style.borderColor = "var(--ink)"; }}
+                onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(128,128,128,0.3)"; }}
               >
                 {link.label}
               </Link>

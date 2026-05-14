@@ -5,6 +5,7 @@ import CatTag from '../components/CatTag';
 import Byline from '../components/Byline';
 import Sidebar from '../components/Sidebar';
 import CrossLinks from '../components/CrossLinks';
+import BookmarkButton from '../components/BookmarkButton';
 
 export default function ArticleDetail() {
   const { slug } = useParams();
@@ -71,7 +72,7 @@ export default function ArticleDetail() {
                   <Byline author={post.author} avatar={post.avatar} date={post.date} readTime={post.readTime} />
                   <div className="d-flex gap-2">
                     <button className="ls-btn ls-btn-outline px-3 py-2"><i className="bi bi-share"></i></button>
-                    <button className="ls-btn ls-btn-outline px-3 py-2"><i className="bi bi-bookmark"></i></button>
+                    <BookmarkButton itemType="article" title={post.title} slug={`/article/${post.slug}`} />
                   </div>
                 </div>
               </header>

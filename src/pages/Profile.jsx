@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import XPWidget from "../components/XPWidget";
 import LifeScoreWidget from "../components/LifeScoreWidget";
 import BurnoutWidget from "../components/BurnoutWidget";
@@ -11,6 +11,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [profileData, setProfileData] = useState(null);
+  const [savedArticles, setSavedArticles] = useState([]);
 
   useEffect(() => {
     const fetchMe = async () => {
@@ -35,6 +36,24 @@ export default function Profile() {
     };
     fetchMe();
   }, [token, logout, navigate]);
+
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      if (!user?.id) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/bookmarks/${user.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setSavedArticles(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch bookmarks:", err);
+      }
+    };
+    if (activeTab === "bookmarks") {
+      fetchBookmarks();
+    }
+  }, [user?.id, activeTab]);
 
   if (!user || user.role === "guest" || user.role === "admin") {
     return (
@@ -260,54 +279,232 @@ export default function Profile() {
 
             {activeTab === "bookmarks" && (
               <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)", minHeight: "500px" }}>
-                <h3 style={{ fontFamily: "var(--serif)", fontWeight: 700, marginBottom: "1.5rem" }}>Saved Articles</h3>
+                <h3 style={{ fontFamily: "var(--serif)", fontWeight: 700, marginBottom: "1.5rem" }}>Saved Articles & Tools</h3>
                 <div className="d-flex flex-column gap-3">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} style={{ display: "flex", gap: "1rem", padding: "1rem", border: "1px solid var(--border2)", borderRadius: "var(--radius)" }}>
+                  {savedArticles.length > 0 ? savedArticles.map((article, idx) => (
+                    <div key={idx} style={{ display: "flex", gap: "1rem", padding: "1rem", border: "1px solid var(--border2)", borderRadius: "var(--radius)", background: "var(--card-bg)", transition: "all 0.2s ease" }} className="hover-lift">
                       <div style={{ width: "80px", height: "80px", background: "var(--cream2)", borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2rem" }}>
-                        📚
+                        {article.itemType === 'tool' ? '🛠️' : '📚'}
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <h5 style={{ fontWeight: 700, marginBottom: "0.3rem" }}>How to negotiate your salary in 2026</h5>
-                        <p style={{ fontSize: "0.85rem", color: "var(--ink3)", marginBottom: "0.5rem" }}>Learn the exact scripts and strategies to increase your total compensation package...</p>
-                        <button style={{ background: "transparent", border: "none", color: "var(--accent)", fontSize: "0.8rem", padding: 0 }}><i className="bi bi-trash"></i> Remove</button>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                        <h5 style={{ fontWeight: 700, marginBottom: "0.3rem" }}>
+                          {article.slug.startsWith('http') ? (
+                            <a href={article.slug} target="_blank" rel="noopener noreferrer" style={{ color: "var(--ink)", textDecoration: "none" }} className="hover-underline">
+                              {article.title}
+                            </a>
+                          ) : (
+                            <Link to={article.slug} style={{ color: "var(--ink)", textDecoration: "none" }} className="hover-underline">
+                              {article.title}
+                            </Link>
+                          )}
+                        </h5>
+                        <p style={{ fontSize: "0.85rem", color: "var(--ink3)", marginBottom: 0 }}>
+                          Added {new Date(article.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        {article.slug.startsWith('http') ? (
+                          <a href={article.slug} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline-dark rounded-pill px-3">Open <i className="bi bi-arrow-right ms-1"></i></a>
+                        ) : (
+                          <Link to={article.slug} className="btn btn-sm btn-outline-dark rounded-pill px-3">Open <i className="bi bi-arrow-right ms-1"></i></Link>
+                        )}
+                        <button 
+                          className="btn btn-sm btn-outline-danger rounded-pill"
+                          onClick={async () => {
+                            try {
+                              await fetch(`${API_BASE_URL}/api/bookmarks/toggle`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ userId: user.id, itemType: article.itemType, title: article.title, slug: article.slug })
+                              });
+                              setSavedArticles(prev => prev.filter(a => a._id !== article._id));
+                            } catch (e) { console.error(e); }
+                          }}
+                        >
+                          <i className="bi bi-trash"></i>
+                        </button>
                       </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="text-center py-5 text-muted" style={{ border: "1px dashed var(--border2)", borderRadius: "var(--radius)" }}>
+                      <i className="bi bi-heartbreak" style={{ fontSize: "3rem", opacity: 0.5, color: "var(--ink3)" }}></i>
+                      <p className="mt-3 fw-bold">No saved items yet.</p>
+                      <p className="small">Click the heart icon on any article or tool to save it here for quick access.</p>
+                      <Link to="/" className="btn btn-sm btn-dark mt-2">Explore Content</Link>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
 
             {activeTab === "settings" && (
-              <div style={{ background: "var(--card-bg)", padding: "2rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)", minHeight: "500px" }}>
-                <h3 style={{ fontFamily: "var(--serif)", fontWeight: 700, marginBottom: "1.5rem" }}>Profile Settings</h3>
+              <div style={{ background: "var(--card-bg)", padding: "2.5rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)", minHeight: "500px" }}>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <h3 style={{ fontFamily: "var(--serif)", fontWeight: 700, margin: 0 }}>Account Settings</h3>
+                  <span className="badge" style={{ background: "var(--cream2)", color: "var(--ink2)", border: "1px solid var(--border)" }}>Last updated: Today</span>
+                </div>
+                
                 <form>
-                  <div className="row g-3 mb-4">
-                    <div className="col-md-6">
-                      <label className="form-label" style={{ fontSize: "0.85rem", fontWeight: 600 }}>First Name</label>
-                      <input type="text" className="form-control" defaultValue={profileData?.firstName || user?.firstName || "Alex"} />
+                  {/* Personal Information */}
+                  <div className="mb-5">
+                    <h5 style={{ fontWeight: 700, marginBottom: "1.2rem", color: "var(--ink)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <i className="bi bi-person-badge text-teal"></i> Personal Information
+                    </h5>
+                    
+                    <div className="d-flex align-items-center gap-4 mb-4 p-3 rounded-4" style={{ background: "var(--cream2)", border: "1px solid var(--border)" }}>
+                      <div 
+                        style={{ 
+                          width: "70px", height: "70px", borderRadius: "50%", 
+                          background: "var(--teal-light)", color: "var(--teal)", 
+                          display: "flex", alignItems: "center", justifyContent: "center", 
+                          fontSize: "1.8rem", fontWeight: "bold"
+                        }}
+                      >
+                        {displayName.charAt(0)}
+                      </div>
+                      <div>
+                        <h6 className="fw-bold mb-1">Profile Avatar</h6>
+                        <p className="text-muted small mb-2">JPG, GIF or PNG. Max size of 5MB.</p>
+                        <div className="d-flex gap-2">
+                          <button type="button" className="btn btn-sm btn-dark px-3 rounded-pill">Upload New</button>
+                          <button type="button" className="btn btn-sm btn-outline-danger px-3 rounded-pill">Remove</button>
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-md-6">
-                      <label className="form-label" style={{ fontSize: "0.85rem", fontWeight: 600 }}>Last Name</label>
-                      <input type="text" className="form-control" defaultValue={profileData?.lastName || user?.lastName || "Johnson"} />
+
+                    <div className="row g-4">
+                      <div className="col-md-6">
+                        <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>First Name</label>
+                        <input type="text" className="form-control form-control-lg bg-transparent" defaultValue={profileData?.firstName || user?.firstName || "Alex"} style={{ fontSize: "0.95rem", borderColor: "var(--border2)" }} />
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>Last Name</label>
+                        <input type="text" className="form-control form-control-lg bg-transparent" defaultValue={profileData?.lastName || user?.lastName || "Johnson"} style={{ fontSize: "0.95rem", borderColor: "var(--border2)" }} />
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>Email Address</label>
+                        <input type="email" className="form-control form-control-lg bg-transparent" defaultValue={displayEmail} style={{ fontSize: "0.95rem", borderColor: "var(--border2)" }} />
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>Phone Number</label>
+                        <input type="tel" className="form-control form-control-lg bg-transparent" placeholder="+1 (555) 000-0000" style={{ fontSize: "0.95rem", borderColor: "var(--border2)" }} />
+                      </div>
                     </div>
-                    <div className="col-12">
-                      <label className="form-label" style={{ fontSize: "0.85rem", fontWeight: 600 }}>Email Address</label>
-                      <input type="email" className="form-control" defaultValue={displayEmail} />
-                    </div>
-                  </div>
-                  
-                  <h5 style={{ fontWeight: 700, marginBottom: "1rem" }}>Preferences</h5>
-                  <div className="form-check form-switch mb-3">
-                    <input className="form-check-input" type="checkbox" role="switch" id="notif1" defaultChecked />
-                    <label className="form-check-label" htmlFor="notif1">Weekly LifeScore Report emails</label>
-                  </div>
-                  <div className="form-check form-switch mb-4">
-                    <input className="form-check-input" type="checkbox" role="switch" id="notif2" defaultChecked />
-                    <label className="form-check-label" htmlFor="notif2">Market Volatility Alerts</label>
                   </div>
 
-                  <button type="button" className="btn btn-dark">Save Changes</button>
+                  <hr className="my-5" style={{ opacity: 0.1 }} />
+
+                  {/* Localization & Preferences */}
+                  <div className="mb-5">
+                    <h5 style={{ fontWeight: 700, marginBottom: "1.2rem", color: "var(--ink)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <i className="bi bi-globe-americas text-accent"></i> Localization & Display
+                    </h5>
+                    <div className="row g-4">
+                      <div className="col-md-6">
+                        <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>Base Currency</label>
+                        <select className="form-select form-select-lg bg-transparent" style={{ fontSize: "0.95rem", borderColor: "var(--border2)" }} defaultValue="USD">
+                          <option value="USD">USD ($) - US Dollar</option>
+                          <option value="EUR">EUR (€) - Euro</option>
+                          <option value="GBP">GBP (£) - British Pound</option>
+                          <option value="INR">INR (₹) - Indian Rupee</option>
+                        </select>
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label text-muted small fw-bold text-uppercase" style={{ letterSpacing: "0.5px" }}>Timezone</label>
+                        <select className="form-select form-select-lg bg-transparent" style={{ fontSize: "0.95rem", borderColor: "var(--border2)" }} defaultValue="EST">
+                          <option value="EST">Eastern Time (EST)</option>
+                          <option value="PST">Pacific Time (PST)</option>
+                          <option value="GMT">Greenwich Mean Time (GMT)</option>
+                          <option value="IST">Indian Standard Time (IST)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr className="my-5" style={{ opacity: 0.1 }} />
+
+                  {/* Notifications */}
+                  <div className="mb-5">
+                    <h5 style={{ fontWeight: 700, marginBottom: "1.2rem", color: "var(--ink)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <i className="bi bi-bell-fill text-warning"></i> Notification Preferences
+                    </h5>
+                    <div className="d-flex flex-column gap-3">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-4" style={{ border: "1px solid var(--border2)", background: "transparent" }}>
+                        <div>
+                          <h6 className="fw-bold mb-1">Weekly LifeScore Report</h6>
+                          <p className="text-muted small mb-0">Get a personalized AI summary of your finances every Monday.</p>
+                        </div>
+                        <div className="form-check form-switch fs-5">
+                          <input className="form-check-input" type="checkbox" role="switch" defaultChecked />
+                        </div>
+                      </div>
+                      
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-4" style={{ border: "1px solid var(--border2)", background: "transparent" }}>
+                        <div>
+                          <h6 className="fw-bold mb-1">Market Volatility Alerts</h6>
+                          <p className="text-muted small mb-0">Receive instant push notifications during extreme market swings.</p>
+                        </div>
+                        <div className="form-check form-switch fs-5">
+                          <input className="form-check-input" type="checkbox" role="switch" defaultChecked />
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-4" style={{ border: "1px solid var(--border2)", background: "transparent" }}>
+                        <div>
+                          <h6 className="fw-bold mb-1">Goal Milestones</h6>
+                          <p className="text-muted small mb-0">Celebrate when you hit 50%, 75%, and 100% of your savings goals.</p>
+                        </div>
+                        <div className="form-check form-switch fs-5">
+                          <input className="form-check-input" type="checkbox" role="switch" defaultChecked />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr className="my-5" style={{ opacity: 0.1 }} />
+
+                  {/* Security */}
+                  <div className="mb-5">
+                    <h5 style={{ fontWeight: 700, marginBottom: "1.2rem", color: "var(--ink)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <i className="bi bi-shield-lock-fill text-success"></i> Security & Authentication
+                    </h5>
+                    <div className="d-flex flex-column gap-3">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-4" style={{ border: "1px solid var(--border2)" }}>
+                        <div>
+                          <h6 className="fw-bold mb-1">Password</h6>
+                          <p className="text-muted small mb-0">Last changed 3 months ago</p>
+                        </div>
+                        <button type="button" className="btn btn-sm btn-outline-dark rounded-pill px-3">Update Password</button>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-4" style={{ border: "1px solid var(--border2)" }}>
+                        <div>
+                          <h6 className="fw-bold mb-1">Two-Factor Authentication (2FA)</h6>
+                          <p className="text-muted small mb-0">Add an extra layer of security using an authenticator app.</p>
+                        </div>
+                        <button type="button" className="btn btn-sm btn-dark rounded-pill px-3">Enable 2FA</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr className="my-5" style={{ opacity: 0.1 }} />
+
+                  {/* Danger Zone */}
+                  <div className="mb-5 p-4 rounded-4" style={{ border: "1px solid rgba(220,38,38,0.2)", background: "rgba(220,38,38,0.02)" }}>
+                    <h5 style={{ fontWeight: 700, marginBottom: "0.5rem", color: "#dc2626" }}>Danger Zone</h5>
+                    <p className="text-muted small mb-3">Once you delete your account, there is no going back. All financial data, tracking history, and personalized AI insights will be permanently wiped.</p>
+                    <div className="d-flex gap-3">
+                      <button type="button" className="btn btn-sm btn-outline-danger fw-bold rounded-pill px-4">Delete Account</button>
+                      <button type="button" className="btn btn-sm btn-outline-secondary fw-bold rounded-pill px-4">Download My Data</button>
+                    </div>
+                  </div>
+
+                  {/* Save Footer */}
+                  <div className="d-flex justify-content-end gap-3 sticky-bottom py-3" style={{ background: "var(--card-bg)", borderTop: "1px solid var(--border)" }}>
+                    <button type="button" className="btn btn-outline-secondary rounded-pill px-4 fw-bold">Cancel</button>
+                    <button type="button" className="btn btn-primary rounded-pill px-5 fw-bold" style={{ background: "var(--accent)", border: "none" }}>Save All Changes</button>
+                  </div>
+
                 </form>
               </div>
             )}

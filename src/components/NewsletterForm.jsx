@@ -50,43 +50,44 @@ export default function NewsletterForm({ source = "website" }) {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubscribe} className="d-flex flex-column gap-2">
-          <div className="d-flex flex-column flex-sm-row gap-2">
+        <form onSubmit={handleSubscribe} className="d-flex flex-column gap-2 m-0 p-0">
+          <div className="position-relative d-flex align-items-center" style={{ background: "rgba(255,255,255,0.7)", borderRadius: "10px", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.02)" }}>
+            <i className="bi bi-envelope position-absolute text-muted" style={{ left: "12px", fontSize: "0.9rem", zIndex: 2 }}></i>
             <input 
               type="email" 
-              className="form-control shadow-none border-0 flex-grow-1" 
-              placeholder="Enter your email address" 
+              className="form-control shadow-none border-0 bg-transparent ps-5" 
+              placeholder="Email address..." 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={status === 'loading'}
               style={{ 
-                padding: "0.65rem 0.85rem", 
-                borderRadius: "8px", 
-                background: "var(--cream2)", 
+                height: "46px",
                 color: "var(--ink)", 
-                border: "1px solid var(--border) !important",
-                fontSize: "0.85rem"
+                fontSize: "0.85rem",
+                fontWeight: 500
               }}
             />
             <button 
               type="submit" 
-              className="btn fw-bold flex-shrink-0 shadow-sm" 
+              className="btn btn-sm position-absolute rounded-3 shadow-sm d-flex align-items-center justify-content-center transition-all" 
               disabled={status === 'loading'}
               style={{ 
+                right: "6px",
+                height: "34px",
                 background: "var(--accent)", 
                 color: "#fff", 
-                padding: "0.65rem 1.25rem", 
-                borderRadius: "8px", 
-                fontSize: "0.85rem",
-                border: "none"
+                padding: "0 1.2rem", 
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                border: "none",
+                letterSpacing: "0.3px"
               }}
             >
-              {status === 'loading' ? <span className="spinner-border spinner-border-sm"></span> : "Subscribe"}
+              {status === 'loading' ? <span className="spinner-border spinner-border-sm" style={{ width: '1rem', height: '1rem' }}></span> : "Join"}
             </button>
           </div>
-          {status === 'error' && <small className="text-danger mt-1"><i className="bi bi-exclamation-circle me-1"></i>{message}</small>}
-          <small className="text-muted mt-1" style={{ fontSize: "0.72rem" }}>Join 10,000+ readers. No spam, ever. Unsubscribe anytime.</small>
+          {status === 'error' && <small className="text-danger mt-1 fw-bold" style={{ fontSize: "0.75rem" }}><i className="bi bi-exclamation-circle me-1"></i>{message}</small>}
         </form>
       )}
     </div>

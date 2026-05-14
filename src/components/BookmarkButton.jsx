@@ -52,7 +52,7 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
     <button 
       onClick={handleToggle}
       disabled={loading}
-      className={`btn btn-sm ${isBookmarked ? 'btn-teal' : 'btn-outline-secondary'} ${className}`}
+      className={`btn btn-sm ${isBookmarked ? 'btn-danger' : 'btn-outline-secondary'} ${className}`}
       style={{ 
         borderRadius: "50%", 
         width: "36px", 
@@ -62,9 +62,9 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
         justifyContent: "center",
         transition: "all 0.2s ease"
       }}
-      title={isBookmarked ? "Remove Bookmark" : "Save for Later"}
+      title={isBookmarked ? "Remove from Favorites" : "Add to Favorites"}
     >
-      <i className={`bi ${isBookmarked ? 'bi-bookmark-fill' : 'bi-bookmark'}`}></i>
+      <i className={`bi ${isBookmarked ? 'bi-heart-fill' : 'bi-heart'}`}></i>
     </button>
   );
 }
