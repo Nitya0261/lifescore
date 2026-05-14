@@ -43,6 +43,10 @@ export default function HeroSection() {
                 {/* Absolute gradient base layer to ensure crisp typography over imagery */}
                 <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)", zIndex: 1 }} />
                 
+                {/* Massive background icon */}
+                <div className="position-absolute d-flex align-items-center justify-content-center w-100 h-100 top-0 start-0" style={{ zIndex: 0, opacity: 0.15, fontSize: "15rem", transform: "translateY(-10%)" }}>
+                  {main.icon}
+                </div>
                 <div className="position-relative" style={{ zIndex: 2 }}>
                   <CatTag
                     cat={main.cat}
@@ -88,6 +92,10 @@ export default function HeroSection() {
             >
               <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)", zIndex: 1 }} />
               
+              {/* Background icon */}
+              <div className="position-absolute d-flex align-items-center justify-content-center w-100 h-100 top-0 start-0" style={{ zIndex: 0, opacity: 0.15, fontSize: "10rem", transform: "translateY(-15%)" }}>
+                {secondary.icon}
+              </div>
               <div className="position-relative" style={{ zIndex: 2 }}>
                 <CatTag
                   cat={secondary.cat}

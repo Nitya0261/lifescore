@@ -30,7 +30,7 @@ export default function BlogGrid() {
       <div className="container">
         <div className="row g-4">
           {/* MAIN CONTENT */}
-          <div className="col-lg-8">
+          <div className="col-lg-8 d-flex flex-column">
             {/* Section header */}
             <div className="mb-3">
               <div className="section-divider mb-3"></div>
@@ -300,7 +300,7 @@ export default function BlogGrid() {
 
             {/* Newsletter CTA */}
             <div
-              className="rounded-3 p-4 mt-4"
+              className="rounded-3 p-4 mt-auto"
               style={{
                 background: "linear-gradient(135deg, #0f1923 0%, #1a3a5c 100%)",
                 color: "#fff",

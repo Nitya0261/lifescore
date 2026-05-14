@@ -65,7 +65,7 @@
 
 /* Navbar */
 [data-theme='dark'] .main-nav {
-  background: #111;
+  background: var(--cream2);
   border-bottom-color: var(--border);
 }
 [data-theme='dark'] .nav-logo {
@@ -88,7 +88,7 @@
 
 /* Topbar */
 [data-theme='dark'] .topbar {
-  background: #080808;
+  background: var(--cream);
 }
 
 /* Cards */
@@ -170,7 +170,7 @@
 /* Footer */
 [data-theme='dark'] footer,
 [data-theme='dark'] .site-footer {
-  background: #080808 !important;
+  background: var(--cream) !important;
 }
 
 /* Badges in dark mode */
@@ -305,7 +305,7 @@ body {
 
 /* ─── NAVBAR ─── */
 .main-nav {
-  background: var(--card-bg);
+  background: #ffffff;
   border-bottom: 1px solid var(--border);
   padding: 0;
   box-shadow: var(--shadow);
