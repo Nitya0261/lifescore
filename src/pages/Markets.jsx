@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BlogGrid from "../components/BlogGrid";
+import BookmarkButton from "../components/BookmarkButton";
 import SEO from "../components/SEO";
 
 export default function Markets() {
@@ -246,6 +247,14 @@ export default function Markets() {
                   <div className={`px-2 py-1 rounded small fw-bold ${asset.up ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'}`} style={{ fontSize: "0.85rem" }}>
                     <i className={`bi bi-arrow-${asset.up ? 'up-right' : 'down-right'} me-1`}></i>
                     {asset.change}
+                  </div>
+                  <div className="position-relative" style={{ zIndex: 15 }}>
+                    <BookmarkButton 
+                      itemType="market-ticker" 
+                      title={`${asset.name} (${asset.ticker})`} 
+                      slug={`/markets/${asset.ticker}`} 
+                      className="btn-sm p-1"
+                    />
                   </div>
                 </div>
 

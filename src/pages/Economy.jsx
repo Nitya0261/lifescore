@@ -1,5 +1,6 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
+import BookmarkButton from "../components/BookmarkButton";
 
 export default function Economy() {
   const indicators = [
@@ -32,8 +33,16 @@ export default function Economy() {
           {indicators.map((ind, i) => (
             <div className="col-md-3 col-6" key={i}>
               <div style={{ background: "var(--card-bg)", padding: "1.25rem", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow)", border: "1px solid var(--border)", height: "100%" }}>
-                <div style={{ fontSize: "0.8rem", color: "var(--ink3)", fontWeight: 600, textTransform: "uppercase" }}>
-                  {ind.name}
+                <div className="d-flex justify-content-between align-items-start">
+                  <div style={{ fontSize: "0.8rem", color: "var(--ink3)", fontWeight: 600, textTransform: "uppercase" }}>
+                    {ind.name}
+                  </div>
+                  <BookmarkButton 
+                    itemType="economic-indicator" 
+                    title={ind.name} 
+                    slug={`/economy/${ind.name.toLowerCase().replace(/\s+/g, '-')}`} 
+                    className="btn-sm p-0"
+                  />
                 </div>
                 <div style={{ fontFamily: "var(--serif)", fontSize: "1.5rem", fontWeight: 900, color: "var(--ink)", margin: "0.3rem 0" }}>
                   {ind.value}
