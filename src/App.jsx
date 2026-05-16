@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
-import PreferencesContext from "./context/PreferencesContext";
+
 import SearchModal from "./components/SearchModal";
 import LifeScoreCalculator from "./pages/LifeScoreCalculator";
 import Home from "./pages/Home";
