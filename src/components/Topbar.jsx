@@ -47,11 +47,11 @@ export default function Topbar() {
           
           {/* Middle: Live Market Data (Horizontally scrollable to prevent wrapping breaks) */}
           <div className="d-flex flex-grow-1 overflow-auto hide-scrollbar position-relative" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <div className="d-flex gap-4 align-items-center mx-auto fw-bold py-1 px-2">
+            <div className="d-flex gap-4 align-items-center fw-bold py-1 px-2 m-0 m-lg-auto" style={{ minWidth: "max-content" }}>
               {markets.length > 0 ? markets.map((m, idx) => {
                 const isPositive = m.change >= 0;
                 return (
-                  <div key={idx} className="d-flex align-items-center gap-2 transition-all hover-lift" style={{ whiteSpace: "nowrap", cursor: "default" }}>
+                  <div key={idx} className="d-flex align-items-center gap-2 transition-all hover-lift flex-shrink-0" style={{ cursor: "default" }}>
                     <span className="fw-bolder" style={{ color: "var(--accent)", padding: "2px 8px", background: "var(--cream2)", borderRadius: "6px", fontSize: "0.7rem", letterSpacing: "0.5px", border: "1px solid var(--border)" }}>
                       {m.name}
                     </span>

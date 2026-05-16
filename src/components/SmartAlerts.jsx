@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function SmartAlerts() {
+  const navigate = useNavigate();
+  const { user, toggleAuthModal } = useAuth();
   const [alerts, setAlerts] = useState([
     {
       id: 1,
@@ -36,6 +40,15 @@ export default function SmartAlerts() {
     info: "rgba(26,58,92,0.08)",
   };
   if (!alerts.length) return null;
+
+  const handleManageAlerts = () => {
+    if (!user || user.role === "guest") {
+      toggleAuthModal(true);
+    } else {
+      navigate('/profile');
+    }
+  };
+
   return (
     <div
       className="smart-alerts-section bg-white border-bottom py-3"
@@ -50,10 +63,13 @@ export default function SmartAlerts() {
             <i className="bi bi-bell-fill me-1"></i>Smart Alert Engine
           </span>
           <span
+            onClick={handleManageAlerts}
+            className="hover-underline"
             style={{
-              fontSize: "0.7rem",
-              color: "var(--ink3)",
+              fontSize: "0.75rem",
+              color: "var(--ink2)",
               cursor: "pointer",
+              fontWeight: 600
             }}
           >
             Manage alerts →

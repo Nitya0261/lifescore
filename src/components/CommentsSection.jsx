@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
 
 export default function CommentsSection({ slug }) {
-  const { user, addXp } = useAuth();
+  const { user, addXp, toggleAuthModal } = useAuth();
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
@@ -100,9 +100,13 @@ export default function CommentsSection({ slug }) {
           ) : (
             <div className="text-center py-3">
               <p className="text-muted mb-3">You must be logged in to join the discussion and earn XP.</p>
-              <Link to="/login" className="btn btn-sm text-white fw-bold px-4" style={{ background: "var(--teal)" }}>
+              <button 
+                onClick={() => toggleAuthModal(true)} 
+                className="btn btn-sm text-white fw-bold px-4" 
+                style={{ background: "var(--teal)" }}
+              >
                 Log In to Comment
-              </Link>
+              </button>
             </div>
           )}
         </div>

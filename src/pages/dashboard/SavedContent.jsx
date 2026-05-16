@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../config/api';
 
 export default function SavedContent() {
-  const { user } = useAuth();
+  const { user, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,10 +17,27 @@ export default function SavedContent() {
     const fetchBookmarks = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/api/bookmarks/${user.id}`);
+        if (!res.ok) throw new Error("Backend response not ok");
         const data = await res.json();
         setBookmarks(data);
       } catch (err) {
-        console.error(err);
+        console.warn("Backend offline, falling back to local simulation in SavedContent:", err.message);
+        if (user.bookmarks && Array.isArray(user.bookmarks)) {
+          const fallbackData = user.bookmarks.map(b => {
+            if (typeof b === 'string') {
+              const guessedTitle = b.split('/').pop().replace(/-/g, ' ');
+              return { 
+                _id: b, 
+                slug: b, 
+                title: guessedTitle.charAt(0).toUpperCase() + guessedTitle.slice(1), 
+                itemType: b.includes('tool') ? 'tool' : 'article', 
+                createdAt: new Date().toISOString() 
+              };
+            }
+            return b;
+          });
+          setBookmarks(fallbackData);
+        }
       } finally {
         setLoading(false);
       }
@@ -29,12 +46,12 @@ export default function SavedContent() {
   }, [user, navigate]);
 
   const removeBookmark = async (id) => {
-    try {
-      // Find the bookmark to get the slug for the toggle endpoint
-      const bookmark = bookmarks.find(b => b._id === id);
-      if (!bookmark) return;
+    // Find the bookmark to get the slug for the toggle endpoint
+    const bookmark = bookmarks.find(b => b._id === id);
+    if (!bookmark) return;
 
-      await fetch(`${API_BASE_URL}/api/bookmarks/toggle`, {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/bookmarks/toggle`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -44,10 +61,15 @@ export default function SavedContent() {
           slug: bookmark.slug
         })
       });
-      
+      if (!res.ok) throw new Error("Backend delete failed");
       setBookmarks(bookmarks.filter(b => b._id !== id));
     } catch (err) {
-      console.error(err);
+      console.warn("Backend offline, applying local deletion in SavedContent:", err.message);
+      setBookmarks(bookmarks.filter(b => b._id !== id));
+      if (updateUserProfile && user?.bookmarks) {
+        const nextBookmarks = user.bookmarks.filter(b => (typeof b === 'string' ? b !== bookmark.slug : b.slug !== bookmark.slug));
+        updateUserProfile({ bookmarks: nextBookmarks });
+      }
     }
   };
 

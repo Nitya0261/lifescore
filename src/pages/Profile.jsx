@@ -7,7 +7,7 @@ import BurnoutWidget from "../components/BurnoutWidget";
 import API_BASE_URL from "../config/api";
 
 export default function Profile() {
-  const { user, logout, token } = useAuth();
+  const { user, logout, token, xpLog, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [profileData, setProfileData] = useState(null);
@@ -48,9 +48,27 @@ export default function Profile() {
         if (res.ok) {
           const data = await res.json();
           setSavedArticles(data);
+          return;
         }
+        throw new Error("Backend response not ok");
       } catch (err) {
-        console.error("Failed to fetch bookmarks:", err);
+        console.warn("Backend offline, falling back to local simulation:", err.message);
+        if (user.bookmarks && Array.isArray(user.bookmarks)) {
+          const fallbackData = user.bookmarks.map(b => {
+            if (typeof b === 'string') {
+              const guessedTitle = b.split('/').pop().replace(/-/g, ' ');
+              return { 
+                _id: b, 
+                slug: b, 
+                title: guessedTitle.charAt(0).toUpperCase() + guessedTitle.slice(1), 
+                itemType: b.includes('tool') ? 'tool' : 'article', 
+                createdAt: new Date().toISOString() 
+              };
+            }
+            return b;
+          });
+          setSavedArticles(fallbackData);
+        }
       }
     };
     if (activeTab === "bookmarks") {
@@ -208,24 +226,23 @@ export default function Profile() {
                     <div className="d-flex flex-column justify-content-center" style={{ background: "var(--card-bg)", padding: "1.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", flex: "1 1 auto" }}>
                       <h5 style={{ fontFamily: "var(--serif)", fontWeight: 700, marginBottom: "1rem" }}>Recent Activity</h5>
                       <div className="d-flex flex-column gap-3">
-                        <div className="d-flex gap-3 align-items-start">
-                          <div style={{ background: "var(--teal-light)", color: "var(--teal)", padding: "0.5rem", borderRadius: "50%", display: "flex" }}>
-                            <i className="bi bi-check2-circle"></i>
+                        {(!xpLog || xpLog.length === 0) ? (
+                          <div className="text-muted text-center" style={{ fontSize: "0.85rem" }}>
+                            No recent activity yet. Explore the platform to earn XP!
                           </div>
-                          <div>
-                            <div style={{ fontWeight: 600, fontSize: "0.9rem" }}>Completed "Review budget"</div>
-                            <div style={{ fontSize: "0.75rem", color: "var(--ink3)" }}>2 hours ago • +20 XP</div>
-                          </div>
-                        </div>
-                        <div className="d-flex gap-3 align-items-start">
-                          <div style={{ background: "var(--accent-light)", color: "var(--accent)", padding: "0.5rem", borderRadius: "50%", display: "flex" }}>
-                            <i className="bi bi-bookmark-plus"></i>
-                          </div>
-                          <div>
-                            <div style={{ fontWeight: 600, fontSize: "0.9rem" }}>Saved article on 50/30/20 Rule</div>
-                            <div style={{ fontSize: "0.75rem", color: "var(--ink3)" }}>Yesterday</div>
-                          </div>
-                        </div>
+                        ) : (
+                          xpLog.slice(0, 3).map((logItem, index) => (
+                            <div key={logItem.id || index} className="d-flex gap-3 align-items-start">
+                              <div style={{ background: "var(--teal-light)", color: "var(--teal)", padding: "0.5rem", borderRadius: "50%", display: "flex" }}>
+                                <i className={logItem.reason?.toLowerCase().includes("save") || logItem.reason?.toLowerCase().includes("bookmark") ? "bi bi-bookmark-star" : "bi bi-check2-circle"}></i>
+                              </div>
+                              <div>
+                                <div style={{ fontWeight: 600, fontSize: "0.9rem" }}>{logItem.reason}</div>
+                                <div style={{ fontSize: "0.75rem", color: "var(--ink3)" }}>{logItem.timestamp} • +{logItem.amount} XP</div>
+                              </div>
+                            </div>
+                          ))
+                        )}
                       </div>
                     </div>
                   </div>
@@ -315,13 +332,21 @@ export default function Profile() {
                           className="btn btn-sm btn-outline-danger rounded-pill"
                           onClick={async () => {
                             try {
-                              await fetch(`${API_BASE_URL}/api/bookmarks/toggle`, {
+                              const res = await fetch(`${API_BASE_URL}/api/bookmarks/toggle`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ userId: user.id, itemType: article.itemType, title: article.title, slug: article.slug })
                               });
+                              if (!res.ok) throw new Error("Backend delete failed");
                               setSavedArticles(prev => prev.filter(a => a._id !== article._id));
-                            } catch (e) { console.error(e); }
+                            } catch (e) {
+                              console.warn("Backend offline, applying local deletion:", e.message);
+                              setSavedArticles(prev => prev.filter(a => a._id !== article._id));
+                              if (updateUserProfile && user?.bookmarks) {
+                                const nextBookmarks = user.bookmarks.filter(b => (typeof b === 'string' ? b !== article.slug : b.slug !== article.slug));
+                                updateUserProfile({ bookmarks: nextBookmarks });
+                              }
+                            }
                           }}
                         >
                           <i className="bi bi-trash"></i>

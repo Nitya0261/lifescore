@@ -1,8 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function AuthModal({ isOpen, onClose }) {
   const navigate = useNavigate();
+  const { loginUser, loginWithGoogle } = useAuth();
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    const res = await loginUser(email, password);
+    setLoading(false);
+    
+    if (res.success) {
+      onClose(); // Close modal on success
+      if (email.toLowerCase().includes("admin")) {
+        navigate("/admin");
+      } else {
+        navigate("/profile");
+      }
+    } else {
+      setError(res.error || "Login failed");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
+    if (loginWithGoogle) {
+      const res = await loginWithGoogle();
+      setLoading(false);
+      if (res?.success) {
+        onClose();
+        navigate("/profile");
+      } else {
+        setError(res?.error || "Google sign-in flow failed");
+      }
+    } else {
+      setLoading(false);
+      setError("Google Sign-In is not initialized");
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -28,9 +73,9 @@ export default function AuthModal({ isOpen, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header with Luxurious Gradient Box */}
+        {/* Header */}
         <div 
-          className="p-5 text-center position-relative" 
+          className="p-4 text-center position-relative" 
           style={{ 
             background: 'linear-gradient(135deg, var(--ink) 0%, var(--dark-surface) 100%)',
             color: '#fff',
@@ -47,90 +92,64 @@ export default function AuthModal({ isOpen, onClose }) {
             <i className="bi bi-x-lg" style={{ fontSize: '1.2rem' }}></i>
           </div>
           
-          <div 
-            className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" 
-            style={{ 
-              width: '84px', 
-              height: '84px',
-              background: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.12)'
-            }}
-          >
-            <i className="bi bi-shield-lock-fill text-warning" style={{ fontSize: '2.8rem' }}></i>
-          </div>
-          
-          <h3 className="fw-bold text-white mb-2" style={{ fontFamily: 'var(--serif)', fontSize: '1.8rem', letterSpacing: '-0.02em' }}>
-            Feature Locked
+          <h3 className="fw-bold text-white mb-1 mt-2" style={{ fontFamily: 'var(--serif)', fontSize: '1.6rem', letterSpacing: '-0.02em' }}>
+            Welcome Back
           </h3>
-          <p className="mb-0" style={{ fontSize: '0.95rem', color: 'rgba(255, 255, 255, 0.8)' }}>
-            Sign in to unlock interactive member tools.
+          <p className="mb-0" style={{ fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+            Sign in to unlock your intelligent dashboard.
           </p>
         </div>
 
-        {/* Adaptive Body Content */}
+        {/* Login Form Body */}
         <div className="p-4 p-md-5" style={{ background: 'var(--card-bg)' }}>
-          <div className="mb-4 pb-2">
-            <h6 className="text-uppercase fw-bold mb-3" style={{ fontSize: '0.72rem', letterSpacing: '1.5px', color: 'var(--accent)' }}>
-              Member Exclusives
-            </h6>
-            <div className="d-flex flex-column gap-3">
-              <div className="d-flex align-items-center gap-3">
-                <div className="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style={{ width: '32px', height: '32px', background: 'rgba(212,160,23,0.12)', color: '#d4a017' }}>
-                  <i className="bi bi-star-fill small"></i>
-                </div>
-                <span style={{ fontSize: '0.95rem', color: 'var(--ink)', fontWeight: 500 }}>
-                  Earn cumulative <strong>XP</strong> points on every single tool usage
-                </span>
-              </div>
-              
-              <div className="d-flex align-items-center gap-3">
-                <div className="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style={{ width: '32px', height: '32px', background: 'rgba(26,122,94,0.12)', color: 'var(--teal)' }}>
-                  <i className="bi bi-bar-chart-fill small"></i>
-                </div>
-                <span style={{ fontSize: '0.95rem', color: 'var(--ink)', fontWeight: 500 }}>
-                  Save customized simulations & track personal <strong>LifeScore</strong> milestones
-                </span>
-              </div>
-
-              <div className="d-flex align-items-center gap-3">
-                <div className="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style={{ width: '32px', height: '32px', background: 'rgba(192,57,43,0.12)', color: 'var(--accent)' }}>
-                  <i className="bi bi-bell-fill small"></i>
-                </div>
-                <span style={{ fontSize: '0.95rem', color: 'var(--ink)', fontWeight: 500 }}>
-                  Receive custom high-yield notifications & specific market triggers
-                </span>
-              </div>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="alert alert-danger" style={{ fontSize: "0.85rem", padding: "0.5rem" }}>{error}</div>}
+            
+            <div className="mb-3 text-start">
+              <label className="form-label" style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>Email address</label>
+              <input 
+                type="email" 
+                className="form-control" 
+                placeholder="Enter your email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={{ padding: "0.75rem", borderRadius: "8px" }}
+              />
             </div>
-          </div>
+            <div className="mb-4 text-start">
+              <div className="d-flex justify-content-between">
+                <label className="form-label" style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>Password</label>
+                <a href="#" style={{ fontSize: "0.8rem", color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}>Forgot password?</a>
+              </div>
+              <input 
+                type="password" 
+                className="form-control" 
+                placeholder="••••••••" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={{ padding: "0.75rem", borderRadius: "8px" }}
+              />
+            </div>
 
-          <div className="d-grid gap-2">
-            <button 
-              className="btn btn-primary py-3 fw-bold w-100 shadow-sm" 
-              style={{ 
-                background: 'var(--accent)', 
-                borderColor: 'var(--accent)', 
-                borderRadius: '10px', 
-                fontSize: '1.05rem',
-                transition: 'all 0.2s'
-              }}
-              onClick={() => {
-                onClose();
-                navigate('/login');
-              }}
-              onMouseOver={(e) => e.currentTarget.style.filter = 'brightness(1.1)'}
-              onMouseOut={(e) => e.currentTarget.style.filter = 'none'}
-            >
-              Sign In with Credentials
+            <button type="submit" disabled={loading} className="btn w-100 mb-3 fw-bold text-white" style={{ padding: "0.75rem", borderRadius: "8px", background: "var(--accent)" }}>
+              {loading ? "Signing in..." : "Sign In"}
             </button>
+            
+            <button type="button" onClick={handleGoogleLogin} disabled={loading} className="btn btn-outline-secondary w-100 fw-bold mb-2" style={{ padding: "0.75rem", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+              <i className="bi bi-google text-danger"></i> Sign in with Google
+            </button>
+          </form>
+
+          <div className="text-center mt-3" style={{ fontSize: "0.85rem", color: "var(--ink3)", fontWeight: 600 }}>
             <button 
-              className="btn border-0 py-2 w-100 mt-1"
-              style={{ background: 'transparent', color: 'var(--ink3)', fontSize: '0.85rem', fontWeight: 600 }}
+              className="btn btn-link p-0 text-decoration-none"
+              style={{ color: "var(--ink)", fontWeight: 700 }}
               onClick={() => {
                 onClose();
                 navigate('/register');
               }}
-              onMouseOver={(e) => e.currentTarget.style.color = 'var(--ink)'}
-              onMouseOut={(e) => e.currentTarget.style.color = 'var(--ink3)'}
             >
               New member? Register instantly &rarr;
             </button>

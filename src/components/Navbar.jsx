@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 export default function Navbar() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { user } = useAuth();
+  const { user, toggleAuthModal } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -160,7 +160,7 @@ export default function Navbar() {
               <button 
                 className="btn btn-sm rounded-pill px-2.5 px-sm-3 fw-bold shadow-sm text-truncate"
                 style={{ background: "var(--accent)", color: "#fff", border: "none" }}
-                onClick={() => navigate("/login")}
+                onClick={() => toggleAuthModal(true)}
               >
                 <i className="bi bi-box-arrow-in-right me-1"></i>
                 <span className="d-none d-sm-inline">{t("nav.login") || "Member Login"}</span>

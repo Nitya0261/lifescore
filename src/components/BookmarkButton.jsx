@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
 
 export default function BookmarkButton({ itemType, title, slug, initialIsBookmarked = false, className = "" }) {
-  const { user, addXp, updateUserProfile } = useAuth();
+  const { user, addXp, updateUserProfile, toggleAuthModal } = useAuth();
   const navigate = useNavigate();
   
-  const isBookmarked = user?.bookmarks?.includes(slug) || initialIsBookmarked;
+  const isBookmarked = user?.bookmarks?.some(b => (typeof b === 'string' ? b === slug : b.slug === slug)) || initialIsBookmarked;
   const [loading, setLoading] = useState(false);
   const [showCutePopup, setShowCutePopup] = useState(false);
 
@@ -16,7 +16,7 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
     e.stopPropagation();
 
     if (!user || user.role === "guest") {
-      navigate('/login');
+      toggleAuthModal(true);
       return;
     }
 
@@ -43,15 +43,15 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
       
       if (data.status === 'added') {
         wasAdded = true;
-        addXp(5, "Saved an item!");
+        addXp(5, `Saved: ${title}`);
       }
     } catch (err) {
       console.warn("Backend offline, triggering local bookmark simulation toggle:", err.message);
       const currentList = user?.bookmarks || [];
-      const isAlreadyAdded = currentList.includes(slug);
+      const isAlreadyAdded = currentList.some(s => (typeof s === 'string' ? s === slug : s.slug === slug));
       const nextBookmarks = isAlreadyAdded 
-        ? currentList.filter(s => s !== slug) 
-        : [...currentList, slug];
+        ? currentList.filter(s => (typeof s === 'string' ? s !== slug : s.slug !== slug)) 
+        : [...currentList, { slug, title, itemType, _id: slug, createdAt: new Date().toISOString() }];
       
       if (updateUserProfile) {
         updateUserProfile({ bookmarks: nextBookmarks });
@@ -59,7 +59,7 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
       
       if (!isAlreadyAdded) {
         wasAdded = true;
-        addXp(5, "Saved an item!");
+        addXp(5, `Saved: ${title}`);
       }
     } finally {
       setLoading(false);
@@ -85,7 +85,7 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
       <button 
         onClick={handleToggle}
         disabled={loading}
-        className={`btn btn-sm ${isBookmarked ? 'btn-danger' : 'btn-outline-secondary'} ${className}`}
+        className={`btn btn-sm ${className}`}
         style={{ 
           borderRadius: "50%", 
           width: "36px", 
@@ -94,11 +94,14 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
           alignItems: "center", 
           justifyContent: "center",
           transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-          transform: loading ? "scale(0.9)" : "scale(1)"
+          transform: loading ? "scale(0.9)" : "scale(1)",
+          background: isBookmarked ? "rgba(225, 29, 72, 0.1)" : "transparent",
+          color: isBookmarked ? "#e11d48" : "var(--ink3)",
+          border: isBookmarked ? "1px solid rgba(225, 29, 72, 0.2)" : "1px solid var(--border)",
         }}
         title={isBookmarked ? "Remove from Favorites" : "Add to Favorites"}
       >
-        <i className={`bi ${isBookmarked ? 'bi-heart-fill animate-pulse' : 'bi-heart'}`}></i>
+        <i className={`bi ${isBookmarked ? 'bi-heart-fill animate-pulse text-danger' : 'bi-heart'}`}></i>
       </button>
 
       {/* Cute and Simple Overlay Popup for Favoriting Items */}
