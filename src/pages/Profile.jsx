@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import XPWidget from "../components/XPWidget";
@@ -15,7 +15,29 @@ export default function Profile() {
   const [twoFactorState, setTwoFactorState] = useState("disabled"); // 'disabled', 'setup', 'enabled'
   const [verificationCode, setVerificationCode] = useState("");
   const [copiedSecret, setCopiedSecret] = useState(false);
+  const fileInputRef = useRef(null);
 
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (updateUserProfile) {
+          updateUserProfile({ avatarUrl: reader.result });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePhotoRemove = () => {
+    if (updateUserProfile) {
+      updateUserProfile({ avatarUrl: null });
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
   useEffect(() => {
     const fetchMe = async () => {
       if (!token) return;
@@ -385,17 +407,41 @@ export default function Profile() {
                           width: "70px", height: "70px", borderRadius: "50%", 
                           background: "var(--teal-light)", color: "var(--teal)", 
                           display: "flex", alignItems: "center", justifyContent: "center", 
-                          fontSize: "1.8rem", fontWeight: "bold"
+                          fontSize: "1.8rem", fontWeight: "bold",
+                          overflow: "hidden"
                         }}
                       >
-                        {displayName.charAt(0)}
+                        {user?.avatarUrl ? (
+                          <img src={user.avatarUrl} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        ) : (
+                          displayName.charAt(0)
+                        )}
                       </div>
                       <div>
                         <h6 className="fw-bold mb-1">Profile Avatar</h6>
                         <p className="text-muted small mb-2">JPG, GIF or PNG. Max size of 5MB.</p>
                         <div className="d-flex gap-2">
-                          <button type="button" className="btn btn-sm btn-dark px-3 rounded-pill">Upload New</button>
-                          <button type="button" className="btn btn-sm btn-outline-danger px-3 rounded-pill">Remove</button>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            ref={fileInputRef} 
+                            style={{ display: "none" }} 
+                            onChange={handlePhotoUpload} 
+                          />
+                          <button 
+                            type="button" 
+                            className="btn btn-sm btn-dark px-3 rounded-pill"
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            Upload New
+                          </button>
+                          <button 
+                            type="button" 
+                            className="btn btn-sm btn-outline-danger px-3 rounded-pill"
+                            onClick={handlePhotoRemove}
+                          >
+                            Remove
+                          </button>
                         </div>
                       </div>
                     </div>

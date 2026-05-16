@@ -148,11 +148,15 @@ export default function Navbar() {
             {/* Authenticated user control */}
             {user && user.role !== "guest" ? (
               <button 
-                className="btn btn-sm rounded-pill px-2.5 px-sm-3 fw-bold shadow-sm text-truncate"
+                className="btn btn-sm rounded-pill px-2.5 px-sm-3 fw-bold shadow-sm text-truncate d-flex align-items-center"
                 style={{ background: "var(--ink)", color: "var(--card-bg)", border: "none", maxWidth: "130px" }}
                 onClick={() => navigate(user.role === "admin" ? "/admin" : "/profile")}
               >
-                <i className={`bi ${user.role === "admin" ? "bi-shield-lock-fill text-warning" : "bi-person-circle text-teal"} me-1`}></i>
+                {user.avatarUrl ? (
+                  <img src={user.avatarUrl} alt="Avatar" style={{ width: "20px", height: "20px", borderRadius: "50%", objectFit: "cover", marginRight: "6px" }} />
+                ) : (
+                  <i className={`bi ${user.role === "admin" ? "bi-shield-lock-fill text-warning" : "bi-person-circle text-teal"} me-1`}></i>
+                )}
                 <span className="d-none d-sm-inline">{user.role === "admin" ? "Admin Panel" : t("nav.profile") || "My Profile"}</span>
                 <span className="d-inline d-sm-none">{user.role === "admin" ? "Admin" : "Profile"}</span>
               </button>
