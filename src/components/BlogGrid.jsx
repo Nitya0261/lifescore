@@ -218,7 +218,8 @@ export default function BlogGrid() {
               </div>
             )}
 
-
+            {filtered.length > 0 && (
+              <>
                 <div className="mb-3">
                   <div className="section-eyebrow mt-4">
                     <i className="bi bi-bookmark-star me-1"></i>In-Depth Guides
