@@ -37,6 +37,7 @@ export default function Footer() {
         { label: "Best Credit Cards", path: "/recommendations/cards" },
         { label: "High-Yield Savings", path: "/recommendations/savings" },
         { label: "Markets", path: "/markets" },
+        { label: "Editorial Blog", path: "/blog" },
       ],
     },
   ];
@@ -54,15 +55,24 @@ export default function Footer() {
               worldwide. Independent, ad-supported, and always free.
             </p>
             <div className="d-flex gap-3 mt-3">
-              {["twitter-x", "instagram", "linkedin", "youtube", "tiktok"].map(
+              {[
+                { id: "twitter-x", label: "Follow us on X (formerly Twitter)" },
+                { id: "instagram", label: "Follow us on Instagram" },
+                { id: "linkedin", label: "Connect with us on LinkedIn" },
+                { id: "youtube", label: "Subscribe to our YouTube channel" },
+                { id: "tiktok", label: "Follow us on TikTok" }
+              ].map(
                 (s) => (
                   <a
-                    key={s}
-                    href="#"
+                    key={s.id}
+                    href={`https://${s.id.includes('twitter') ? 'x' : s.id}.com`}
                     className="footer-link"
                     style={{ margin: 0 }}
+                    aria-label={s.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <i className={`bi bi-${s}`}></i>
+                    <i className={`bi bi-${s.id}`} aria-hidden="true"></i>
                   </a>
                 ),
               )}
@@ -87,17 +97,21 @@ export default function Footer() {
         <div className="footer-bottom">
           <div className="d-flex justify-content-center gap-3 gap-sm-4 mb-3 flex-wrap" style={{ fontSize: "0.9rem" }}>
             <Link to="/about" className="text-muted text-decoration-none fw-semibold">About Us</Link>
+            <Link to="/editorial-policy" className="text-muted text-decoration-none fw-semibold">Editorial Policy</Link>
             <Link to="/contact" className="text-muted text-decoration-none fw-semibold">Contact Desk</Link>
             <Link to="/privacy" className="text-muted text-decoration-none fw-semibold">Privacy Policy</Link>
             <Link to="/terms" className="text-muted text-decoration-none fw-semibold">Terms & Conditions</Link>
+            <Link to="/disclaimer" className="text-muted text-decoration-none fw-semibold">Disclaimer</Link>
           </div>
           <span className="footer-bottom-text">
             © 2026 LifeScore · Personal Finance & Life Intelligence · All rights
             reserved · Built with React & Bootstrap
           </span>
-          <span className="footer-bottom-text">
-            Disclosure: LifeScore is ad-supported. We may earn affiliate
-            commissions from links. Content is for informational purposes only.
+          <span className="footer-bottom-text d-block mt-2" style={{ maxWidth: "800px", margin: "0 auto", opacity: 0.6, fontSize: "0.75rem", lineHeight: "1.5" }}>
+            ADVERTISER DISCLOSURE: LifeScore is an independent, ad-supported publisher and comparison service. We may receive compensation from some of the companies whose products we review or appear on this site. This compensation may impact how and where products appear, but does not influence our editorial integrity or mathematical models. LifeScore does not include all financial companies or all available financial offers.
+          </span>
+          <span className="footer-bottom-text d-block mt-1" style={{ maxWidth: "800px", margin: "0 auto", opacity: 0.6, fontSize: "0.75rem", lineHeight: "1.5" }}>
+            FINANCIAL DISCLAIMER: The content on LifeScore is for educational purposes only and does not constitute financial, investment, legal, or tax advice. We recommend consulting with a qualified professional before making any significant financial decisions.
           </span>
         </div>
       </div>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { BLOG_POSTS } from "../data/mockData";
 import CatTag from "./CatTag";
 import Byline from "./Byline";
-import AdSlot from "./AdSlot";
 import Sidebar from "./Sidebar";
 import BookmarkButton from "./BookmarkButton";
 
@@ -165,20 +164,24 @@ export default function BlogGrid() {
                         className="blog-card text-decoration-none h-100 d-flex flex-column" 
                         style={{ cursor: "pointer", display: 'block' }}
                       >
-                        <div className="blog-card-img">
-                          <div
-                            className="blog-card-img-placeholder"
-                            style={{
-                              background: post.bg,
-                              minHeight: "140px",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: "2.5rem",
-                            }}
-                          >
-                            {post.icon}
-                          </div>
+                        <div className="blog-card-img overflow-hidden rounded-top-3">
+                          {post.image ? (
+                            <img src={post.image} alt={post.title} className="w-100 h-100 object-fit-cover" style={{ minHeight: "180px" }} />
+                          ) : (
+                            <div
+                              className="blog-card-img-placeholder"
+                              style={{
+                                background: post.bg,
+                                minHeight: "140px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "2.5rem",
+                              }}
+                            >
+                              {post.icon}
+                            </div>
+                          )}
                         </div>
                         <div className="blog-card-body flex-grow-1">
                           <CatTag
@@ -213,13 +216,6 @@ export default function BlogGrid() {
               </div>
             )}
 
-            {/* Conditionally render Ad Slot and In-Depth Guides only if there are enough posts */}
-            {filtered.length > 4 && (
-              <>
-                <AdSlot
-                  type="leaderboard"
-                  label="Advertisement — Google AdSense 728×90"
-                />
 
                 <div className="mb-3">
                   <div className="section-eyebrow mt-4">
@@ -234,24 +230,28 @@ export default function BlogGrid() {
                 </div>
                 {filtered.slice(4).map((post) => (
                   <div className="blog-card-featured position-relative" key={post.id}>
-                    <Link to={`/article/${post.slug}`} className="text-decoration-none d-flex gap-3 w-100">
-                      <div className="featured-img" style={{ flexShrink: 0 }}>
-                        <div
-                          className="blog-card-img-placeholder"
-                          style={{
-                            background: post.bg,
-                            height: "100%",
-                            minWidth: "140px",
-                            minHeight: "110px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: "2rem",
-                            borderRadius: 'var(--radius)'
-                          }}
-                        >
-                          {post.icon}
-                        </div>
+                    <Link to={`/article/${post.slug}`} className="text-decoration-none d-flex flex-column flex-sm-row gap-3 w-100">
+                      <div className="featured-img flex-shrink-0 overflow-hidden rounded-3" style={{ width: "160px" }}>
+                        {post.image ? (
+                          <img src={post.image} alt={post.title} className="w-100 h-100 object-fit-cover" />
+                        ) : (
+                          <div
+                            className="blog-card-img-placeholder"
+                            style={{
+                              background: post.bg,
+                              height: "100%",
+                              minWidth: "140px",
+                              minHeight: "110px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "2rem",
+                              borderRadius: 'var(--radius)'
+                            }}
+                          >
+                            {post.icon}
+                          </div>
+                        )}
                       </div>
                       <div className="featured-body" style={{ paddingRight: "2rem" }}>
                         <CatTag
@@ -298,65 +298,6 @@ export default function BlogGrid() {
               </>
             )}
 
-            {/* Newsletter CTA */}
-            <div
-              className="rounded-3 p-4 mt-auto"
-              style={{
-                background: "linear-gradient(135deg, #0f1923 0%, #1a3a5c 100%)",
-                color: "#fff",
-                border: "none",
-              }}
-            >
-              <div className="row align-items-center g-3">
-                <div className="col-md-7">
-                  <h4
-                    style={{
-                      fontFamily: "var(--serif)",
-                      fontSize: "1.2rem",
-                      fontWeight: 900,
-                      marginBottom: "0.3rem",
-                    }}
-                  >
-                    Get Smarter About Money — Free
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: "0.8rem",
-                      color: "rgba(255,255,255,0.65)",
-                      marginBottom: 0,
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    Join 120,000+ readers who get our weekly finance digest: no
-                    spam, no fluff — just the best money moves of the week.
-                  </p>
-                </div>
-                <div className="col-md-5">
-                  <div className="d-flex gap-2">
-                    <input
-                      type="email"
-                      placeholder="Your email address"
-                      className="form-control"
-                      style={{
-                        fontSize: "0.82rem",
-                        borderRadius: "4px",
-                        border: "none",
-                      }}
-                    />
-                    <button
-                      className="subscribe-btn"
-                      style={{
-                        borderRadius: "4px",
-                        whiteSpace: "nowrap",
-                        flexShrink: 0,
-                      }}
-                    >
-                      Subscribe
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* SIDEBAR */}

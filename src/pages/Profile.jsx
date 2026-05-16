@@ -241,11 +241,11 @@ export default function Profile() {
                       <LifeScoreWidget />
                     </div>
                   </div>
-                  <div className="col-md-6 d-flex flex-column gap-4 justify-content-between">
+                  <div className="col-md-6 d-flex flex-column gap-4">
                     <div style={{ flex: "0 0 auto" }}>
                       <BurnoutWidget />
                     </div>
-                    <div className="d-flex flex-column justify-content-center" style={{ background: "var(--card-bg)", padding: "1.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", flex: "1 1 auto" }}>
+                    <div className="d-flex flex-column justify-content-center" style={{ background: "var(--card-bg)", padding: "1.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", boxShadow: "var(--shadow)", flex: "1" }}>
                       <h5 style={{ fontFamily: "var(--serif)", fontWeight: 700, marginBottom: "1rem" }}>Recent Activity</h5>
                       <div className="d-flex flex-column gap-3">
                         {(!xpLog || xpLog.length === 0) ? (

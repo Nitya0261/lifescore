@@ -49,6 +49,10 @@ export default function ToolPageLayout({
               {/* The Calculator Widget */}
               <div style={{ background: "var(--card-bg)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow)", padding: "clamp(1.2rem, 4vw, 2.5rem)", marginBottom: "2.5rem" }}>
                 {children}
+                <div className="mt-4 p-3 rounded-3 small" style={{ background: "var(--cream2)", border: "1px solid var(--border)", color: "var(--ink3)", fontSize: "0.75rem", lineHeight: "1.5" }}>
+                  <i className="bi bi-info-circle me-2"></i>
+                  <strong>Tool Disclaimer:</strong> This calculator is for educational purposes only. Projections are based on mathematical formulas and do not guarantee future results. All investments involve risk. We recommend consulting with a <Link to="/advisor" className="text-teal text-decoration-none fw-bold">certified financial advisor</Link> before making significant decisions.
+                </div>
               </div>
 
               {/* Explainer Article */}

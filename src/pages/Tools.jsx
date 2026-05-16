@@ -31,12 +31,14 @@ export default function Tools() {
   };
 
   const toolCards = [
-    { icon: "bi-calculator", name: "SIP Calculator", desc: "Calculate your Systematic Investment Plan returns over time.", path: "/tools/sip-calculator", color: "#0d9488" },
-    { icon: "bi-graph-up-arrow", name: "Compound Interest", desc: "See the power of compounding on your savings and investments.", path: "/tools/compound-interest", color: "#6366f1" },
-    { icon: "bi-piggy-bank", name: "Retirement Number", desc: "Find out exactly how much you need to retire comfortably.", path: "/tools/retirement-number", color: "#f59e0b" },
-    { icon: "bi-wallet2", name: "Net Worth Tracker", desc: "Track your assets minus liabilities to see your true net worth.", path: "/tools/net-worth", color: "#ec4899" },
-    { icon: "bi-receipt", name: "Tax Estimator", desc: "Estimate your federal and state tax liability for the year.", path: "/tools/tax-estimator", color: "#ef4444" },
-    { icon: "bi-bar-chart-line", name: "Budget Tracker", desc: "Track income vs expenses and see your savings rate over time.", path: "/dashboard/budget", color: "#22c55e" },
+    { icon: "bi-calculator", name: "SIP Calculator", desc: "Project your wealth from regular investments.", path: "/tools/sip-calculator", color: "#0d9488" },
+    { icon: "bi-graph-up-arrow", name: "Compound Interest", desc: "See the power of compounding in action.", path: "/tools/compound-interest", color: "#6366f1" },
+    { icon: "bi-shield-check", name: "Emergency Fund", desc: "Calculate your safety net in 30 seconds.", path: "/tools/emergency-fund", color: "#b45309" },
+    { icon: "bi-fire", name: "Debt Payoff", desc: "Compare Snowball vs. Avalanche strategies.", path: "/tools/debt-payoff", color: "#dc2626" },
+    { icon: "bi-umbrella", name: "Retirement Number", desc: "Find your exact number for total freedom.", path: "/tools/retirement-number", color: "#7c3aed" },
+    { icon: "bi-wallet2", name: "Net Worth Tracker", desc: "Track assets vs. liabilities in one view.", path: "/tools/net-worth", color: "#2563eb" },
+    { icon: "bi-pie-chart", name: "Budget Tracker", desc: "Master your cashflow with 50/30/20 rules.", path: "/dashboard/budget", color: "#1a7a5e" },
+    { icon: "bi-receipt", name: "Tax Estimator", desc: "Estimate your federal and state liability.", path: "/tools/tax-estimator", color: "#ef4444" },
   ];
 
   return (

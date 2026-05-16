@@ -45,8 +45,8 @@ export default function NewsletterForm({ source = "website" }) {
         <div className="alert alert-success d-flex align-items-center mb-0" style={{ borderRadius: "var(--radius-md)", border: "none", background: "rgba(56, 178, 172, 0.15)", color: "var(--teal)" }}>
           <i className="bi bi-check-circle-fill fs-4 me-3"></i>
           <div>
-            <strong>You're in!</strong>
-            <div style={{ fontSize: "0.9rem" }}>Watch your inbox every Monday for the top 5 articles + one actionable finance tip.</div>
+            <strong>Plan Secured!</strong>
+            <div style={{ fontSize: "0.9rem" }}>Check your inbox every Monday for your personalized wealth trajectory and market updates.</div>
           </div>
         </div>
       ) : (
@@ -56,7 +56,7 @@ export default function NewsletterForm({ source = "website" }) {
             <input 
               type="email" 
               className="form-control shadow-none border-0 bg-transparent ps-5" 
-              placeholder="Email address..." 
+              placeholder="Enter email for your weekly plan..." 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -85,7 +85,7 @@ export default function NewsletterForm({ source = "website" }) {
                 letterSpacing: "0.3px"
               }}
             >
-              {status === 'loading' ? <span className="spinner-border spinner-border-sm" style={{ width: '1rem', height: '1rem' }}></span> : "Join"}
+              {status === 'loading' ? <span className="spinner-border spinner-border-sm" style={{ width: '1rem', height: '1rem' }}></span> : "Get My Plan"}
             </button>
           </div>
           {status === 'error' && <small className="text-danger mt-1 fw-bold" style={{ fontSize: "0.75rem" }}><i className="bi bi-exclamation-circle me-1"></i>{message}</small>}

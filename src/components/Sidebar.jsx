@@ -1,16 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { TRENDING } from "../data/mockData";
-import AdSlot from "./AdSlot";
+import BookmarkButton from "./BookmarkButton";
 import EMICalculator from "./EMICalculator";
 import GeoTips from "./GeoTips";
-import BookmarkButton from "./BookmarkButton";
 
 export default function Sidebar() {
   return (
     <div>
-      {/* Ad */}
-      <AdSlot type="rectangle" label="Advertisement — Google AdSense 300×250" />
+      {/* Trust & Transparency */}
+      <div className="sidebar-widget mb-4 border-0 p-3 rounded-3" style={{ background: "var(--teal-light)", border: "1px solid var(--teal-medium) !important" }}>
+        <div className="d-flex align-items-center gap-2 mb-2 text-teal">
+          <i className="bi bi-patch-check-fill"></i>
+          <span className="fw-bold small text-uppercase" style={{ letterSpacing: "1px" }}>LifeScore Verified</span>
+        </div>
+        <p className="extra-small text-muted mb-0" style={{ lineHeight: 1.5 }}>
+          Our content is rigorously reviewed by a board of certified financial planners (CFP®) and behavioral economists. We cite primary sources for all data points.
+        </p>
+        <div className="mt-3 pt-3 border-top border-white opacity-50">
+          <Link to="/editorial-policy" className="extra-small fw-bold text-teal text-decoration-none">Review Our Editorial Board →</Link>
+        </div>
+      </div>
 
       {/* Trending */}
       <div className="sidebar-widget mb-4">

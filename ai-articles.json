@@ -1,0 +1,397 @@
+[
+  {
+    "title": "The 50/30/20 Rule: A Data-Driven Breakdown",
+    "slug": "50-30-20-rule-breakdown",
+    "category": "Saving",
+    "publishedAt": "2026-05-10T10:00:00Z",
+    "excerpt": "Learn how to allocate your income for maximum wealth building without sacrificing your current quality of life.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The 50/30/20 rule is more than just a guideline; it's a structural framework for your financial life..."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [{ "_type": "span", "text": "Understanding the Tiers" }]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "50% for Needs, 30% for Wants, and 20% for Savings. Sounds simple, but the devil is in the details..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Why Index Funds Beat Active Management",
+    "slug": "index-funds-vs-active",
+    "category": "Investing",
+    "publishedAt": "2026-05-11T12:00:00Z",
+    "excerpt": "A deep dive into why low-cost passive investing is the most reliable path to long-term wealth.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The statistics are clear: over a 15-year period, more than 90% of active managers fail to beat their benchmarks..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "The Hidden Costs of Home Ownership",
+    "slug": "hidden-costs-home-ownership",
+    "category": "Real Estate",
+    "publishedAt": "2026-05-12T09:00:00Z",
+    "excerpt": "Before you sign that mortgage, understand the property taxes, maintenance, and opportunity costs involved.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Owning a home is often called the American Dream, but for many, it can become a financial anchor if not approached with eyes wide open..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "How to Build a 6-Month Emergency Fund",
+    "slug": "build-emergency-fund",
+    "category": "Saving",
+    "publishedAt": "2026-05-13T14:00:00Z",
+    "excerpt": "A step-by-step guide to creating your financial safety net in record time.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Financial stability begins with the peace of mind that comes from knowing you're covered if life takes an unexpected turn..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Mastering the Debt Snowball Method",
+    "slug": "mastering-debt-snowball",
+    "category": "Debt",
+    "publishedAt": "2026-05-14T11:00:00Z",
+    "excerpt": "Why psychological wins matter more than interest rates when paying off debt.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The debt snowball method focuses on behavior modification. By paying off the smallest balances first, you build momentum..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "The FIRE Movement: Is it for You?",
+    "slug": "fire-movement-guide",
+    "category": "Retirement",
+    "publishedAt": "2026-05-15T08:00:00Z",
+    "excerpt": "Financial Independence, Retire Early. We break down the math and the mindset.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Retiring at 35 or 40 requires an aggressive savings rate and a minimalist lifestyle. Here's how to calculate your FIRE number..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Tax-Loss Harvesting Explained",
+    "slug": "tax-loss-harvesting",
+    "category": "Tax",
+    "publishedAt": "2026-05-16T15:00:00Z",
+    "excerpt": "Turn your investment losses into tax savings with this advanced strategy.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Tax-loss harvesting involves selling securities at a loss to offset capital gains tax. It's a key tool for high-net-worth investors..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Choosing Your First Brokerage Account",
+    "slug": "choosing-brokerage-account",
+    "category": "Investing",
+    "publishedAt": "2026-05-17T10:00:00Z",
+    "excerpt": "Vanguard vs. Fidelity vs. Schwab. Which one is best for your specific goals?",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Where you hold your money matters as much as what you invest in. We compare the fee structures and user interfaces of the big three..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "The Power of Compound Interest",
+    "slug": "power-compound-interest",
+    "category": "Investing",
+    "publishedAt": "2026-05-18T13:00:00Z",
+    "excerpt": "Einstein called it the eighth wonder of the world. See why time is your greatest asset.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Compound interest is interest on interest. The earlier you start, the less you actually have to save to reach your goals..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Rethinking Your Car Payment",
+    "slug": "rethinking-car-payment",
+    "category": "Debt",
+    "publishedAt": "2026-05-19T11:00:00Z",
+    "excerpt": "How that $600 monthly payment is costing you millions in retirement.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A car is a depreciating asset. Financing one for 72 months is one of the biggest wealth-killers in the modern economy..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Side Hustles That Actually Scale",
+    "slug": "scalable-side-hustles",
+    "category": "Saving",
+    "publishedAt": "2026-05-20T09:00:00Z",
+    "excerpt": "Moving beyond trading time for money to building assets that pay you while you sleep.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Not all side hustles are created equal. We look at digital products, affiliate marketing, and automated services..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Navigating High Inflation",
+    "slug": "navigating-high-inflation",
+    "category": "Economy",
+    "publishedAt": "2026-05-21T14:00:00Z",
+    "excerpt": "How to protect your purchasing power when the cost of living spikes.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Inflation erodes cash. We discuss TIPS, commodities, and equities as hedges against a devaluing currency..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "The Truth About Crypto in Your Portfolio",
+    "slug": "crypto-portfolio-truth",
+    "category": "Investing",
+    "publishedAt": "2026-05-22T10:00:00Z",
+    "excerpt": "Is it digital gold or a speculative bubble? Here's a balanced allocation strategy.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Bitcoin and Ethereum have matured as asset classes, but they remain highly volatile. We suggest a 1-5% capped allocation..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Optimizing Your 401(k) Match",
+    "slug": "optimizing-401k-match",
+    "category": "Retirement",
+    "publishedAt": "2026-05-23T12:00:00Z",
+    "excerpt": "Don't leave free money on the table. How to maximize employer contributions.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Your employer match is a guaranteed 100% return on investment. If you aren't contributing at least enough to get the full match, you're missing out..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "The Ethics of Sustainable Investing",
+    "slug": "sustainable-investing-ethics",
+    "category": "Investing",
+    "publishedAt": "2026-05-24T08:00:00Z",
+    "excerpt": "Can you grow your wealth and change the world at the same time? A look at ESG funds.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Environmental, Social, and Governance (ESG) investing is becoming mainstream. We evaluate the performance vs. impact trade-offs..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Surviving a Stock Market Crash",
+    "slug": "surviving-market-crash",
+    "category": "Investing",
+    "publishedAt": "2026-05-25T15:00:00Z",
+    "excerpt": "Why the best thing to do when the market drops is often nothing at all.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Bear markets are part of the cycle. Selling at the bottom locks in losses; staying the course captures the recovery..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "The Psychology of Money",
+    "slug": "psychology-of-money",
+    "category": "Saving",
+    "publishedAt": "2026-05-26T10:00:00Z",
+    "excerpt": "Why being 'smart' with money is 80% behavior and only 20% head knowledge.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Our relationship with money is formed in childhood. Understanding your money scripts is the first step to financial health..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Is a Master's Degree Worth the Debt?",
+    "slug": "masters-degree-roi",
+    "category": "Debt",
+    "publishedAt": "2026-05-27T13:00:00Z",
+    "excerpt": "A ROI analysis of graduate education across different industries.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Higher education is an investment in human capital. We look at which degrees have the shortest break-even points..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Teaching Your Kids About Finance",
+    "slug": "teaching-kids-finance",
+    "category": "Saving",
+    "publishedAt": "2026-05-28T11:00:00Z",
+    "excerpt": "How to raise money-smart children in a consumer-driven world.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "From allowances to opening their first custodial account, here's how to instill healthy financial habits early..."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Minimalism as a Financial Strategy",
+    "slug": "minimalism-financial-strategy",
+    "category": "Saving",
+    "publishedAt": "2026-05-29T09:00:00Z",
+    "excerpt": "How owning less can lead to having significantly more wealth and freedom.",
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Minimalism isn't just about clearing clutter; it's about intentional spending. When you stop buying things you don't need, your savings rate explodes..."
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -54,6 +54,9 @@ export default function AuthModal({ isOpen, onClose }) {
   return (
     <div 
       className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center animate__animated animate__fadeIn animate__faster" 
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="auth-modal-title"
       style={{ 
         zIndex: 99999, 
         background: 'rgba(5, 12, 26, 0.85)', 
@@ -82,17 +85,18 @@ export default function AuthModal({ isOpen, onClose }) {
             borderBottom: '3px solid var(--accent)'
           }}
         >
-          <div 
-            className="position-absolute top-0 end-0 p-3" 
-            style={{ cursor: 'pointer', color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s' }}
+          <button 
+            className="btn position-absolute top-0 end-0 p-3" 
+            style={{ color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s', background: 'transparent', border: 'none' }}
             onClick={onClose}
+            aria-label="Close authentication modal"
             onMouseOver={(e) => e.currentTarget.style.color = '#fff'}
             onMouseOut={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
           >
-            <i className="bi bi-x-lg" style={{ fontSize: '1.2rem' }}></i>
-          </div>
+            <i className="bi bi-x-lg" style={{ fontSize: '1.2rem' }} aria-hidden="true"></i>
+          </button>
           
-          <h3 className="fw-bold text-white mb-1 mt-2" style={{ fontFamily: 'var(--serif)', fontSize: '1.6rem', letterSpacing: '-0.02em' }}>
+          <h3 id="auth-modal-title" className="fw-bold text-white mb-1 mt-2" style={{ fontFamily: 'var(--serif)', fontSize: '1.6rem', letterSpacing: '-0.02em' }}>
             Welcome Back
           </h3>
           <p className="mb-0" style={{ fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.8)' }}>
@@ -106,8 +110,9 @@ export default function AuthModal({ isOpen, onClose }) {
             {error && <div className="alert alert-danger" style={{ fontSize: "0.85rem", padding: "0.5rem" }}>{error}</div>}
             
             <div className="mb-3 text-start">
-              <label className="form-label" style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>Email address</label>
+              <label htmlFor="auth-email" className="form-label" style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>Email address</label>
               <input 
+                id="auth-email"
                 type="email" 
                 className="form-control" 
                 placeholder="Enter your email" 
@@ -119,10 +124,11 @@ export default function AuthModal({ isOpen, onClose }) {
             </div>
             <div className="mb-4 text-start">
               <div className="d-flex justify-content-between">
-                <label className="form-label" style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>Password</label>
-                <a href="#" style={{ fontSize: "0.8rem", color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}>Forgot password?</a>
+                <label htmlFor="auth-password" className="form-label" style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--ink)" }}>Password</label>
+                <Link to="/forgot-password" style={{ fontSize: "0.8rem", color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}>Forgot password?</Link>
               </div>
               <input 
+                id="auth-password"
                 type="password" 
                 className="form-control" 
                 placeholder="••••••••" 

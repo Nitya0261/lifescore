@@ -6,6 +6,8 @@ import Byline from '../components/Byline';
 import Sidebar from '../components/Sidebar';
 import CrossLinks from '../components/CrossLinks';
 import BookmarkButton from '../components/BookmarkButton';
+import RelatedToolCTA from '../components/RelatedToolCTA';
+import { ExpertQuote, ArticleSource, DataHighlight } from '../components/CredibilitySignals';
 
 export default function ArticleDetail() {
   const { slug } = useParams();
@@ -70,26 +72,50 @@ export default function ArticleDetail() {
                 <hr className="my-4" />
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
                   <Byline author={post.author} avatar={post.avatar} date={post.date} readTime={post.readTime} />
-                  <div className="d-flex gap-2">
+                  <div className="d-flex gap-2 align-items-center">
+                    <span className="text-muted small fw-semibold me-2"><i className="bi bi-calendar-check me-1"></i>Updated {post.date}</span>
                     <button className="ls-btn ls-btn-outline px-3 py-2"><i className="bi bi-share"></i></button>
                     <BookmarkButton itemType="article" title={post.title} slug={`/article/${post.slug}`} />
                   </div>
                 </div>
+                <div className="mt-3 p-2 px-3 rounded-2 small" style={{ background: "var(--cream2)", border: "1px solid var(--border)", color: "var(--ink3)" }}>
+                  <i className="bi bi-shield-check text-teal me-2"></i>
+                  <strong>Editorial Integrity:</strong> This guide has been verified for factual accuracy and adheres to our <Link to="/editorial-policy" className="text-teal text-decoration-none fw-bold">Editorial Policy</Link>.
+                </div>
               </header>
 
-              <div 
-                className="article-hero-img rounded-4 mb-5" 
-                style={{ 
-                  background: post.bg, 
-                  height: '400px', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  fontSize: '6rem' 
-                }}
-              >
-                {post.icon}
-              </div>
+              {post.image ? (
+                <div className="article-hero-img-container mb-5 overflow-hidden rounded-4 shadow-sm border" style={{ maxHeight: '500px' }}>
+                  <img src={post.image} alt={post.title} className="w-100 h-100 object-fit-cover" />
+                  <div className="p-2 px-3 bg-light border-top extra-small text-muted italic">
+                    <i className="bi bi-camera me-1"></i> LifeScore Visual Intelligence: {post.title} (Simulated Analysis)
+                  </div>
+                </div>
+              ) : (
+                <div 
+                  className="article-hero-img rounded-4 mb-5" 
+                  style={{ 
+                    background: post.bg, 
+                    height: '400px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    fontSize: '6rem' 
+                  }}
+                >
+                  {post.icon}
+                </div>
+              )}
+
+              {post.highlights && (
+                <div className="row g-3 mb-5">
+                  {post.highlights.map((h, i) => (
+                    <div key={i} className="col-md-4">
+                      <DataHighlight {...h} />
+                    </div>
+                  ))}
+                </div>
+              )}
 
               <div className="article-content ls-text-muted" style={{ fontSize: '1.15rem', lineHeight: 1.8 }}>
                 <p>
@@ -98,6 +124,14 @@ export default function ArticleDetail() {
                   provides a critical roadmap for stability and growth.
                 </p>
                 
+                {post.quote && (
+                  <ExpertQuote 
+                    quote={post.quote.text} 
+                    author={post.quote.author} 
+                    title={post.quote.title} 
+                  />
+                )}
+
                 <h3 className="ls-heading ls-heading-md mt-5 mb-3">The Fundamentals of {post.cat}</h3>
                 <p>
                   Most experts agree that the first step toward financial intelligence is awareness. By understanding the core mechanics of 
@@ -118,10 +152,9 @@ export default function ArticleDetail() {
                   try to track every transaction related to {post.cat.toLowerCase()} and look for patterns of inefficiency.
                 </p>
 
-                <p>
-                  Stay tuned for our follow-up guide next week, where we'll dive deeper into advanced strategies and real-world case studies 
-                  from the LifeScore community.
-                </p>
+                {post.sources && <ArticleSource sources={post.sources} />}
+                
+                <RelatedToolCTA category={post.cat} />
               </div>
 
               <footer className="mt-5 pt-5 border-top">

@@ -4,28 +4,49 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
 
+import { createClient } from '@sanity/client';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 
-const ROUTES = [
+const STATIC_ROUTES = [
   '/',
+  '/blog',
   '/saving-money',
   '/investing',
-  '/debt-freedom',
+  '/debt',
   '/real-estate',
   '/retirement',
   '/side-income',
   '/glossary',
   '/tools',
   '/markets',
-  '/find-advisor',
+  '/advisor',
   '/about',
   '/contact',
   '/privacy',
-  '/terms'
+  '/terms',
+  '/disclaimer'
 ];
+
+const sanityClient = createClient({
+  projectId: 't18y5tol',
+  dataset: 'production',
+  useCdn: false,
+  apiVersion: '2024-05-06',
+});
+
+async function getDynamicRoutes() {
+  try {
+    const posts = await sanityClient.fetch('*[_type == "blogPost"]{ "slug": slug.current }');
+    return posts.map(p => `/blog/${p.slug}`);
+  } catch (err) {
+    console.error('⚠️ Could not fetch dynamic blog routes from Sanity:', err.message);
+    return [];
+  }
+}
 
 const MIME_TYPES = {
   '.html': 'text/html',
@@ -92,10 +113,13 @@ async function generateIndexedPages() {
 
   // Track canonical entries for sitemap generation
   const sitemapUrls = [];
-  const baseUrl = 'https://lifescore.platform';
+  const baseUrl = 'https://lifescore-ten.vercel.app';
 
   // 3. Pre-render individual scope routes
-  for (const route of ROUTES) {
+  const dynamicRoutes = await getDynamicRoutes();
+  const allRoutes = [...STATIC_ROUTES, ...dynamicRoutes];
+  
+  for (const route of allRoutes) {
     const targetUrl = `http://127.0.0.1:${PORT}${route}`;
     console.log(`🌐 Crawling target route: ${route}`);
 

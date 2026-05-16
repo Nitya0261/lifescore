@@ -223,7 +223,7 @@
 /* News ticker */
 [data-theme='dark'] .news-ticker { background: #080808; }
 /* ─── GLOBAL OVERRIDES ─── */
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -241,14 +241,15 @@ button {
   transition: all 0.2s ease;
 }
 
-html {
-  scroll-behavior: smooth;
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--sans);
-  overflow-x: hidden;
 }
 ::selection {
   background: rgba(192, 57, 43, 0.15);
@@ -267,11 +268,17 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 0;
   pointer-events: none;
   opacity: 0.35;
+}
+
+/* Ensure all media stays within viewport */
+img, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
 }
 
 /* ROOT LAYOUT */
@@ -1748,6 +1755,28 @@ footer {
   .hero-deck {
     display: none;
   }
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .row {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+  .row > * {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  /* Fix nav search on small screens */
+  .nav-search input {
+    width: 120px;
+  }
+  .nav-search input:focus {
+    width: 160px;
+  }
+  .ls-logo {
+    font-size: 1.4rem !important;
+  }
 }
 /* ─── LIFESCORE PREMIUM 3D DESIGN SYSTEM ─── */
 
@@ -1768,6 +1797,13 @@ footer {
   overflow: hidden;
   height: 100%;
   position: relative;
+}
+
+@media (max-width: 575px) {
+  .ls-card {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 }
 
 [data-theme='dark'] .ls-card,

@@ -64,7 +64,7 @@ export default function AboutUs() {
           <div className="row justify-content-center mb-5">
             <div className="col-lg-8 text-center">
               <h2 className="fw-bold mb-3" style={{ fontFamily: "var(--serif)", color: "var(--ink)", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}>Our Guiding Principles</h2>
-              <p className="text-muted fs-5">We hold ourselves to absolute standards of objective analysis and community empowerment.</p>
+              <p className="text-muted fs-5">We hold ourselves to absolute standards of objective analysis and community empowerment. Every guide is bound by our <Link to="/editorial-policy" className="text-teal text-decoration-none fw-bold">Editorial Policy</Link>.</p>
             </div>
           </div>
 

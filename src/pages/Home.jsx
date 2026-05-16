@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MoodBar from "../components/MoodBar";
 import HeroSection from "../components/HeroSection";
-import SmartAlerts from "../components/SmartAlerts";
 import BlogGrid from "../components/BlogGrid";
-import SimulatorSection from "../components/SimulatorSection";
-import NewsSection from "../components/NewsSection";
-import CommunitySection from "../components/CommunitySection";
 import SEO from "../components/SEO";
 import API_BASE_URL from "../config/api";
 
@@ -41,132 +36,88 @@ export default function Home() {
         title="Personal Finance & Life Intelligence Platform" 
         description="LifeScore helps you track your real net worth, calculate SIP trajectories, and compare ultimate retirement options using tailored financial telemetry."
         url="https://lifescore.app"
-      >
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "LifeScore",
-            "url": "https://lifescore.app",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://lifescore.app/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          })}
-        </script>
-      </SEO>
-      <MoodBar />
-      
-      {/* Global Live Announcements Broadcast Banner */}
-      {announcements.length > 0 && (
-        <div style={{ borderBottom: "1px solid var(--border)" }}>
-          {announcements.map((ann) => (
-            <div 
-              key={ann._id} 
-              style={{ 
-                padding: "0.6rem 1rem", 
-                background: ann.type === 'danger' ? '#fef2f2' : ann.type === 'warning' ? '#fffbeb' : ann.type === 'success' ? '#f0fdf4' : '#eff6ff',
-                color: ann.type === 'danger' ? '#991b1b' : ann.type === 'warning' ? '#b45309' : ann.type === 'success' ? '#166534' : '#1e40af',
-                borderBottom: "1px solid rgba(0,0,0,0.05)",
-                textAlign: "center",
-                fontWeight: 700,
-                fontSize: "0.85rem"
-              }}
-              className="d-flex justify-content-center align-items-center gap-2 flex-wrap"
-            >
-              <i className="bi bi-megaphone-fill"></i>
-              <span>{ann.message}</span>
-              {ann.link && (
-                <a 
-                  href={ann.link} 
-                  target={ann.link.startsWith("http") ? "_blank" : "_self"} 
-                  rel="noreferrer" 
-                  className="ms-2 text-decoration-underline fw-bold"
-                  style={{ color: "inherit" }}
-                >
-                  {ann.linkText || "Learn More"} →
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      />
 
       <HeroSection />
-      <SmartAlerts />
 
-      {/* Quick Access Ribbon */}
-      <section className="quick-links-section py-4 border-bottom" style={{ background: "var(--cream2)" }}>
+      {/* Primary Conversion Path: The Growth Engine */}
+      <section className="py-5 py-md-6" style={{ background: "var(--card-bg)" }}>
         <div className="container">
-          <div className="d-flex flex-wrap justify-content-center gap-3">
-            {quickLinks.map((ql) => (
-              <Link
-                key={ql.path}
-                to={ql.path}
-                className="ls-card d-flex align-items-center gap-2 text-decoration-none px-4 py-2"
-                style={{
-                  borderRadius: "50px",
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  height: "auto",
-                  border: `1px solid var(--border)`
-                }}
-              >
-                <i className={`bi ${ql.icon}`} style={{ color: ql.color }}></i>
-                {ql.label}
-              </Link>
-            ))}
+          <div className="row justify-content-center text-center mb-5">
+            <div className="col-lg-8">
+              <h2 className="ls-heading ls-heading-lg mb-3">Intelligence Toolkit</h2>
+              <p className="text-muted fs-5 mb-0">High-precision simulators to model your path to financial freedom.</p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <NewsSection />
-
-      <div className="blog-grid-section">
-        <BlogGrid />
-      </div>
-      <SimulatorSection />
-
-      {/* Comparison Highlights */}
-      <section className="ls-section-alt">
-        <div className="container">
-          <h3 className="ls-heading ls-heading-lg text-center mb-5">
-            Popular Comparisons
-          </h3>
-          <div className="row g-4 justify-content-center">
+          
+          <div className="row g-4">
             {[
-              { label: "Roth IRA vs 401(k)", slug: "roth-ira-vs-401k" },
-              { label: "ETF vs Mutual Fund", slug: "etf-vs-mutual-fund" },
-            ].map((c) => (
-              <div key={c.slug} className="col-md-4">
-                <Link
-                  to={`/compare/${c.slug}`}
-                  className="ls-card text-decoration-none"
-                >
-                  <div className="card-body p-4 text-center">
-                    <i className="bi bi-arrow-left-right mb-2 d-block" style={{ fontSize: "2rem", color: "var(--teal)" }}></i>
-                    <h5 className="ls-heading ls-heading-md mb-0">{c.label}</h5>
+              { title: "SIP Calculator", desc: "Project wealth from regular investments.", path: "/tools/sip-calculator", icon: "bi-calculator", color: "var(--teal)", bg: "var(--cream2)" },
+              { title: "Budget Tracker", desc: "Master your cashflow with 50/30/20 rules.", path: "/dashboard/budget", icon: "bi-pie-chart", color: "var(--teal)", bg: "var(--cream2)" },
+              { title: "Retirement Goal", desc: "Find your magic number for total freedom.", path: "/tools/retirement-number", icon: "bi-umbrella", color: "var(--teal)", bg: "var(--cream2)" },
+              { title: "Debt Payoff", desc: "Compare Snowball vs. Avalanche strategies.", path: "/tools/debt-payoff", icon: "bi-fire", color: "var(--teal)", bg: "var(--cream2)" },
+              { title: "Emergency Fund", desc: "Calculate your safety net in 30 seconds.", path: "/tools/emergency-fund", icon: "bi-shield-check", color: "var(--teal)", bg: "var(--cream2)" },
+              { title: "Net Worth Tracker", desc: "See your entire financial life in one place.", path: "/tools/net-worth", icon: "bi-wallet2", color: "var(--teal)", bg: "var(--cream2)" }
+            ].map((tool, idx) => (
+              <div key={idx} className="col-md-4 col-sm-6">
+                <Link to={tool.path} className="ls-card h-100 d-block text-decoration-none transition-all p-4 text-center" style={{ background: "var(--card-bg)", border: "1px solid var(--border)", borderRadius: "24px" }}>
+                  <div className="mb-3 d-inline-flex align-items-center justify-content-center" style={{ width: "64px", height: "64px", borderRadius: "16px", background: "var(--cream)", color: tool.color, fontSize: "1.75rem" }}>
+                    <i className={`bi ${tool.icon}`}></i>
                   </div>
+                  <h5 className="ls-heading ls-heading-sm mb-2">{tool.title}</h5>
+                  <p className="text-muted small mb-0">{tool.desc}</p>
                 </Link>
               </div>
             ))}
-            <div className="col-md-4">
-              <Link
-                to="/glossary"
-                className="ls-card text-decoration-none"
-              >
-                <div className="card-body p-4 text-center">
-                  <i className="bi bi-book mb-2 d-block" style={{ fontSize: "2rem", color: "var(--gold)" }}></i>
-                  <h5 className="ls-heading ls-heading-md mb-0">Financial Glossary A–Z</h5>
-                </div>
-              </Link>
-            </div>
+          </div>
+          
+          <div className="text-center mt-5">
+            <Link to="/tools" className="btn btn-outline-dark px-5 py-3 rounded-pill fw-bold">
+              View All Financial Tools <i className="bi bi-arrow-right ms-2"></i>
+            </Link>
           </div>
         </div>
       </section>
 
-      <CommunitySection />
+      {/* Editorial Content Layer */}
+      <section className="py-5 py-md-6" style={{ background: "var(--cream2)", borderTop: "1px solid var(--border)" }}>
+        <div className="container">
+          <div className="row align-items-end mb-5">
+            <div className="col-md-8">
+              <h2 className="ls-heading ls-heading-lg mb-2">Latest Insights</h2>
+              <p className="text-muted mb-0">Fresh perspectives on wealth, career, and life strategy.</p>
+            </div>
+            <div className="col-md-4 text-md-end mt-3 mt-md-0">
+              <Link to="/blog" className="text-decoration-none fw-bold text-dark">Browse Archive &rarr;</Link>
+            </div>
+          </div>
+          <BlogGrid />
+        </div>
+      </section>
+
+      {/* Comparison & Literacy */}
+      <section className="py-5 py-md-6" style={{ background: "var(--card-bg)", borderTop: "1px solid var(--border)" }}>
+        <div className="container">
+          <div className="row g-4 justify-content-center">
+            {[
+              { label: "Roth IRA vs 401(k)", slug: "roth-ira-vs-401k", icon: "bi-arrow-left-right", color: "var(--teal)" },
+              { label: "ETF vs Mutual Fund", slug: "etf-vs-mutual-fund", icon: "bi-arrow-left-right", color: "var(--teal)" },
+              { label: "Financial Glossary A–Z", path: "/glossary", icon: "bi-book", color: "var(--teal)" }
+            ].map((c, idx) => (
+              <div key={idx} className="col-md-4">
+                <Link
+                  to={c.path || `/compare/${c.slug}`}
+                  className="ls-card text-decoration-none h-100 d-block p-4 text-center"
+                  style={{ border: "1px solid var(--border)", borderRadius: "20px" }}
+                >
+                  <i className={`bi ${c.icon} mb-3 d-block`} style={{ fontSize: "2rem", color: c.color }}></i>
+                  <h5 className="ls-heading ls-heading-md mb-0">{c.label}</h5>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }

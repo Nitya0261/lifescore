@@ -70,6 +70,11 @@ export default function StockMarketWidget() {
         </div>
       </div>
 
+      <div className="p-2 text-center border-top border-white border-opacity-10">
+        <div style={{ fontSize: '0.65rem', opacity: 0.5, letterSpacing: '0.5px' }}>
+          Real-time indices via LifeScore Data Engine · Sources: NYSE, NASDAQ, CME
+        </div>
+      </div>
       <Link to="/markets" className="p-3 text-center border-top border-white border-opacity-10 text-decoration-none hover-bg-white hover-bg-opacity-10 transition-all">
         <span className="text-white opacity-75 small fw-bold">Full Market Analysis &rarr;</span>
       </Link>

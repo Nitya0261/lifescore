@@ -6,6 +6,7 @@ import SEO from '../components/SEO';
 import NewsletterForm from '../components/NewsletterForm';
 import CommentsSection from '../components/CommentsSection';
 import BookmarkButton from '../components/BookmarkButton';
+import RelatedToolCTA from '../components/RelatedToolCTA';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -15,7 +16,6 @@ export default function BlogPost() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // GROQ Query to fetch post by slug and related posts in one go
     const query = `{
       "post": *[_type == "blogPost" && slug.current == $slug][0]{
         title,
@@ -23,6 +23,8 @@ export default function BlogPost() {
         publishedAt,
         "authorName": author->name,
         "authorSlug": author->slug.current,
+        "authorBio": author->bio,
+        "authorImage": author->image.asset->url,
         category,
         body,
         seo
@@ -142,16 +144,23 @@ export default function BlogPost() {
                     )}
                     <span className="text-muted mx-1">•</span>
                     <span style={{ color: "var(--ink3)", fontSize: "0.85rem" }}>
-                      {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                      Updated on {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
                   
                   {/* Bookmark Button */}
-                  <BookmarkButton 
-                    itemType="article" 
-                    title={post.title} 
-                    slug={`/blog/${post.slug}`} 
-                  />
+                  <div className="d-flex gap-2">
+                    <BookmarkButton 
+                      itemType="article" 
+                      title={post.title} 
+                      slug={`/blog/${post.slug}`} 
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4 p-2 px-3 rounded-2 small" style={{ background: "var(--cream2)", border: "1px solid var(--border)", color: "var(--ink3)" }}>
+                  <i className="bi bi-shield-check text-teal me-2"></i>
+                  <strong>Accuracy Guarantee:</strong> This article follows our <Link to="/editorial-policy" className="text-teal text-decoration-none fw-bold">Editorial Standards</Link> for financial reporting.
                 </div>
                 
                 <h1 style={{ fontFamily: "var(--serif)", fontWeight: 900, marginBottom: "2rem", color: "var(--ink)" }}>
@@ -200,12 +209,40 @@ export default function BlogPost() {
                   )}
                 </div>
 
+                <RelatedToolCTA category={post.category} />
+
                 <hr className="my-5" />
                 <div className="p-4 mb-5" style={{ background: "var(--cream2)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)" }}>
                   <h4 className="fw-bold mb-2">Did you enjoy this article?</h4>
                   <p className="text-muted mb-4">Get our top 5 articles and one actionable finance tip delivered straight to your inbox every Monday.</p>
                   <NewsletterForm source="blog_post_footer" />
                 </div>
+
+                {/* Author Bio Section */}
+                {post.authorName && (
+                  <div className="author-bio-footer p-4 rounded-4 mb-5" style={{ border: "1px solid var(--border)", background: "var(--card-bg)" }}>
+                    <div className="d-flex align-items-center gap-4 flex-wrap flex-sm-nowrap">
+                      <div className="flex-shrink-0">
+                        {post.authorImage ? (
+                          <img src={post.authorImage} alt={post.authorName} style={{ width: "80px", height: "80px", borderRadius: "50%", objectFit: "cover", border: "4px solid var(--cream2)" }} />
+                        ) : (
+                          <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "var(--teal)", color: "#fff", display: "flex", alignItems: "center", justifyCenter: "center", fontSize: "2rem", fontWeight: 700 }}>
+                            {post.authorName.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <h5 className="fw-bold mb-1" style={{ color: "var(--ink)" }}>About {post.authorName}</h5>
+                        <p className="text-muted mb-3" style={{ fontSize: "0.95rem", lineHeight: 1.6 }}>
+                          {post.authorBio || "Financial analyst and columnist at LifeScore, specializing in market trends and personal wealth growth strategies."}
+                        </p>
+                        <Link to={`/author/${post.authorSlug}`} className="btn btn-sm btn-outline-dark rounded-pill px-3">
+                          View All Articles by {post.authorName}
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {/* Comments Engine */}
                 <CommentsSection slug={post.slug} />

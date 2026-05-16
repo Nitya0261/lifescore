@@ -19,7 +19,7 @@ export default function BurnoutWidget() {
 
   return (
     <div 
-      className="sidebar-widget mb-0 d-flex flex-column h-100"
+      className="sidebar-widget mb-0 d-flex flex-column"
       style={{ 
         position: "relative", 
         overflow: "hidden", 

@@ -14,6 +14,12 @@ export default function AIChatbot() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const handleToggle = () => setIsOpen(!isOpen);
+    window.addEventListener('toggle-chatbot', handleToggle);
+    return () => window.removeEventListener('toggle-chatbot', handleToggle);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -54,33 +60,6 @@ export default function AIChatbot() {
 
   return (
     <>
-      {/* Floating Action Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          position: "fixed",
-          bottom: "2rem",
-          right: "2rem",
-          width: "60px",
-          height: "60px",
-          borderRadius: "50%",
-          background: "linear-gradient(135deg, var(--teal), #0d382b)",
-          color: "#fff",
-          border: "none",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-          fontSize: "1.8rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          zIndex: 1000,
-          transition: "transform 0.2s ease"
-        }}
-        onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-        onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
-      >
-        <i className={isOpen ? "bi bi-x-lg" : "bi bi-robot"}></i>
-      </button>
 
       {/* Chat Window */}
       {isOpen && (
