@@ -115,7 +115,7 @@ const AppContent = ({ canvasRef }) => {
               <Route path="/terms" element={<TermsConditions />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
               <Route path="/editorial-policy" element={<EditorialPolicy />} />
-              <Route path="/calculate-lifescore" element={<LifeScoreFunnel />} />
+              <Route path="/lifescore-funnel" element={<LifeScoreFunnel />} />
             </Routes>
           </Suspense>
         </main>

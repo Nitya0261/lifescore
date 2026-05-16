@@ -42,8 +42,8 @@ export default function BlogGrid() {
                     Personal Finance Guides
                   </h2>
                 </div>
-                <a
-                  href="#"
+                <Link
+                  to="/blog"
                   style={{
                     fontSize: "0.78rem",
                     color: "var(--accent)",
@@ -52,7 +52,7 @@ export default function BlogGrid() {
                   }}
                 >
                   View all articles →
-                </a>
+                </Link>
               </div>
 
               {/* Category tabs */}
@@ -170,6 +170,8 @@ export default function BlogGrid() {
                           ) : (
                             <div
                               className="blog-card-img-placeholder"
+                              role="img"
+                              aria-label={`Illustration for ${post.title}`}
                               style={{
                                 background: post.bg,
                                 minHeight: "140px",
@@ -237,6 +239,8 @@ export default function BlogGrid() {
                         ) : (
                           <div
                             className="blog-card-img-placeholder"
+                            role="img"
+                            aria-label={`Illustration for ${post.title}`}
                             style={{
                               background: post.bg,
                               height: "100%",

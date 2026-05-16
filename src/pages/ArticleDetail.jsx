@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { BLOG_POSTS, TRENDING } from '../data/mockData';
 import CatTag from '../components/CatTag';
 import Byline from '../components/Byline';
@@ -8,9 +8,11 @@ import CrossLinks from '../components/CrossLinks';
 import BookmarkButton from '../components/BookmarkButton';
 import RelatedToolCTA from '../components/RelatedToolCTA';
 import { ExpertQuote, ArticleSource, DataHighlight } from '../components/CredibilitySignals';
+import SEO from '../components/SEO';
 
 export default function ArticleDetail() {
   const { slug } = useParams();
+  const location = useLocation();
   const [post, setPost] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -39,8 +41,31 @@ export default function ArticleDetail() {
     );
   }
 
+  const canonicalUrl = `https://lifescore-ten.vercel.app/article/${post.slug}`;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.deck,
+    "author": { "@type": "Person", "name": post.author },
+    "publisher": { "@type": "Organization", "name": "LifeScore", "url": "https://lifescore-ten.vercel.app" },
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
+    "image": post.image || "https://lifescore-ten.vercel.app/og-default.png"
+  };
+
   return (
     <div className="article-page">
+      <SEO
+        title={post.title}
+        description={post.deck}
+        url={canonicalUrl}
+        image={post.image}
+        type="article"
+      >
+        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+      </SEO>
       {/* Reading Progress Bar */}
       <div 
         className="reading-progress-bar" 
@@ -74,7 +99,7 @@ export default function ArticleDetail() {
                   <Byline author={post.author} avatar={post.avatar} date={post.date} readTime={post.readTime} />
                   <div className="d-flex gap-2 align-items-center">
                     <span className="text-muted small fw-semibold me-2"><i className="bi bi-calendar-check me-1"></i>Updated {post.date}</span>
-                    <button className="ls-btn ls-btn-outline px-3 py-2"><i className="bi bi-share"></i></button>
+                    <button className="ls-btn ls-btn-outline px-3 py-2" aria-label="Share this article"><i className="bi bi-share" aria-hidden="true"></i></button>
                     <BookmarkButton itemType="article" title={post.title} slug={`/article/${post.slug}`} />
                   </div>
                 </div>
@@ -172,8 +197,9 @@ export default function ArticleDetail() {
                   <h4 className="ls-heading mb-2 text-white">Enjoyed this guide?</h4>
                   <p className="opacity-75 mb-3">Subscribe to our newsletter and never miss a money move.</p>
                   <div className="d-flex flex-wrap gap-2">
-                    <input type="email" placeholder="Your email" className="form-control flex-grow-1" style={{ minWidth: '200px', maxWidth: '300px' }} />
-                    <button className="ls-btn ls-btn-teal">Join 10k+ Readers</button>
+                    <label htmlFor="article-newsletter-email" className="visually-hidden">Email address</label>
+                    <input id="article-newsletter-email" type="email" name="email" placeholder="Your email" className="form-control flex-grow-1" style={{ minWidth: '200px', maxWidth: '300px' }} autoComplete="email" required />
+                    <button type="submit" className="ls-btn ls-btn-teal">Join 10k+ Readers</button>
                   </div>
                 </div>
               </footer>
@@ -192,7 +218,7 @@ export default function ArticleDetail() {
                   <ul className="list-unstyled mb-0">
                     {TRENDING.slice(0,3).map(t => (
                       <li key={t.id} className="mb-3">
-                        <Link to="#" className="text-decoration-none text-dark fw-bold small hover-teal">{t.title}</Link>
+                        <Link to={t.slug ? `/article/${t.slug}` : "/blog"} className="text-decoration-none text-dark fw-bold small hover-teal">{t.title}</Link>
                         <div className="ls-text-muted mt-1" style={{ fontSize: '0.7rem' }}>{t.time} read · {t.date}</div>
                       </li>
                     ))}

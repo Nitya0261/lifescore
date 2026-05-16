@@ -2,6 +2,7 @@ import React from "react";
 import BlogGrid from "../components/BlogGrid";
 import CrossLinks from "../components/CrossLinks";
 import BookmarkButton from "../components/BookmarkButton";
+import SEO from "../components/SEO";
 
 export default function Investing() {
   const stats = [
@@ -13,6 +14,11 @@ export default function Investing() {
 
   return (
     <div style={{ background: "var(--cream)" }}>
+      <SEO
+        title="Investing — Stocks, ETFs & Wealth Building"
+        description="Learn how to grow your wealth through smart investing. Expert guides on stocks, ETFs, mutual funds, and portfolio strategies for 2026."
+        url="https://lifescore-ten.vercel.app/investing"
+      />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #1a3a5c, #042c53)", color: "#fff", padding: "4rem 0" }}>
         <div className="container">

@@ -1,6 +1,7 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
 import CrossLinks from "../components/CrossLinks";
+import SEO from "../components/SEO";
 
 export default function Debt() {
   const stats = [
@@ -12,6 +13,11 @@ export default function Debt() {
 
   return (
     <div style={{ background: "var(--cream)" }}>
+      <SEO
+        title="Debt Payoff — Strategies to Get Debt Free"
+        description="Crush your high-interest debt with proven strategies like Snowball and Avalanche methods. Reclaim your financial freedom starting today."
+        url="https://lifescore-ten.vercel.app/debt"
+      />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #c0392b, #4a1b0c)", color: "#fff", padding: "4rem 0" }}>
         <div className="container">

@@ -1,6 +1,7 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
 import CrossLinks from "../components/CrossLinks";
+import SEO from "../components/SEO";
 
 export default function Retirement() {
   const stats = [
@@ -12,6 +13,11 @@ export default function Retirement() {
 
   return (
     <div style={{ background: "var(--cream)" }}>
+      <SEO
+        title="Retirement & FIRE — Planning Your Financial Freedom"
+        description="Plan your exit strategy with 401(k), IRA, and FIRE guides. From contribution limits to early retirement calculators, updated for 2026."
+        url="https://lifescore-ten.vercel.app/retirement"
+      />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #1a3a5c, #d4a017)", color: "#fff", padding: "4rem 0" }}>
         <div className="container">

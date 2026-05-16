@@ -1,6 +1,7 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
 import CrossLinks from "../components/CrossLinks";
+import SEO from "../components/SEO";
 
 export default function SideIncome() {
   const stats = [
@@ -12,6 +13,11 @@ export default function SideIncome() {
 
   return (
     <div style={{ background: "var(--cream)" }}>
+      <SEO
+        title="Side Income — Freelancing, Passive Income & Hustles"
+        description="Discover legitimate ways to increase your cash flow. From freelancing and consulting to building passive income streams that run while you sleep."
+        url="https://lifescore-ten.vercel.app/side-income"
+      />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #6b35a3, #3d1a6e)", color: "#fff", padding: "4rem 0" }}>
         <div className="container">

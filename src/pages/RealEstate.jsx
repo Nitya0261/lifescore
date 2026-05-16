@@ -1,6 +1,7 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
 import CrossLinks from "../components/CrossLinks";
+import SEO from "../components/SEO";
 
 export default function RealEstate() {
   const stats = [
@@ -12,6 +13,11 @@ export default function RealEstate() {
 
   return (
     <div style={{ background: "var(--cream)" }}>
+      <SEO
+        title="Real Estate — Housing Market & Mortgage Insights"
+        description="Navigate the housing market with confidence. Track mortgage rates, compare rent vs buy, and find the best real estate strategies for 2026."
+        url="https://lifescore-ten.vercel.app/real-estate"
+      />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #5a3e28, #2d1a0e)", color: "#fff", padding: "4rem 0" }}>
         <div className="container">

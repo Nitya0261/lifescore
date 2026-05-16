@@ -29,13 +29,13 @@ export default function StockMarketWidget() {
       <div className="p-4 flex-grow-1">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
-            <span className="badge bg-danger mb-1" style={{ fontSize: '0.6rem', letterSpacing: '1px' }}>
-              <i className="bi bi-record-fill me-1"></i> LIVE
+            <span className="badge bg-secondary mb-1" style={{ fontSize: '0.6rem', letterSpacing: '1px' }}>
+              <i className="bi bi-graph-up me-1"></i> DEMO DATA
             </span>
             <h5 className="ls-heading mb-0 text-white" style={{ fontSize: '1.2rem' }}>Global Markets</h5>
           </div>
-          <Link to="/markets" className="text-white opacity-50 hover-opacity-100 transition-all">
-            <i className="bi bi-arrow-up-right-circle" style={{ fontSize: '1.4rem' }}></i>
+          <Link to="/markets" className="text-white opacity-50 hover-opacity-100 transition-all" aria-label="View full market analysis">
+            <i className="bi bi-arrow-up-right-circle" style={{ fontSize: '1.4rem' }} aria-hidden="true"></i>
           </Link>
         </div>
 
@@ -72,7 +72,7 @@ export default function StockMarketWidget() {
 
       <div className="p-2 text-center border-top border-white border-opacity-10">
         <div style={{ fontSize: '0.65rem', opacity: 0.5, letterSpacing: '0.5px' }}>
-          Real-time indices via LifeScore Data Engine · Sources: NYSE, NASDAQ, CME
+          Simulated data for demonstration only · Not real-time · Not financial advice
         </div>
       </div>
       <Link to="/markets" className="p-3 text-center border-top border-white border-opacity-10 text-decoration-none hover-bg-white hover-bg-opacity-10 transition-all">

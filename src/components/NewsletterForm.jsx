@@ -52,9 +52,13 @@ export default function NewsletterForm({ source = "website" }) {
       ) : (
         <form onSubmit={handleSubscribe} className="d-flex flex-column gap-2 m-0 p-0">
           <div className="position-relative d-flex align-items-center" style={{ background: "rgba(255,255,255,0.7)", borderRadius: "10px", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.02)" }}>
-            <i className="bi bi-envelope position-absolute text-muted" style={{ left: "12px", fontSize: "0.9rem", zIndex: 2 }}></i>
+            <label htmlFor="newsletter-email-input" className="visually-hidden">Email address for newsletter</label>
+            <i className="bi bi-envelope position-absolute text-muted" style={{ left: "12px", fontSize: "0.9rem", zIndex: 2 }} aria-hidden="true"></i>
             <input 
+              id="newsletter-email-input"
               type="email" 
+              name="email"
+              autoComplete="email"
               className="form-control shadow-none border-0 bg-transparent ps-5" 
               placeholder="Enter email for your weekly plan..." 
               value={email}

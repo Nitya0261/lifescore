@@ -92,7 +92,7 @@ export default function Navbar() {
                 onClick={() => window.dispatchEvent(new CustomEvent('toggle-search'))}
                 aria-label="Search"
               >
-                <i className="bi bi-search" style={{ fontSize: "0.9rem" }}></i>
+                <i className="bi bi-search" style={{ fontSize: "0.9rem" }} aria-hidden="true"></i>
               </button>
 
               <button 
@@ -101,7 +101,7 @@ export default function Navbar() {
                 onClick={() => window.dispatchEvent(new CustomEvent('toggle-chatbot'))}
                 aria-label="AI Assistant"
               >
-                <i className="bi bi-robot" style={{ fontSize: "0.9rem" }}></i>
+                <i className="bi bi-robot" style={{ fontSize: "0.9rem" }} aria-hidden="true"></i>
               </button>
 
               <div className="dropdown">
@@ -111,7 +111,7 @@ export default function Navbar() {
                   data-bs-toggle="dropdown"
                   aria-label="Settings and Tools"
                 >
-                  <i className="bi bi-three-dots-vertical" style={{ fontSize: "1rem" }}></i>
+                  <i className="bi bi-three-dots-vertical" style={{ fontSize: "1rem" }} aria-hidden="true"></i>
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end shadow-lg border-0 p-3 rounded-4 mt-2" style={{ minWidth: "240px" }}>
                   <li>
@@ -164,7 +164,7 @@ export default function Navbar() {
                 data-bs-target="#mobileMenu"
                 aria-label="Toggle mobile menu"
               >
-                <i className="bi bi-list" style={{ fontSize: "1.2rem" }}></i>
+                <i className="bi bi-list" style={{ fontSize: "1.2rem" }} aria-hidden="true"></i>
               </button>
             </div>
           </div>
