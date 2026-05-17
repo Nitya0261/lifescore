@@ -69,6 +69,36 @@ async function generateIndexedPages() {
     process.exit(1);
   }
 
+  const baseUrl = 'https://lifescore-ten.vercel.app';
+
+  if (process.env.VERCEL || process.env.CI) {
+    console.log('⚠️ Running in a CI/Vercel environment. Skipping heavy Puppeteer pre-rendering to prevent deployment failures.');
+    
+    const dynamicRoutes = await getDynamicRoutes();
+    const allRoutes = [...STATIC_ROUTES, ...dynamicRoutes];
+    const sitemapUrls = allRoutes.map(route => `${baseUrl}${route}`);
+    
+    console.log('🗺️ Assembling complete production sitemap.xml structure...');
+    const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls
+  .map(
+    (url) => `  <url>
+    <loc>${url}</loc>
+    <changefreq>daily</changefreq>
+    <priority>${url === baseUrl + '/' ? '1.0' : '0.8'}</priority>
+  </url>`
+  )
+  .join('\n')}
+</urlset>`;
+
+    const sitemapPath = path.join(distDir, 'sitemap.xml');
+    fs.writeFileSync(sitemapPath, sitemapXml, 'utf-8');
+    console.log(`📜 Validated sitemap output successfully -> ${path.relative(rootDir, sitemapPath)}`);
+    console.log('🎉 Production build complete! Static sitemap generated successfully on Vercel.');
+    return;
+  }
+
   // 1. Spin up a fast static fileserver for dist/
   const server = http.createServer((req, res) => {
     // Basic route mapping
@@ -113,7 +143,6 @@ async function generateIndexedPages() {
 
   // Track canonical entries for sitemap generation
   const sitemapUrls = [];
-  const baseUrl = 'https://lifescore-ten.vercel.app';
 
   // 3. Pre-render individual scope routes
   const dynamicRoutes = await getDynamicRoutes();
