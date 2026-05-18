@@ -2,6 +2,11 @@ import React, { useEffect, useRef, lazy, Suspense } from "react";
 import { initThreeBackground } from "./ThreeBackground.js";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Topbar from "./components/Topbar";
+import NewsTicker from "./components/NewsTicker";
+import ReadingProgressBar from "./components/ReadingProgressBar";
+import XPToast from "./components/XPToast";
+import ExitIntentPopup from "./components/ExitIntentPopup";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -54,9 +59,6 @@ const EditorialPolicy = lazy(() => import("./pages/EditorialPolicy"));
 const LifeScoreFunnel = lazy(() => import("./pages/LifeScoreFunnel"));
 
 import AIChatbot from "./components/AIChatbot";
-import XPToast from "./components/XPToast";
-import ExitIntentPopup from "./components/ExitIntentPopup";
-import ReadingProgressBar from "./components/ReadingProgressBar";
 import AuthModal from "./components/AuthModal";
 import { useAuth } from "./context/AuthContext";
 
@@ -68,7 +70,10 @@ const AppContent = ({ canvasRef }) => {
       <AuthModal isOpen={authModalOpen} onClose={() => toggleAuthModal(false)} />
       <canvas id="bg-canvas" ref={canvasRef}></canvas>
       <div id="root-content" style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <ReadingProgressBar />
+        <Topbar />
         <Navbar />
+        <NewsTicker />
         
         <main style={{ flex: 1 }}>
           <Suspense fallback={<PageLoader />}>
@@ -123,6 +128,8 @@ const AppContent = ({ canvasRef }) => {
         <Footer />
         <AIChatbot />
         <SearchModal />
+        <XPToast />
+        <ExitIntentPopup />
       </div>
     </Router>
   );
