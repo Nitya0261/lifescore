@@ -4,6 +4,7 @@ import { TRENDING } from "../data/mockData";
 import BookmarkButton from "./BookmarkButton";
 import EMICalculator from "./EMICalculator";
 import GeoTips from "./GeoTips";
+import AdSlot from "./AdSlot";
 
 export default function Sidebar() {
   return (
