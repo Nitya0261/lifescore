@@ -2,7 +2,6 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import puppeteer from 'puppeteer';
 
 import { createClient } from '@sanity/client';
 
@@ -162,6 +161,7 @@ ${sitemapUrls
 
   // 2. Launch Puppeteer browser instance
   console.log('🤖 Initializing high-speed static DOM generation engine (Puppeteer)...');
+  const { default: puppeteer } = await import('puppeteer');
   const browser = await puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox']
