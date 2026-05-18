@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
@@ -104,8 +105,8 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
         <i className={`bi ${isBookmarked ? 'bi-heart-fill animate-pulse text-danger' : 'bi-heart'}`}></i>
       </button>
 
-      {/* Cute and Simple Overlay Popup for Favoriting Items */}
-      {showCutePopup && (
+      {/* Cute and Simple Overlay Popup for Favoriting Items wrapped in React Portal to bypass CSS parent transforms */}
+      {showCutePopup && createPortal(
         <div 
           className="position-fixed"
           style={{
@@ -165,7 +166,8 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
               100% { transform: scale(1.15) rotate(5deg); }
             }
           `}</style>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
