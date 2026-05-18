@@ -144,15 +144,14 @@ export default function Home() {
         <div className="container position-relative" style={{ zIndex: 2 }}>
           <div className="row justify-content-center text-center mb-5">
             <div className="col-lg-8">
-              <span className="badge bg-danger rounded-pill px-3 py-2 fw-bold mb-3 shadow-sm" style={{ letterSpacing: "1px", fontSize: "0.7rem" }}>
-                <span className="spinner-grow spinner-grow-sm me-2 align-middle" style={{ width: "0.50rem", height: "0.50rem" }}></span>
-                LIVE SIMULATED MARKET HUB
+              <span className="badge bg-warning text-dark rounded-pill px-3 py-2 fw-black mb-3 shadow-sm" style={{ letterSpacing: "1px", fontSize: "0.7rem" }}>
+                ⚠️ LIVE SIMULATED MARKET HUB
               </span>
               <h2 className="ls-heading text-white fw-bolder mb-3" style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", fontFamily: "var(--serif)" }}>
                 Global Macro & Markets Engine
               </h2>
               <p className="text-white-50 fs-5 mb-0">
-                Institutional-grade telemetry tracking live stock indexes and crypto markets in real-time.
+                Programmatically simulated market telemetry tracking stock indexes and crypto assets for educational and demo purposes.
               </p>
             </div>
           </div>
@@ -184,7 +183,9 @@ export default function Home() {
                   <div className="card h-100 p-4 border-0 rounded-4" style={{ background: "rgba(30, 41, 59, 0.4)", backdropFilter: "blur(12px)", border: "1px solid rgba(255, 255, 255, 0.05) !important", transition: "all 0.3s ease" }}>
                     <div className="d-flex justify-content-between align-items-start mb-2">
                       <div>
-                        <span className="text-uppercase opacity-50 fw-bold" style={{ fontSize: "0.65rem", letterSpacing: "1px" }}>{asset.ticker}</span>
+                        <span className="text-uppercase opacity-50 fw-bold" style={{ fontSize: "0.65rem", letterSpacing: "1px" }}>
+                          {asset.ticker} <span className="ms-1 px-1 rounded bg-secondary text-white" style={{ fontSize: "0.55rem", fontWeight: 700, letterSpacing: "normal" }}>SIMULATED</span>
+                        </span>
                         <h5 className="ls-heading text-white mb-0 mt-1" style={{ fontSize: "1.1rem" }}>{asset.name}</h5>
                       </div>
                       <span className={`px-2 py-1 rounded small fw-bold ${asset.up ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger'}`} style={{ fontSize: "0.75rem" }}>
@@ -196,6 +197,7 @@ export default function Home() {
                       <span className="fw-black fs-2 text-white" style={{ fontFamily: "var(--serif)", letterSpacing: "-0.02em" }}>
                         {marketTab === "Crypto" ? (asset.value < 1 ? `$${asset.value}` : `$${asset.value.toLocaleString()}`) : asset.value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
+                      <span className="text-warning fw-bold" style={{ fontSize: "0.65rem", letterSpacing: "0.5px" }}>[SIMULATED]</span>
                     </div>
 
                     {/* Interactive mini sparkline SVG */}
@@ -234,6 +236,9 @@ export default function Home() {
             <Link to="/markets" className="btn btn-primary px-5 py-3 rounded-pill fw-bold shadow-lg" style={{ background: "var(--teal)", borderColor: "var(--teal)" }}>
               Open Interactive Trade & Macro Room <i className="bi bi-arrow-up-right-circle ms-2"></i>
             </Link>
+            <div className="mt-4 opacity-50 text-white-50 small" style={{ fontSize: "0.72rem", maxWidth: "680px", margin: "0 auto", lineHeight: 1.4 }}>
+              ⚠️ <strong>Disclaimer:</strong> All values, tickers, and trends shown in this Global Macro & Markets Engine are programmatically generated real-time simulations. They are strictly for educational and demonstration purposes, do not reflect real-world exchange rates or live trading conditions, and do not constitute financial or investment advice.
+            </div>
           </div>
         </div>
       </section>

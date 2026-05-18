@@ -46,6 +46,7 @@ export default function VoiceAdvisor() {
         <button
           className={`voice-btn-circle ${listening ? "listening" : ""}`}
           onClick={toggle}
+          aria-label={listening ? "Listening to voice input" : "Activate voice AI advisor"}
         >
           🎙
         </button>

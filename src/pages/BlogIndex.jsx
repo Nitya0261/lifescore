@@ -2,10 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { sanityClient } from '../sanityClient';
 import SEO from '../components/SEO';
+import { BLOG_POSTS } from '../data/mockData';
+
+// Format mock posts to align with Sanity schema
+const initialPosts = BLOG_POSTS.map(post => {
+  let dateObj = new Date();
+  if (post.date === 'Yesterday') {
+    dateObj.setDate(dateObj.getDate() - 1);
+  } else if (post.date !== 'Today') {
+    dateObj = new Date(post.date);
+  }
+  return {
+    title: post.title,
+    slug: post.slug,
+    publishedAt: dateObj.toISOString(),
+    category: post.cat,
+    authorName: post.author,
+    excerpt: post.deck,
+    isMock: true
+  };
+});
 
 export default function BlogIndex() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState(initialPosts);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const query = `*[_type == "blogPost"] | order(publishedAt desc) {
@@ -19,12 +39,15 @@ export default function BlogIndex() {
 
     sanityClient.fetch(query)
       .then((data) => {
-        setPosts(data);
-        setLoading(false);
+        if (data && data.length > 0) {
+          // If Sanity returns rich posts, merge them or prioritize them, marking them as dynamic
+          const formattedDynamic = data.map(p => ({ ...p, isMock: false }));
+          // Merge dynamic posts with mock posts to guarantee rich contents always
+          setPosts([...formattedDynamic, ...initialPosts.filter(ip => !formattedDynamic.some(dp => dp.slug === ip.slug))]);
+        }
       })
       .catch((err) => {
-        console.error(err);
-        setLoading(false);
+        console.error("Sanity blog fetch failed, gracefully retaining mock fallback posts:", err);
       });
   }, []);
 
@@ -79,7 +102,7 @@ export default function BlogIndex() {
             {posts.length > 0 ? (
               posts.map((post) => (
                 <div className="col-md-6 col-lg-4" key={post.slug}>
-                  <Link to={`/blog/${post.slug}`} className="text-decoration-none h-100">
+                  <Link to={post.isMock ? `/article/${post.slug}` : `/blog/${post.slug}`} className="text-decoration-none h-100">
                     <div className="card h-100 border-0 shadow-sm blog-card" style={{ borderRadius: "var(--radius-lg)", background: "var(--card-bg)", transition: "all 0.3s ease" }}>
                       <div className="card-body p-4">
                         <div className="d-flex align-items-center gap-2 mb-3">

@@ -29,8 +29,8 @@ export default function StockMarketWidget() {
       <div className="p-4 flex-grow-1">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
-            <span className="badge bg-secondary mb-1" style={{ fontSize: '0.6rem', letterSpacing: '1px' }}>
-              <i className="bi bi-graph-up me-1"></i> DEMO DATA
+            <span className="badge bg-warning text-dark mb-1" style={{ fontSize: '0.6rem', letterSpacing: '1px' }}>
+              <i className="bi bi-exclamation-triangle-fill me-1"></i> LIVE SIMULATED DATA
             </span>
             <h5 className="ls-heading mb-0 text-white" style={{ fontSize: '1.2rem' }}>Global Markets</h5>
           </div>
@@ -44,8 +44,12 @@ export default function StockMarketWidget() {
             <div key={idx.name} className="market-item">
               <div className="d-flex justify-content-between align-items-end">
                 <div>
-                  <div className="text-uppercase opacity-50 fw-bold mb-1" style={{ fontSize: '0.65rem', letterSpacing: '1px' }}>{idx.name}</div>
-                  <div className="ls-heading ls-heading-sm mb-0 text-white" style={{ fontSize: '1.3rem' }}>{idx.value}</div>
+                  <div className="text-uppercase opacity-50 fw-bold mb-1" style={{ fontSize: '0.65rem', letterSpacing: '1px' }}>
+                    {idx.name} <span style={{ fontSize: '0.55rem', opacity: 0.6 }}>[SIM]</span>
+                  </div>
+                  <div className="ls-heading ls-heading-sm mb-0 text-white" style={{ fontSize: '1.3rem' }}>
+                    {idx.value} <span className="text-warning small" style={{ fontSize: "0.6rem" }}>[SIM]</span>
+                  </div>
                 </div>
                 <div className={`text-end ${idx.up ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700, fontSize: '0.9rem' }}>
                   <div className="small opacity-75">{idx.up ? '▲' : '▼'} {idx.change}</div>

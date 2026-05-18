@@ -79,14 +79,24 @@ export default function AIChatbot() {
           overflow: "hidden"
         }}>
           {/* Header */}
-          <div style={{ background: "linear-gradient(135deg, var(--teal), #0d382b)", padding: "1rem", color: "#fff", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <div style={{ width: "35px", height: "35px", background: "var(--card-bg)", color: "var(--teal)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem" }}>
-              <i className="bi bi-robot"></i>
+          <div style={{ background: "linear-gradient(135deg, var(--teal), #0d382b)", padding: "1rem", color: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", width: "100%" }}>
+            <div className="d-flex align-items-center gap-2">
+              <div style={{ width: "35px", height: "35px", background: "var(--card-bg)", color: "var(--teal)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>
+                <i className="bi bi-robot"></i>
+              </div>
+              <div>
+                <h6 style={{ margin: 0, fontWeight: 700, fontFamily: "var(--serif)", fontSize: "0.95rem" }}>LifeScore AI</h6>
+                <div style={{ fontSize: "0.7rem", opacity: 0.8 }}><span style={{ color: "#4ade80" }}>●</span> Online</div>
+              </div>
             </div>
-            <div>
-              <h6 style={{ margin: 0, fontWeight: 700, fontFamily: "var(--serif)" }}>LifeScore AI</h6>
-              <div style={{ fontSize: "0.7rem", opacity: 0.8 }}><span style={{ color: "#4ade80" }}>●</span> Online</div>
-            </div>
+            <button 
+              className="btn btn-link text-white text-decoration-none p-0 ms-auto fs-5 d-flex align-items-center justify-content-center" 
+              onClick={() => setIsOpen(false)} 
+              aria-label="Close AI Chatbot"
+              style={{ width: "28px", height: "28px", border: "none" }}
+            >
+              <i className="bi bi-x-lg"></i>
+            </button>
           </div>
 
           {/* Messages Area */}
@@ -145,6 +155,7 @@ export default function AIChatbot() {
               />
               <button
                 type="submit"
+                aria-label="Send message"
                 style={{
                   width: "40px",
                   height: "40px",

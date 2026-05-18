@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot, hydrateRoot } from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from './context/AuthContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
@@ -23,8 +23,5 @@ const appTree = (
   </StrictMode>
 );
 
-if (rootElement.hasChildNodes()) {
-  hydrateRoot(rootElement, appTree);
-} else {
-  createRoot(rootElement).render(appTree);
-}
+createRoot(rootElement).render(appTree);
+

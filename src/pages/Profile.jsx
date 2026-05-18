@@ -5,6 +5,7 @@ import XPWidget from "../components/XPWidget";
 import LifeScoreWidget from "../components/LifeScoreWidget";
 import BurnoutWidget from "../components/BurnoutWidget";
 import API_BASE_URL from "../config/api";
+import SEO from "../components/SEO";
 
 export default function Profile() {
   const { user, logout, token, xpLog, updateUserProfile } = useAuth();
@@ -128,6 +129,10 @@ export default function Profile() {
 
   return (
     <div style={{ background: "var(--cream)", minHeight: "80vh", padding: "3rem 0" }}>
+      <SEO 
+        title="Member Dashboard" 
+        description="Monitor your financial status, customize indicators, and access premium LifeScore calculations."
+      />
       <div className="container">
         
         {/* Top Header */}

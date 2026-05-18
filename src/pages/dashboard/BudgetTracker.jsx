@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../config/api';
+import SEO from '../../components/SEO';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -180,6 +181,10 @@ export default function BudgetTracker() {
 
   return (
     <div className="container py-5" style={{ minHeight: "80vh" }}>
+      <SEO 
+        title="Personal Budget Tracker" 
+        description="Optimize your personal cash flow using our smart budget ledger. Categorize your income and expenses for ultimate productivity and wealth."
+      />
       <div className="row mb-5 align-items-center">
         <div className="col-md-7">
           <div className="d-flex align-items-center gap-3 mb-2">

@@ -109,7 +109,7 @@ export default function SearchModal() {
               onChange={(e) => setQuery(e.target.value)}
               style={{ background: "transparent" }}
             />
-            <button className="btn btn-link text-muted text-decoration-none p-0 fs-5" onClick={handleClose}>
+            <button className="btn btn-link text-muted text-decoration-none p-0 fs-5" onClick={handleClose} aria-label="Close search">
               <i className="bi bi-x-lg"></i>
             </button>
           </div>

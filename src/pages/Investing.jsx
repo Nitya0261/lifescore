@@ -36,6 +36,11 @@ export default function Investing() {
 
       {/* Ticker Cards */}
       <div className="container" style={{ marginTop: "-2rem", position: "relative", zIndex: 10 }}>
+        {/* Trust disclaimer banner */}
+        <div className="alert alert-warning py-2 px-3 mb-3 d-flex align-items-center gap-2" style={{ borderRadius: "var(--radius-md)", border: "none", fontSize: "0.8rem", background: "rgba(245, 158, 11, 0.15)", color: "#b45309", fontWeight: 500 }}>
+          <i className="bi bi-info-circle-fill"></i>
+          <span><strong>Transparency Check:</strong> All asset statistics shown below are programmatically simulated for educational and demo purposes.</span>
+        </div>
         <div className="row g-3">
           {stats.map((stat, i) => (
             <div className="col-md-3 col-6" key={i}>

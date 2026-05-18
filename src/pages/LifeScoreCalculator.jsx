@@ -133,7 +133,7 @@ export default function LifeScoreCalculator() {
                   <div className="mb-3 d-inline-flex align-items-center justify-content-center bg-teal text-white rounded-circle" style={{ width: "64px", height: "64px" }}>
                     <i className="bi bi-lightning-charge-fill fs-3"></i>
                   </div>
-                  <h2 className="ls-heading ls-heading-lg mb-2">LifeScore Calculator</h2>
+                  <h1 className="ls-heading ls-heading-lg mb-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>LifeScore Calculator</h1>
                   <p className="text-muted">Analyze your trajectory in 60 seconds.</p>
                   
                   {/* Progress Bar */}
@@ -149,7 +149,7 @@ export default function LifeScoreCalculator() {
                 <div className="mb-4">
                   <span className="badge bg-teal bg-opacity-10 text-teal px-3 py-2 rounded-pill fw-bold small text-uppercase">Analysis Complete</span>
                 </div>
-                <h2 className="ls-heading ls-heading-lg mb-2">Your LifeScore is</h2>
+                <h1 className="ls-heading ls-heading-lg mb-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>Your LifeScore is</h1>
                 
                 <div className="my-5 position-relative d-inline-block">
                   <svg width="200" height="200" viewBox="0 0 100 100">

@@ -1,6 +1,7 @@
 import React from "react";
 import BlogGrid from "../components/BlogGrid";
 import BookmarkButton from "../components/BookmarkButton";
+import SEO from "../components/SEO";
 
 export default function Economy() {
   const indicators = [
@@ -12,6 +13,10 @@ export default function Economy() {
 
   return (
     <div style={{ background: "var(--cream)" }}>
+      <SEO 
+        title="Macro Economy & Global Indicators Tracker" 
+        description="Analyze global macro trends, inflation rates, interest policy, unemployment data, and market dynamics on the LifeScore Macro terminal."
+      />
       {/* Category Hero */}
       <div style={{ background: "var(--navy)", color: "#fff", padding: "4rem 0" }}>
         <div className="container">
@@ -29,6 +34,11 @@ export default function Economy() {
 
       {/* Ticker Cards */}
       <div className="container" style={{ marginTop: "-2rem", position: "relative", zIndex: 10 }}>
+        {/* Trust disclaimer banner */}
+        <div className="alert alert-warning py-2 px-3 mb-3 d-flex align-items-center gap-2" style={{ borderRadius: "var(--radius-md)", border: "none", fontSize: "0.8rem", background: "rgba(245, 158, 11, 0.15)", color: "#b45309", fontWeight: 500 }}>
+          <i className="bi bi-info-circle-fill"></i>
+          <span><strong>Transparency Check:</strong> All macro indicators shown below are programmatically simulated for educational and demo purposes.</span>
+        </div>
         <div className="row g-3">
           {indicators.map((ind, i) => (
             <div className="col-md-3 col-6" key={i}>
@@ -45,7 +55,7 @@ export default function Economy() {
                   />
                 </div>
                 <div style={{ fontFamily: "var(--serif)", fontSize: "1.5rem", fontWeight: 900, color: "var(--ink)", margin: "0.3rem 0" }}>
-                  {ind.value}
+                  {ind.value} <span className="text-warning small" style={{ fontSize: "0.65rem" }}>[SIM]</span>
                 </div>
                 <div style={{ fontSize: "0.75rem", color: ind.good ? "var(--teal)" : "var(--ink3)" }}>
                   {ind.desc}

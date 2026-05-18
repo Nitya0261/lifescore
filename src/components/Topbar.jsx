@@ -46,17 +46,20 @@ export default function Topbar() {
           </div>
           
           {/* Middle: Live Market Data (Horizontally scrollable to prevent wrapping breaks) */}
-          <div className="d-flex flex-grow-1 overflow-auto hide-scrollbar position-relative" style={{ WebkitOverflowScrolling: 'touch' }}>
+          <div className="d-flex flex-grow-1 overflow-auto hide-scrollbar position-relative align-items-center" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <span className="badge bg-warning text-dark me-2 fw-black flex-shrink-0" style={{ fontSize: "0.62rem", letterSpacing: "0.5px" }}>
+              ⚠️ SIMULATED FEED
+            </span>
             <div className="d-flex gap-4 align-items-center fw-bold py-1 px-2 m-0 m-lg-auto" style={{ minWidth: "max-content" }}>
               {markets.length > 0 ? markets.map((m, idx) => {
                 const isPositive = m.change >= 0;
                 return (
                   <div key={idx} className="d-flex align-items-center gap-2 transition-all hover-lift flex-shrink-0" style={{ cursor: "default" }}>
                     <span className="fw-bolder" style={{ color: "var(--accent)", padding: "2px 8px", background: "var(--cream2)", borderRadius: "6px", fontSize: "0.7rem", letterSpacing: "0.5px", border: "1px solid var(--border)" }}>
-                      {m.name}
+                      {m.name} <span style={{ fontSize: "0.55rem", opacity: 0.6 }}>[SIM]</span>
                     </span>
                     <span style={{ color: "var(--ink)", fontSize: "0.85rem", letterSpacing: "-0.5px" }}>
-                      {m.price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      {m.price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontSize: "0.6rem", opacity: 0.5 }}>SIM</span>
                     </span>
                     <span className="d-flex align-items-center gap-1 rounded-pill px-2" style={{ background: isPositive ? "rgba(34, 197, 94, 0.1)" : "rgba(239, 68, 68, 0.1)", color: isPositive ? "#16a34a" : "#dc2626", fontSize: "0.7rem", fontWeight: 700 }}>
                       {isPositive ? <i className="bi bi-caret-up-fill" style={{ fontSize: "0.6rem" }}></i> : <i className="bi bi-caret-down-fill" style={{ fontSize: "0.6rem" }}></i>} 
@@ -75,9 +78,9 @@ export default function Topbar() {
 
           {/* Right: Socials */}
           <div className="d-none d-md-flex gap-3 align-items-center">
-            <a href="#" className="text-muted transition-all hover-accent" style={{ textDecoration: "none" }}><i className="bi bi-twitter-x"></i></a>
-            <a href="#" className="text-muted transition-all hover-accent" style={{ textDecoration: "none" }}><i className="bi bi-instagram"></i></a>
-            <a href="#" className="text-muted transition-all hover-accent" style={{ textDecoration: "none" }}><i className="bi bi-youtube"></i></a>
+            <a href="#" className="text-muted transition-all hover-accent" style={{ textDecoration: "none" }} aria-label="Follow us on X"><i className="bi bi-twitter-x" aria-hidden="true"></i></a>
+            <a href="#" className="text-muted transition-all hover-accent" style={{ textDecoration: "none" }} aria-label="Follow us on Instagram"><i className="bi bi-instagram" aria-hidden="true"></i></a>
+            <a href="#" className="text-muted transition-all hover-accent" style={{ textDecoration: "none" }} aria-label="Subscribe on YouTube"><i className="bi bi-youtube" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>

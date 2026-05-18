@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../config/api';
+import SEO from '../../components/SEO';
 
 export default function SavedContent() {
   const { user, updateUserProfile } = useAuth();
@@ -80,6 +81,10 @@ export default function SavedContent() {
 
   return (
     <div className="container py-5" style={{ minHeight: "80vh" }}>
+      <SEO 
+        title="Saved Library" 
+        description="View your personal bookmarked collection of personal finance calculators, strategy guides, and planning templates."
+      />
       <div className="row mb-5">
         <div className="col-12">
           <h2 className="fw-bold mb-1" style={{ fontFamily: "var(--serif)", color: "var(--ink)" }}>Saved Library</h2>

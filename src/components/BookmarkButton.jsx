@@ -101,6 +101,7 @@ export default function BookmarkButton({ itemType, title, slug, initialIsBookmar
           border: isBookmarked ? "1px solid rgba(225, 29, 72, 0.2)" : "1px solid var(--border)",
         }}
         title={isBookmarked ? "Remove from Favorites" : "Add to Favorites"}
+        aria-label={isBookmarked ? "Remove from Favorites" : "Add to Favorites"}
       >
         <i className={`bi ${isBookmarked ? 'bi-heart-fill animate-pulse text-danger' : 'bi-heart'}`}></i>
       </button>

@@ -30,33 +30,35 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 
-// Lazy-loaded routes
-const BlogIndex = lazy(() => import("./pages/BlogIndex"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
-const SIPCalculator = lazy(() => import("./pages/tools/SIPCalculator"));
-const CompoundInterest = lazy(() => import("./pages/tools/CompoundInterest"));
-const RetirementNumber = lazy(() => import("./pages/tools/RetirementNumber"));
-const NetWorthTracker = lazy(() => import("./pages/tools/NetWorthTracker"));
-const TaxEstimator = lazy(() => import("./pages/tools/TaxEstimator"));
-const BudgetTracker = lazy(() => import("./pages/dashboard/BudgetTracker"));
-const SavedContent = lazy(() => import("./pages/dashboard/SavedContent"));
-const CreditCards = lazy(() => import("./pages/recommendations/CreditCards"));
-const HighYieldSavings = lazy(() => import("./pages/recommendations/HighYieldSavings"));
-const AuthorProfile = lazy(() => import("./pages/AuthorProfile"));
-const GlossaryIndex = lazy(() => import("./pages/GlossaryIndex"));
-const GlossaryTerm = lazy(() => import("./pages/GlossaryTerm"));
-const ComparisonPage = lazy(() => import("./pages/ComparisonPage"));
-const IraVs401k = lazy(() => import("./pages/compare/IraVs401k"));
-const EtfVsMutualFund = lazy(() => import("./pages/compare/EtfVsMutualFund"));
-const FindAdvisor = lazy(() => import("./pages/FindAdvisor"));
-const AboutUs = lazy(() => import("./pages/AboutUs"));
-const ContactUs = lazy(() => import("./pages/ContactUs"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const TermsConditions = lazy(() => import("./pages/TermsConditions"));
-const Disclaimer = lazy(() => import("./pages/Disclaimer"));
-const EditorialPolicy = lazy(() => import("./pages/EditorialPolicy"));
-const LifeScoreFunnel = lazy(() => import("./pages/LifeScoreFunnel"));
+// Eagerly imported routes for instant rendering and SEO crawler compatibility
+import BlogIndex from "./pages/BlogIndex";
+import BlogPost from "./pages/BlogPost";
+import ArticleDetail from "./pages/ArticleDetail";
+import SIPCalculator from "./pages/tools/SIPCalculator";
+import CompoundInterest from "./pages/tools/CompoundInterest";
+import EmergencyFund from "./pages/tools/EmergencyFund";
+import DebtPayoff from "./pages/tools/DebtPayoff";
+import RetirementNumber from "./pages/tools/RetirementNumber";
+import NetWorthTracker from "./pages/tools/NetWorthTracker";
+import TaxEstimator from "./pages/tools/TaxEstimator";
+import BudgetTracker from "./pages/dashboard/BudgetTracker";
+import SavedContent from "./pages/dashboard/SavedContent";
+import CreditCards from "./pages/recommendations/CreditCards";
+import HighYieldSavings from "./pages/recommendations/HighYieldSavings";
+import AuthorProfile from "./pages/AuthorProfile";
+import GlossaryIndex from "./pages/GlossaryIndex";
+import GlossaryTerm from "./pages/GlossaryTerm";
+import ComparisonPage from "./pages/ComparisonPage";
+import IraVs401k from "./pages/compare/IraVs401k";
+import EtfVsMutualFund from "./pages/compare/EtfVsMutualFund";
+import FindAdvisor from "./pages/FindAdvisor";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import Disclaimer from "./pages/Disclaimer";
+import EditorialPolicy from "./pages/EditorialPolicy";
+import LifeScoreFunnel from "./pages/LifeScoreFunnel";
 
 import AIChatbot from "./components/AIChatbot";
 import AuthModal from "./components/AuthModal";
@@ -93,6 +95,8 @@ const AppContent = ({ canvasRef }) => {
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/sip-calculator" element={<SIPCalculator />} />
               <Route path="/tools/compound-interest" element={<CompoundInterest />} />
+              <Route path="/tools/emergency-fund" element={<EmergencyFund />} />
+              <Route path="/tools/debt-payoff" element={<DebtPayoff />} />
               <Route path="/tools/retirement-number" element={<RetirementNumber />} />
               <Route path="/tools/net-worth" element={<NetWorthTracker />} />
               <Route path="/tools/tax-estimator" element={<TaxEstimator />} />

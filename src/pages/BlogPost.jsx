@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { sanityClient } from '../sanityClient';
 import { PortableText } from '@portabletext/react';
 import SEO from '../components/SEO';
@@ -7,15 +7,23 @@ import NewsletterForm from '../components/NewsletterForm';
 import CommentsSection from '../components/CommentsSection';
 import BookmarkButton from '../components/BookmarkButton';
 import RelatedToolCTA from '../components/RelatedToolCTA';
+import { BLOG_POSTS } from '../data/mockData';
 
 export default function BlogPost() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [tocOpen, setTocOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Graceful redirect to mock ArticleDetail route if slug matches a pre-loaded local mock article
+    const isMock = BLOG_POSTS.some(p => p.slug === slug);
+    if (isMock) {
+      navigate(`/article/${slug}`, { replace: true });
+      return;
+    }
     const query = `{
       "post": *[_type == "blogPost" && slug.current == $slug][0]{
         title,

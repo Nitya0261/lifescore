@@ -125,16 +125,16 @@ export default function Navbar() {
                     <div className="d-flex justify-content-between align-items-center">
                       <span className="small fw-bold">Dark Mode</span>
                       <div className="form-check form-switch m-0">
-                        <input className="form-check-input" type="checkbox" checked={isDark} onChange={toggleTheme} />
+                        <input className="form-check-input" type="checkbox" checked={isDark} onChange={toggleTheme} aria-label="Toggle Dark Mode" />
                       </div>
                     </div>
                   </li>
                   <li className="px-3 py-2">
                     <span className="small fw-bold d-block mb-2">Language</span>
                     <div className="d-flex gap-2">
-                      <button className="btn btn-xs btn-outline-secondary py-0 px-2" style={{ fontSize: '0.7rem' }} onClick={() => changeLanguage('en')}>EN</button>
-                      <button className="btn btn-xs btn-outline-secondary py-0 px-2" style={{ fontSize: '0.7rem' }} onClick={() => changeLanguage('es')}>ES</button>
-                      <button className="btn btn-xs btn-outline-secondary py-0 px-2" style={{ fontSize: '0.7rem' }} onClick={() => changeLanguage('hi')}>HI</button>
+                      <button className="btn btn-xs btn-outline-secondary py-0 px-2" style={{ fontSize: '0.7rem' }} onClick={() => changeLanguage('en')} aria-label="Switch language to English">EN</button>
+                      <button className="btn btn-xs btn-outline-secondary py-0 px-2" style={{ fontSize: '0.7rem' }} onClick={() => changeLanguage('es')} aria-label="Switch language to Spanish">ES</button>
+                      <button className="btn btn-xs btn-outline-secondary py-0 px-2" style={{ fontSize: '0.7rem' }} onClick={() => changeLanguage('hi')} aria-label="Switch language to Hindi">HI</button>
                     </div>
                   </li>
                 </ul>

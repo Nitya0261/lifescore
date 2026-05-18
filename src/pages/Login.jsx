@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import SEO from "../components/SEO";
 
 export default function Login() {
   const { loginUser, loginWithGoogle } = useAuth();
@@ -49,6 +50,10 @@ export default function Login() {
 
   return (
     <div style={{ background: "var(--cream)", minHeight: "90vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 1rem" }}>
+      <SEO 
+        title="Sign In" 
+        description="Access your personal LifeScore telemetry dashboard, track your goals, and view AI recommendations."
+      />
       <div style={{ background: "var(--card-bg)", width: "100%", maxWidth: "1000px", borderRadius: "var(--radius-lg)", boxShadow: "0 20px 40px rgba(0,0,0,0.15)", display: "flex", overflow: "hidden" }}>
         
         {/* Left Side - Image/Branding (always dark) */}

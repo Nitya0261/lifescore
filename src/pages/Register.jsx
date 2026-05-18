@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import SEO from "../components/SEO";
 
 export default function Register() {
   const { registerUser, loginWithGoogle } = useAuth();
@@ -47,6 +48,10 @@ export default function Register() {
 
   return (
     <div style={{ background: "var(--cream)", minHeight: "90vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 1rem" }}>
+      <SEO 
+        title="Create Account" 
+        description="Join LifeScore and unlock your full personal finance potential. Gain insights into net worth, budget optimization, and retirement trajectories."
+      />
       <div style={{ background: "var(--card-bg)", width: "100%", maxWidth: "1000px", borderRadius: "var(--radius-lg)", boxShadow: "0 20px 40px rgba(0,0,0,0.08)", display: "flex", overflow: "hidden", flexDirection: "row-reverse" }}>
         
         {/* Right Side - Image/Branding */}

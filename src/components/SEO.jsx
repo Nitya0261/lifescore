@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 
 export default function SEO({ title, description, image, url, type = 'website', children }) {
   const siteName = 'LifeScore';
-  const defaultDesc = 'Improve productivity, mindset and mental wellness with LifeScore platform telemetry.';
+  const defaultDesc = 'LifeScore — The definitive personal finance, health, and life intelligence engine. Track net worth, calculate SIPs, and optimize your wealth with data-driven insights.';
   const defaultUrl = 'https://lifescore-ten.vercel.app';
   const defaultImage = 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80';
 
-  const fullTitle = title ? `${title} | ${siteName}` : `${siteName} - Mental Health & Productivity`;
+  const fullTitle = title ? `${title} | ${siteName}` : 'Personal Finance & Life Intelligence Platform | LifeScore';
   const canonicalUrl = url || defaultUrl;
 
   return (

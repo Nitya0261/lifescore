@@ -56,7 +56,7 @@ export default function LifeScoreFunnel() {
 
             {step === 1 && (
               <div className="animate__animated animate__fadeIn">
-                <h2 className="ls-heading mb-3 text-center">Let's start with the basics</h2>
+                <h1 className="ls-heading mb-3 text-center" style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)" }}>Let's start with the basics</h1>
                 <div className="mb-4">
                   <label htmlFor="age" className="form-label fw-bold">How old are you?</label>
                   <input id="age" type="number" className="form-control form-control-lg" placeholder="e.g. 30" value={data.age} onChange={e => setData({...data, age: e.target.value})} />
@@ -67,7 +67,7 @@ export default function LifeScoreFunnel() {
 
             {step === 2 && (
               <div className="animate__animated animate__fadeIn">
-                <h2 className="ls-heading mb-3 text-center">Your Monthly Cashflow</h2>
+                <h1 className="ls-heading mb-3 text-center" style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)" }}>Your Monthly Cashflow</h1>
                 <div className="mb-4">
                   <label htmlFor="income" className="form-label fw-bold">Monthly Post-Tax Income ($)</label>
                   <input id="income" type="number" className="form-control form-control-lg" placeholder="e.g. 5000" value={data.income} onChange={e => setData({...data, income: e.target.value})} />
@@ -81,7 +81,7 @@ export default function LifeScoreFunnel() {
 
             {step === 3 && (
               <div className="animate__animated animate__fadeIn">
-                <h2 className="ls-heading mb-3 text-center">Savings & Debt</h2>
+                <h1 className="ls-heading mb-3 text-center" style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)" }}>Savings & Debt</h1>
                 <div className="mb-3">
                   <label htmlFor="savings" className="form-label fw-bold">Total Liquid Savings ($)</label>
                   <input id="savings" type="number" className="form-control form-control-lg" placeholder="e.g. 25000" value={data.savings} onChange={e => setData({...data, savings: e.target.value})} />
@@ -99,7 +99,7 @@ export default function LifeScoreFunnel() {
 
             {step === 4 && (
               <div className="animate__animated animate__fadeIn text-center">
-                <h2 className="ls-heading mb-3">One last thing...</h2>
+                <h1 className="ls-heading mb-3" style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)" }}>One last thing...</h1>
                 <p className="text-muted mb-4">What is your primary financial focus right now?</p>
                 <div className="d-flex flex-column gap-2 mb-4">
                   {['Building Wealth', 'Paying Off Debt', 'Early Retirement', 'Saving for a House'].map(goal => (
@@ -129,7 +129,7 @@ export default function LifeScoreFunnel() {
         ) : (
           <div className="animate__animated animate__fadeInUp text-center">
             <div className="mb-4">
-              <span className="text-muted small fw-bold text-uppercase">Your Calculated LifeScore</span>
+              <h1 className="text-muted small fw-bold text-uppercase fs-6 m-0">Your Calculated LifeScore</h1>
               <div className="display-1 fw-black text-teal mt-2" style={{ fontWeight: 900 }}>{score}</div>
               <div className="badge rounded-pill bg-success px-3 py-2 mt-2">
                 {score > 70 ? 'EXCELLENT' : score > 40 ? 'STABLE' : 'ACTION REQUIRED'}

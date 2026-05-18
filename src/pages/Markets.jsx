@@ -150,10 +150,13 @@ export default function Markets() {
 
         <div className="container position-relative" style={{ zIndex: 2 }}>
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
-            <div className="d-flex align-items-center gap-2">
+            <div className="d-flex flex-wrap align-items-center gap-2">
+              <span className="badge bg-warning text-dark rounded-pill px-3 py-2 fw-black shadow-sm" style={{ letterSpacing: "1px", fontSize: "0.7rem" }}>
+                ⚠️ LIVE SIMULATED MARKET HUB
+              </span>
               <span className="badge bg-danger rounded-pill px-3 py-2 fw-bold shadow-sm" style={{ letterSpacing: "1px", fontSize: "0.7rem" }}>
                 <span className="spinner-grow spinner-grow-sm me-1 align-middle" style={{ width: "0.5rem", height: "0.5rem" }}></span>
-                INSTITUTIONAL TELEMETRY
+                SIMULATED TELEMETRY
               </span>
               <span className={`badge ${isUpdating ? 'bg-warning text-dark' : 'bg-success'} rounded-pill px-2 py-1 transition-all`} style={{ fontSize: "0.65rem" }}>
                 {isUpdating ? 'OSCILLATING TICK...' : 'SYNCED'}
@@ -172,8 +175,13 @@ export default function Markets() {
             Global Macro & Markets Engine
           </h1>
           <p className="text-white-50 mb-0" style={{ fontSize: "1.05rem", maxWidth: "750px" }}>
-            Complex cross-border capital liquidity analytics tracking live stock exchanges in the <span className="text-white fw-bold">United States</span>, <span className="text-white fw-bold">United Kingdom</span>, <span className="text-white fw-bold">Canada</span>, alongside high-volatility decentralized <span className="text-white fw-bold">Crypto networks</span>.
+            Programmatically simulated cross-border capital liquidity analytics tracking stock exchanges in the <span className="text-white fw-bold">United States</span>, <span className="text-white fw-bold">United Kingdom</span>, <span className="text-white fw-bold">Canada</span>, alongside high-volatility decentralized <span className="text-white fw-bold">Crypto networks</span>.
           </p>
+          <div className="mt-3 p-3 rounded bg-white bg-opacity-5 border border-white border-opacity-10" style={{ maxWidth: "750px" }}>
+            <small className="text-white-50 d-block" style={{ fontSize: "0.8rem", lineHeight: 1.4 }}>
+              <i className="bi bi-info-circle-fill me-1 text-warning"></i> <strong>Transparency Disclaimer:</strong> All telemetry and metrics shown on this page are simulated oscillations generated programmatically. These values are not live exchange rates and do not constitute professional investment advice or recommendation.
+            </small>
+          </div>
         </div>
       </div>
 
@@ -237,8 +245,11 @@ export default function Markets() {
               >
                 <div className="d-flex justify-content-between align-items-start mb-2">
                   <div>
-                    <span className="badge bg-secondary bg-opacity-10 text-muted px-2 py-1 mb-1 fw-bold" style={{ fontSize: "0.65rem" }}>
+                    <span className="badge bg-secondary bg-opacity-10 text-muted px-2 py-1 mb-1 fw-bold me-1" style={{ fontSize: "0.65rem" }}>
                       {asset.ticker}
+                    </span>
+                    <span className="badge bg-warning text-dark px-2 py-1 mb-1 fw-bold" style={{ fontSize: "0.6rem", letterSpacing: "0.5px" }}>
+                      SIMULATED
                     </span>
                     <h4 className="fw-bold mb-0 text-truncate" style={{ color: "var(--ink)", fontSize: "1.2rem" }}>
                       {asset.name}
@@ -266,6 +277,7 @@ export default function Markets() {
                   <span className={`small fw-bold ${asset.up ? 'text-success' : 'text-danger'}`} style={{ fontSize: "0.8rem" }}>
                     ({asset.netChange})
                   </span>
+                  <span className="text-warning fw-bold ms-1" style={{ fontSize: "0.7rem", letterSpacing: "0.5px" }}>[SIM]</span>
                 </div>
 
                 {/* SVG Live Rendered Sparkline Trend */}
@@ -393,11 +405,14 @@ export default function Markets() {
                     {activeMovers.map((mover) => (
                       <tr key={mover.symbol} style={{ borderColor: "var(--border2)" }}>
                         <td className="py-3">
-                          <div className="fw-bold" style={{ color: "var(--ink)", fontSize: "0.9rem" }}>{mover.symbol}</div>
+                          <div className="fw-bold d-flex align-items-center gap-1" style={{ color: "var(--ink)", fontSize: "0.9rem" }}>
+                            {mover.symbol}
+                            <span className="badge bg-secondary-subtle text-muted fw-normal" style={{ fontSize: "0.55rem", padding: "1px 3px" }}>SIM</span>
+                          </div>
                           <div className="text-muted small" style={{ fontSize: "0.75rem" }}>{mover.name}</div>
                         </td>
                         <td className="py-3 fw-bold" style={{ color: "var(--ink)", fontSize: "0.9rem" }}>
-                          {mover.price}
+                          {mover.price} <span className="text-warning small" style={{ fontSize: "0.6rem" }}>[SIM]</span>
                         </td>
                         <td className="py-3 text-muted small" style={{ fontSize: "0.8rem" }}>
                           {mover.volume}

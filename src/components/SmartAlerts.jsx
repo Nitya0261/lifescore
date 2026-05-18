@@ -89,6 +89,7 @@ export default function SmartAlerts() {
                 <button
                   className="alert-dismiss-btn"
                   onClick={() => dismiss(a.id)}
+                  aria-label="Dismiss alert"
                 >
                   ✕
                 </button>
