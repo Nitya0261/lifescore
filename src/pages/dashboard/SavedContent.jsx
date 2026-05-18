@@ -109,9 +109,9 @@ export default function SavedContent() {
                       <div className="flex-grow-1" style={{ minWidth: "150px" }}>
                         <h6 className="fw-bold mb-1">
                           {b.slug.startsWith('http') ? (
-                            <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none hover-underline">{b.title}</a>
+                            <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-decoration-none hover-underline" style={{ color: "var(--ink)" }}>{b.title}</a>
                           ) : (
-                            <Link to={b.slug} className="text-dark text-decoration-none hover-underline">{b.title}</Link>
+                            <Link to={b.slug} className="text-decoration-none hover-underline" style={{ color: "var(--ink)" }}>{b.title}</Link>
                           )}
                         </h6>
                         <small className="text-muted">Saved on {new Date(b.createdAt).toLocaleDateString()}</small>
@@ -139,9 +139,9 @@ export default function SavedContent() {
                       <div className="flex-grow-1" style={{ minWidth: "150px" }}>
                         <h6 className="fw-bold mb-1">
                           {b.slug.startsWith('http') ? (
-                            <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-dark text-decoration-none hover-underline">{b.title}</a>
+                            <a href={b.slug} target="_blank" rel="noopener noreferrer" className="text-decoration-none hover-underline" style={{ color: "var(--ink)" }}>{b.title}</a>
                           ) : (
-                            <Link to={b.slug} className="text-dark text-decoration-none hover-underline">{b.title}</Link>
+                            <Link to={b.slug} className="text-decoration-none hover-underline" style={{ color: "var(--ink)" }}>{b.title}</Link>
                           )}
                         </h6>
                         <small className="text-muted">Saved on {new Date(b.createdAt).toLocaleDateString()}</small>

@@ -63,6 +63,69 @@
   color: var(--ink);
 }
 
+/* Custom UI Elements and Utility Class Overrides for Perfect Dark Mode Visibility */
+[data-theme='dark'] .text-dark {
+  color: var(--ink) !important;
+}
+[data-theme='dark'] .bg-white {
+  background-color: var(--cream2) !important;
+}
+[data-theme='dark'] .bg-light {
+  background-color: var(--cream3) !important;
+  color: var(--ink) !important;
+}
+[data-theme='dark'] .text-muted {
+  color: var(--ink3) !important;
+}
+[data-theme='dark'] .btn-outline-dark {
+  color: var(--ink) !important;
+  border-color: var(--border2) !important;
+}
+[data-theme='dark'] .btn-outline-dark:hover {
+  background-color: var(--cream3) !important;
+  color: var(--ink) !important;
+}
+[data-theme='dark'] .dropdown-menu {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+[data-theme='dark'] .dropdown-item {
+  color: var(--ink) !important;
+}
+[data-theme='dark'] .dropdown-item:hover,
+[data-theme='dark'] .dropdown-item:focus {
+  background-color: var(--cream3) !important;
+  color: var(--accent) !important;
+}
+[data-theme='dark'] .dropdown-divider {
+  border-top-color: var(--border) !important;
+}
+[data-theme='dark'] .modal-content {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+[data-theme='dark'] .modal-header,
+[data-theme='dark'] .modal-footer {
+  border-color: var(--border) !important;
+}
+[data-theme='dark'] .border {
+  border-color: var(--border) !important;
+}
+[data-theme='dark'] .border-top {
+  border-top-color: var(--border) !important;
+}
+[data-theme='dark'] .border-bottom {
+  border-bottom-color: var(--border) !important;
+}
+[data-theme='dark'] .border-start {
+  border-start-color: var(--border) !important;
+}
+[data-theme='dark'] .border-end {
+  border-end-color: var(--border) !important;
+}
+
 /* Navbar */
 [data-theme='dark'] .main-nav {
   background: var(--cream2);

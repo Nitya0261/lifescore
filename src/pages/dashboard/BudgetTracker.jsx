@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../config/api';
 import {
@@ -30,6 +31,7 @@ ChartJS.register(
 
 export default function BudgetTracker() {
   const { user, addXp } = useAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -189,7 +191,7 @@ export default function BudgetTracker() {
           <p className="text-muted ms-1 mb-0" style={{ fontSize: "1.05rem" }}>Track income, monitor expenses, and optimize your wealth building.</p>
         </div>
         <div className="col-md-5 text-md-end mt-4 mt-md-0">
-          <div className="d-inline-flex align-items-center p-2 rounded-4 shadow-sm" style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.05)" }}>
+          <div className="d-inline-flex align-items-center p-2 rounded-4 shadow-sm" style={{ background: "var(--cream3)", border: "1px solid var(--border)" }}>
             <i className="bi bi-calendar3 text-muted mx-3"></i>
             <input 
               type="month" 
@@ -205,7 +207,7 @@ export default function BudgetTracker() {
       {/* Top Metrics Cards */}
       <div className="row g-4 mb-5">
         <div className="col-md-3 col-6">
-          <div className="card border-0 p-4 h-100 position-relative overflow-hidden transition-all" style={{ background: "linear-gradient(145deg, #ffffff, #f0fdf4)", borderRadius: "1.25rem", boxShadow: "0 10px 30px rgba(0,0,0,0.03)", border: "1px solid rgba(34, 197, 94, 0.1)" }}>
+          <div className="card border-0 p-4 h-100 position-relative overflow-hidden transition-all" style={{ background: isDark ? "linear-gradient(145deg, #0f172a, #052e16)" : "linear-gradient(145deg, #ffffff, #f0fdf4)", borderRadius: "1.25rem", boxShadow: "var(--shadow)", border: `1px solid ${isDark ? "rgba(34, 197, 94, 0.2)" : "rgba(34, 197, 94, 0.1)"}` }}>
             <div className="position-absolute end-0 top-0 p-3 opacity-25">
               <i className="bi bi-arrow-down-left-circle-fill text-success" style={{ fontSize: "2.5rem" }}></i>
             </div>
@@ -214,7 +216,7 @@ export default function BudgetTracker() {
           </div>
         </div>
         <div className="col-md-3 col-6">
-          <div className="card border-0 p-4 h-100 position-relative overflow-hidden transition-all" style={{ background: "linear-gradient(145deg, #ffffff, #fef2f2)", borderRadius: "1.25rem", boxShadow: "0 10px 30px rgba(0,0,0,0.03)", border: "1px solid rgba(239, 68, 68, 0.1)" }}>
+          <div className="card border-0 p-4 h-100 position-relative overflow-hidden transition-all" style={{ background: isDark ? "linear-gradient(145deg, #0f172a, #450a0a)" : "linear-gradient(145deg, #ffffff, #fef2f2)", borderRadius: "1.25rem", boxShadow: "var(--shadow)", border: `1px solid ${isDark ? "rgba(239, 68, 68, 0.2)" : "rgba(239, 68, 68, 0.1)"}` }}>
             <div className="position-absolute end-0 top-0 p-3 opacity-25">
               <i className="bi bi-arrow-up-right-circle-fill text-danger" style={{ fontSize: "2.5rem" }}></i>
             </div>
@@ -223,7 +225,7 @@ export default function BudgetTracker() {
           </div>
         </div>
         <div className="col-md-3 col-6">
-          <div className="card border-0 p-4 h-100 position-relative overflow-hidden transition-all" style={{ background: "linear-gradient(145deg, #ffffff, var(--cream2))", borderRadius: "1.25rem", boxShadow: "0 10px 30px rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.04)" }}>
+          <div className="card border-0 p-4 h-100 position-relative overflow-hidden transition-all" style={{ background: isDark ? "linear-gradient(145deg, #0f172a, #1e293b)" : "linear-gradient(145deg, #ffffff, var(--cream2))", borderRadius: "1.25rem", boxShadow: "var(--shadow)", border: "1px solid var(--border)" }}>
             <div className="position-absolute end-0 top-0 p-3 opacity-10">
               <i className="bi bi-piggy-bank-fill text-dark" style={{ fontSize: "2.5rem" }}></i>
             </div>
@@ -245,7 +247,7 @@ export default function BudgetTracker() {
       <div className="row g-4">
         {/* Left Col: Entry Form & List */}
         <div className="col-lg-5 d-flex flex-column gap-4">
-          <div className="card border-0 p-1" style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)", boxShadow: "0 15px 35px rgba(0,0,0,0.04)", borderRadius: "1.25rem", border: "1px solid rgba(255,255,255,1)" }}>
+          <div className="card border-0 p-1" style={{ background: isDark ? "rgba(15, 23, 42, 0.8)" : "rgba(255, 255, 255, 0.8)", backdropFilter: "blur(10px)", boxShadow: "var(--shadow-md)", borderRadius: "1.25rem", border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(255, 255, 255, 1)" }}>
             <div className="card-body p-4">
               <h5 className="fw-bolder mb-4" style={{ color: "var(--ink)", letterSpacing: "-0.3px" }}><i className="bi bi-plus-circle-fill text-teal me-2"></i>Add Transaction</h5>
               <form onSubmit={handleSubmit}>
@@ -269,7 +271,7 @@ export default function BudgetTracker() {
             </div>
           </div>
 
-          <div className="card border-0 p-1 flex-grow-1" style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)", boxShadow: "0 15px 35px rgba(0,0,0,0.04)", borderRadius: "1.25rem", border: "1px solid rgba(255,255,255,1)", maxHeight: "400px", overflowY: "auto" }}>
+          <div className="card border-0 p-1 flex-grow-1" style={{ background: isDark ? "rgba(15, 23, 42, 0.8)" : "rgba(255, 255, 255, 0.8)", backdropFilter: "blur(10px)", boxShadow: "var(--shadow-md)", borderRadius: "1.25rem", border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(255, 255, 255, 1)", maxHeight: "400px", overflowY: "auto" }}>
             <div className="card-body p-4">
               <h5 className="fw-bolder mb-4" style={{ color: "var(--ink)", letterSpacing: "-0.3px" }}><i className="bi bi-receipt-cutoff text-accent me-2"></i>Recent Activity</h5>
               {monthEntries.length === 0 ? (
@@ -308,7 +310,7 @@ export default function BudgetTracker() {
 
         {/* Right Col: Charts */}
         <div className="col-lg-7 d-flex flex-column gap-4">
-          <div className="card border-0 p-1" style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)", boxShadow: "0 15px 35px rgba(0,0,0,0.04)", borderRadius: "1.25rem", border: "1px solid rgba(255,255,255,1)" }}>
+          <div className="card border-0 p-1" style={{ background: isDark ? "rgba(15, 23, 42, 0.8)" : "rgba(255, 255, 255, 0.8)", backdropFilter: "blur(10px)", boxShadow: "var(--shadow-md)", borderRadius: "1.25rem", border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(255, 255, 255, 1)" }}>
             <div className="card-body p-4">
               <h5 className="fw-bolder mb-4" style={{ color: "var(--ink)", letterSpacing: "-0.3px" }}><i className="bi bi-bar-chart-fill text-accent me-2"></i>Cash Flow ({new Date(selectedMonth + '-01').toLocaleString('default', { month: 'long' })})</h5>
               <div style={{ height: "260px" }}>
@@ -318,8 +320,15 @@ export default function BudgetTracker() {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false }, tooltip: { padding: 12, cornerRadius: 8, titleFont: { size: 14 }, bodyFont: { size: 13 } } },
                     scales: { 
-                      y: { beginAtZero: true, grid: { borderDash: [4, 4], color: "rgba(0,0,0,0.05)" } },
-                      x: { grid: { display: false } }
+                      y: { 
+                        beginAtZero: true, 
+                        grid: { borderDash: [4, 4], color: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)" },
+                        ticks: { color: isDark ? "#94a3b8" : "#64748b" }
+                      },
+                      x: { 
+                        grid: { display: false },
+                        ticks: { color: isDark ? "#94a3b8" : "#64748b" }
+                      }
                     }
                   }} 
                 />
@@ -327,7 +336,7 @@ export default function BudgetTracker() {
             </div>
           </div>
 
-          <div className="card border-0 p-1" style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)", boxShadow: "0 15px 35px rgba(0,0,0,0.04)", borderRadius: "1.25rem", border: "1px solid rgba(255,255,255,1)" }}>
+          <div className="card border-0 p-1" style={{ background: isDark ? "rgba(15, 23, 42, 0.8)" : "rgba(255, 255, 255, 0.8)", backdropFilter: "blur(10px)", boxShadow: "var(--shadow-md)", borderRadius: "1.25rem", border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(255, 255, 255, 1)" }}>
             <div className="card-body p-4">
               <h5 className="fw-bolder mb-4" style={{ color: "var(--ink)", letterSpacing: "-0.3px" }}><i className="bi bi-graph-up-arrow text-teal me-2"></i>6-Month Savings Trajectory</h5>
               <div style={{ height: "260px" }}>
@@ -337,8 +346,15 @@ export default function BudgetTracker() {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false }, tooltip: { padding: 12, cornerRadius: 8 } },
                     scales: { 
-                      y: { beginAtZero: true, grid: { borderDash: [4, 4], color: "rgba(0,0,0,0.05)" } },
-                      x: { grid: { display: false } }
+                      y: { 
+                        beginAtZero: true, 
+                        grid: { borderDash: [4, 4], color: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)" },
+                        ticks: { color: isDark ? "#94a3b8" : "#64748b" }
+                      },
+                      x: { 
+                        grid: { display: false },
+                        ticks: { color: isDark ? "#94a3b8" : "#64748b" }
+                      }
                     },
                     elements: { point: { radius: 4, hoverRadius: 6 } }
                   }} 
