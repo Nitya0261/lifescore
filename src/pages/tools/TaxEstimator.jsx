@@ -61,7 +61,7 @@ export default function TaxEstimator() {
     <ToolPageLayout
       title="Income Tax Estimator | Calculate Your Effective Tax Rate"
       description="Estimate your Federal income tax and discover your true effective tax rate with our free Tax Calculator."
-      url="https://lifescore.app/tools/tax-estimator"
+      url="https://lifesscore.live/tools/tax-estimator"
       keyword="Income Tax Estimator"
       faq={faq}
       articleContent={articleContent}

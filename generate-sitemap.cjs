@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const domain = 'https://lifescore.app';
+const domain = 'https://lifesscore.live';
 
 // Static routes in your React app
 const staticRoutes = [

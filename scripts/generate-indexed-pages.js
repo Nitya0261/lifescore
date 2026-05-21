@@ -94,7 +94,7 @@ async function generateIndexedPages() {
     process.exit(1);
   }
 
-  const baseUrl = 'https://lifescore-ten.vercel.app';
+  const baseUrl = 'https://lifesscore.live';
 
   if (process.env.VERCEL || process.env.CI) {
     console.log('⚠️ Running in a CI/Vercel environment. Skipping heavy Puppeteer pre-rendering to prevent deployment failures.');

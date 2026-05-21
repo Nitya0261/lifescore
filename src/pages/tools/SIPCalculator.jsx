@@ -40,7 +40,7 @@ export default function SIPCalculator() {
     <ToolPageLayout
       title="SIP Calculator | Free Systematic Investment Planner"
       description="Calculate your future wealth with our free Systematic Investment Plan (SIP) calculator. See the power of compounding in action."
-      url="https://lifescore.app/tools/sip-calculator"
+      url="https://lifesscore.live/tools/sip-calculator"
       keyword="SIP Return Calculator"
       faq={faq}
       articleContent={articleContent}

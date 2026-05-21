@@ -176,7 +176,7 @@ export default function DebtPayoff() {
     <ToolPageLayout
       title="Debt Payoff Strategy Visualizer | Snowball vs. Avalanche"
       description="Compare Snowball and Avalanche debt payoff models. Build your tailored roadmap to total freedom, optimize extra budgets, and save thousands in interest."
-      url="https://lifescore.app/tools/debt-payoff"
+      url="https://lifesscore.live/tools/debt-payoff"
       keyword="Debt Payoff Strategy Visualizer"
       faq={faq}
       articleContent={articleContent}

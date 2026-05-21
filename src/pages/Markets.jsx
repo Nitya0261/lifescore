@@ -131,7 +131,7 @@ export default function Markets() {
       <SEO 
         title="Full Market Analysis & Telemetry Dashboard" 
         description="Complex global institutional metrics covering real-time equities for Wall Street, London Stock Exchange, TSX Canada, and top cryptocurrency assets."
-        url="https://lifescore-ten.vercel.app/markets"
+        url="https://lifesscore.live/markets"
       />
 
       {/* Modern High-End Terminal Banner */}

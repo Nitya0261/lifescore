@@ -47,7 +47,7 @@ export default function NetWorthTracker() {
     <ToolPageLayout
       title="Net Worth Calculator | Track Your Total Wealth"
       description="Calculate your exact net worth by adding up your assets and subtracting your liabilities. Start tracking your financial progress today."
-      url="https://lifescore.app/tools/net-worth-tracker"
+      url="https://lifesscore.live/tools/net-worth-tracker"
       keyword="Net Worth Tracker"
       faq={faq}
       articleContent={articleContent}

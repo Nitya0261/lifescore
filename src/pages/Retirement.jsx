@@ -16,7 +16,7 @@ export default function Retirement() {
       <SEO
         title="Retirement & FIRE — Planning Your Financial Freedom"
         description="Plan your exit strategy with 401(k), IRA, and FIRE guides. From contribution limits to early retirement calculators, updated for 2026."
-        url="https://lifescore-ten.vercel.app/retirement"
+        url="https://lifesscore.live/retirement"
       />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #1a3a5c, #d4a017)", color: "#fff", padding: "4rem 0" }}>

@@ -16,7 +16,7 @@ export default function SavingMoney() {
       <SEO
         title="Saving Money — Guides, Tips & Strategies"
         description="Discover smart ways to cut expenses, build your emergency fund, and make your money work harder. Expert guides updated for 2026."
-        url="https://lifescore-ten.vercel.app/saving-money"
+        url="https://lifesscore.live/saving-money"
       />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #1a7a5e, #04342c)", color: "#fff", padding: "4rem 0" }}>

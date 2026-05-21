@@ -16,7 +16,7 @@ export default function SideIncome() {
       <SEO
         title="Side Income — Freelancing, Passive Income & Hustles"
         description="Discover legitimate ways to increase your cash flow. From freelancing and consulting to building passive income streams that run while you sleep."
-        url="https://lifescore-ten.vercel.app/side-income"
+        url="https://lifesscore.live/side-income"
       />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #6b35a3, #3d1a6e)", color: "#fff", padding: "4rem 0" }}>

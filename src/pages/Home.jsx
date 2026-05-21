@@ -91,7 +91,7 @@ export default function Home() {
       <SEO 
         title="Personal Finance & Life Intelligence Platform" 
         description="LifeScore helps you track your real net worth, calculate SIP trajectories, and compare ultimate retirement options using tailored financial telemetry."
-        url="https://lifescore.app"
+        url="https://lifesscore.live"
       />
 
       <HeroSection />

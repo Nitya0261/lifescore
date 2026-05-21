@@ -16,7 +16,7 @@ export default function Debt() {
       <SEO
         title="Debt Payoff — Strategies to Get Debt Free"
         description="Crush your high-interest debt with proven strategies like Snowball and Avalanche methods. Reclaim your financial freedom starting today."
-        url="https://lifescore-ten.vercel.app/debt"
+        url="https://lifesscore.live/debt"
       />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #c0392b, #4a1b0c)", color: "#fff", padding: "4rem 0" }}>

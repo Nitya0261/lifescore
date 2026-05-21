@@ -29,7 +29,7 @@ export default function Disclaimer() {
             
             <div className="legal-content text-muted" style={{ fontSize: "1.05rem", lineHeight: "1.8" }}>
               <p className="lead fw-semibold text-dark">
-                The information provided by LifeScore ("we", "us", or "our") on lifescore-ten.vercel.app (the "Site") is for general informational and educational purposes only.
+                The information provided by LifeScore ("we", "us", or "our") on lifesscore.live (the "Site") is for general informational and educational purposes only.
               </p>
 
               <hr className="my-4" />

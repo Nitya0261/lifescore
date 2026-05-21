@@ -41,18 +41,18 @@ export default function ArticleDetail() {
     );
   }
 
-  const canonicalUrl = `https://lifescore-ten.vercel.app/article/${post.slug}`;
+  const canonicalUrl = `https://lifesscore.live/article/${post.slug}`;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": post.title,
     "description": post.deck,
     "author": { "@type": "Person", "name": post.author },
-    "publisher": { "@type": "Organization", "name": "LifeScore", "url": "https://lifescore-ten.vercel.app" },
+    "publisher": { "@type": "Organization", "name": "LifeScore", "url": "https://lifesscore.live" },
     "datePublished": post.date,
     "dateModified": post.date,
     "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
-    "image": post.image || "https://lifescore-ten.vercel.app/og-default.png"
+    "image": post.image || "https://lifesscore.live/og-default.png"
   };
 
   return (

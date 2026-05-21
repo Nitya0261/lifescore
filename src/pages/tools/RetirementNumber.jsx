@@ -35,7 +35,7 @@ export default function RetirementNumber() {
     <ToolPageLayout
       title="Retirement Number Calculator | Find Your FIRE Number"
       description="Calculate exactly how much money you need to retire based on the 4% rule and your expected monthly expenses."
-      url="https://lifescore.app/tools/retirement-number"
+      url="https://lifesscore.live/tools/retirement-number"
       keyword="Retirement Number Calculator"
       faq={faq}
       articleContent={articleContent}

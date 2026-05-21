@@ -63,7 +63,7 @@ export default function EmergencyFund() {
     <ToolPageLayout
       title="Emergency Fund Calculator | Protect Your Wealth"
       description="Determine your exact financial safety net. Calculate living expenses, assess lifestyle risks, and structure your high-yield cash cushions."
-      url="https://lifescore.app/tools/emergency-fund"
+      url="https://lifesscore.live/tools/emergency-fund"
       keyword="Emergency Fund Calculator"
       faq={faq}
       articleContent={articleContent}

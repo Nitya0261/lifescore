@@ -35,7 +35,7 @@ export default function CompoundInterest() {
     <ToolPageLayout
       title="Compound Interest Calculator | Visualize Your Wealth"
       description="Calculate compound interest and see how your investments grow exponentially over time with our free calculator."
-      url="https://lifescore.app/tools/compound-interest"
+      url="https://lifesscore.live/tools/compound-interest"
       keyword="Compound Interest Calculator"
       faq={faq}
       articleContent={articleContent}

@@ -78,7 +78,7 @@ export default function GlossaryTerm() {
     "@type": "DefinedTerm",
     "name": termData.term,
     "description": termData.definition,
-    "inDefinedTermSet": "https://lifescore.app/glossary"
+    "inDefinedTermSet": "https://lifesscore.live/glossary"
   };
 
   return (

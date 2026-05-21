@@ -17,7 +17,7 @@ export default function Investing() {
       <SEO
         title="Investing — Stocks, ETFs & Wealth Building"
         description="Learn how to grow your wealth through smart investing. Expert guides on stocks, ETFs, mutual funds, and portfolio strategies for 2026."
-        url="https://lifescore-ten.vercel.app/investing"
+        url="https://lifesscore.live/investing"
       />
       {/* Category Hero */}
       <div style={{ background: "linear-gradient(135deg, #1a3a5c, #042c53)", color: "#fff", padding: "4rem 0" }}>

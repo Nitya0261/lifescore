@@ -46,7 +46,7 @@ export default function Tools() {
       <SEO 
         title="Financial Calculators & Tools" 
         description="Run the numbers on your next big move with our interactive EMI calculator and other financial planning tools."
-        url="https://lifescore.app/tools"
+        url="https://lifesscore.live/tools"
       >
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </SEO>

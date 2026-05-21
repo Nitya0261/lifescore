@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
         id: "local_user_init",
         firstName: "Demo",
         lastName: role.charAt(0).toUpperCase() + role.slice(1),
-        email: `demo.${role}@lifescore.app`,
+        email: `demo.${role}@lifesscore.live`,
         role,
         bookmarks: []
       };
@@ -171,7 +171,7 @@ export const AuthProvider = ({ children }) => {
         id: "local_user_" + Date.now(),
         firstName: firstName || "Demo",
         lastName: lastName || "Member",
-        email: email || "demo@lifescore.app",
+        email: email || "demo@lifesscore.live",
         role,
         xp: existingXp,
         lifeScore: 680,
@@ -213,7 +213,7 @@ export const AuthProvider = ({ children }) => {
         id: "local_user_" + Date.now(),
         firstName: "Demo",
         lastName: role.charAt(0).toUpperCase() + role.slice(1),
-        email: email || "demo@lifescore.app",
+        email: email || "demo@lifesscore.live",
         role,
         xp: existingXp,
         lifeScore: 740,
@@ -235,7 +235,7 @@ export const AuthProvider = ({ children }) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          email: "google.member@lifescore.app",
+          email: "google.member@lifesscore.live",
           firstName: "Google",
           lastName: "Member",
           googleId: "g_oauth_verified_992102"
@@ -259,7 +259,7 @@ export const AuthProvider = ({ children }) => {
         id: "g_user_992102",
         firstName: "Google",
         lastName: "Member",
-        email: "google.member@lifescore.app",
+        email: "google.member@lifesscore.live",
         role: "premium", // Google Auth automatically unlocks premium simulator perks
         xp: existingXp,
         lifeScore: 810,
