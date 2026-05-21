@@ -9,6 +9,7 @@ export default function PrivacyPolicy() {
       <SEO 
         title="Privacy Policy - LifeScore Platform Data Disclosures" 
         description="Review how the LifeScore personal finance engine processes analytics, safeguards simulator configurations, and guarantees absolute GDPR/CCPA alignment."
+        url="https://lifesscore.live/privacy"
       />
 
       {/* Header */}

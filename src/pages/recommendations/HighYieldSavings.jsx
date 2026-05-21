@@ -41,6 +41,7 @@ export default function HighYieldSavings() {
       <SEO 
         title="Best High-Yield Savings Accounts 2026 | LifeScore" 
         description="Compare the top high-yield savings accounts of 2026. Maximize your interest with no monthly fees." 
+        url="https://lifesscore.live/recommendations/savings"
       />
       <div style={{ background: "var(--cream)", minHeight: "100vh", padding: "4rem 0" }}>
         <div className="container">

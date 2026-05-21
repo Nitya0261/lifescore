@@ -23,6 +23,7 @@ export default function ContactUs() {
       <SEO 
         title="Contact LifeScore - Editorial, Press & Support" 
         description="Reach out to the LifeScore platform team for editorial inquiries, partnership opportunities, press briefings, or technical calculator assistance."
+        url="https://lifesscore.live/contact"
       />
 
       {/* Header */}

@@ -64,6 +64,7 @@ export default function BlogIndex() {
       <SEO 
         title="Blog - LifeScore Personal Finance & Wealth Insights" 
         description="Explore the latest articles on saving, investing, and financial independence from the LifeScore editorial team."
+        url="https://lifesscore.live/blog"
       />
 
       <div style={{ background: "var(--cream)", minHeight: "100vh", padding: "4rem 0" }}>

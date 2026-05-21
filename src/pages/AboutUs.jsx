@@ -27,6 +27,7 @@ export default function AboutUs() {
       <SEO 
         title="About LifeScore - Bridging Finance & Life Intelligence" 
         description="Learn about the origins, mission, and independent data principles driving the LifeScore personal finance ecosystem."
+        url="https://lifesscore.live/about"
       />
 
       {/* Hero Banner */}

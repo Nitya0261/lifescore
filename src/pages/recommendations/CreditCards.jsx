@@ -41,6 +41,7 @@ export default function CreditCards() {
       <SEO 
         title="Best Credit Cards 2026 | Rewards, Travel & Cash Back | LifeScore" 
         description="Find the perfect credit card for your lifestyle. Compare the best travel, cash back, and 0% APR credit cards of 2026." 
+        url="https://lifesscore.live/recommendations/cards"
       />
       <div style={{ background: "var(--cream)", minHeight: "100vh", padding: "4rem 0" }}>
         <div className="container">

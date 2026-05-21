@@ -8,7 +8,10 @@ export default function SEO({ title, description, image, url, type = 'website', 
   const defaultImage = 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80';
 
   const fullTitle = title ? `${title} | ${siteName}` : 'Personal Finance & Life Intelligence Platform | LifeScore';
-  const canonicalUrl = url || defaultUrl;
+  
+  // Dynamically build canonical URL using current pathname if url prop is omitted
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+  const canonicalUrl = url || `https://lifesscore.live${currentPath === '/' ? '' : currentPath}`;
 
   return (
     <Helmet>

@@ -122,6 +122,7 @@ export default function LifeScoreCalculator() {
       <SEO 
         title="Calculate Your LifeScore | Financial Health Check" 
         description="Get a real-time assessment of your financial health using LifeScore's institutional-grade calculation engine."
+        url="https://lifesscore.live/calculate-lifescore"
       />
 
       <div className="container">
