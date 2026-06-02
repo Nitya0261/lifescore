@@ -180,6 +180,7 @@ export default function DebtPayoff() {
       keyword="Debt Payoff Strategy Visualizer"
       faq={faq}
       articleContent={articleContent}
+      category="Debt"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>
         <i className="bi bi-fire text-danger me-2"></i>Debt Payoff Strategy Visualizer

@@ -39,6 +39,7 @@ export default function CompoundInterest() {
       keyword="Compound Interest Calculator"
       faq={faq}
       articleContent={articleContent}
+      category="Investing"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>Calculate Compound Growth</h3>
       <div className="mb-4">

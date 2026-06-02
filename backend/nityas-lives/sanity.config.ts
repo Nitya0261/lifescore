@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'Nitya\'s lives',
 
-  projectId: 't18y5tol',
+  projectId: 'o8lo52g5',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],

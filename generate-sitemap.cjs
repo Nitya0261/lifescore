@@ -1,7 +1,15 @@
 const fs = require('fs');
 const path = require('path');
+const { createClient } = require('@sanity/client');
 
 const domain = 'https://lifesscore.live';
+
+const sanityClient = createClient({
+  projectId: 'o8lo52g5',
+  dataset: 'production',
+  useCdn: false,
+  apiVersion: '2024-05-06',
+});
 
 // Static routes in your React app
 const staticRoutes = [
@@ -20,16 +28,24 @@ const staticRoutes = [
   '/register',
 ];
 
-// In a real production setup, you would fetch blog post slugs from Sanity here
-// using @sanity/client and add them to the dynamicRoutes array.
-const dynamicRoutes = [
-  '/blog/how-to-save-money',
-  '/blog/crypto-market-update'
-];
+async function generateSitemap() {
+  console.log('🚀 Generating sitemap dynamically from Sanity...');
+  let dynamicRoutes = [];
+  try {
+    const posts = await sanityClient.fetch('*[_type == "blogPost"]{ "slug": slug.current }');
+    dynamicRoutes = posts.map(p => `/blog/${p.slug}`);
+    console.log(`✅ Loaded ${dynamicRoutes.length} dynamic routes from Sanity.`);
+  } catch (err) {
+    console.error('⚠️ Could not fetch dynamic blog routes from Sanity for sitemap, using fallbacks:', err.message);
+    dynamicRoutes = [
+      '/blog/how-to-save-money',
+      '/blog/crypto-market-update'
+    ];
+  }
 
-const allRoutes = [...staticRoutes, ...dynamicRoutes];
+  const allRoutes = [...staticRoutes, ...dynamicRoutes];
 
-const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${allRoutes.map(route => `
   <url>
@@ -41,5 +57,10 @@ const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
   `).join('')}
 </urlset>`;
 
-fs.writeFileSync(path.join(__dirname, 'public', 'sitemap.xml'), sitemapContent);
-console.log('✅ sitemap.xml generated successfully in /public directory!');
+  fs.writeFileSync(path.join(__dirname, 'public', 'sitemap.xml'), sitemapContent);
+  console.log('✅ sitemap.xml generated successfully in /public directory!');
+}
+
+generateSitemap().catch(err => {
+  console.error('❌ Sitemap generation failed:', err);
+});

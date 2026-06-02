@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
+import RelatedArticlesCTA from "../components/RelatedArticlesCTA";
 
 export default function LifeScoreCalculator() {
   const [step, setStep] = useState(1);
@@ -127,75 +128,79 @@ export default function LifeScoreCalculator() {
 
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-lg-6">
-            {!isCalculated ? (
-              <div className="ls-card p-4 p-md-5 bg-white shadow-lg rounded-4 border-0">
-                <div className="text-center mb-5">
-                  <div className="mb-3 d-inline-flex align-items-center justify-content-center bg-teal text-white rounded-circle" style={{ width: "64px", height: "64px" }}>
-                    <i className="bi bi-lightning-charge-fill fs-3"></i>
-                  </div>
-                  <h1 className="ls-heading ls-heading-lg mb-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>LifeScore Calculator</h1>
-                  <p className="text-muted">Analyze your trajectory in 60 seconds.</p>
-                  
-                  {/* Progress Bar */}
-                  <div className="progress mt-4" style={{ height: "6px" }}>
-                    <div className="progress-bar bg-teal" style={{ width: `${(step / 2) * 100}%` }}></div>
-                  </div>
-                </div>
-
-                {renderStep()}
-              </div>
-            ) : (
-              <div className="ls-card p-4 p-md-5 bg-white shadow-lg rounded-4 border-0 text-center animate-in">
-                <div className="mb-4">
-                  <span className="badge bg-teal bg-opacity-10 text-teal px-3 py-2 rounded-pill fw-bold small text-uppercase">Analysis Complete</span>
-                </div>
-                <h1 className="ls-heading ls-heading-lg mb-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>Your LifeScore is</h1>
-                
-                <div className="my-5 position-relative d-inline-block">
-                  <svg width="200" height="200" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border)" strokeWidth="8" />
-                    <circle 
-                      cx="50" cy="50" r="45" fill="none" stroke="var(--teal)" strokeWidth="8" 
-                      strokeDasharray="283"
-                      strokeDashoffset={283 - (283 * score) / 100}
-                      strokeLinecap="round"
-                      style={{ transition: "stroke-dashoffset 1.5s ease-out" }}
-                    />
-                  </svg>
-                  <div className="position-absolute top-50 start-50 translate-middle">
-                    <span className="display-3 fw-black text-dark">{score}</span>
-                  </div>
-                </div>
-
-                <div className="mb-5">
-                  <h4 className="fw-bold mb-3">{score > 70 ? "Excellent Trajectory!" : score > 40 ? "Steady Growth" : "Critical Improvements Needed"}</h4>
-                  <p className="text-muted">You are outperforming {score + 5}% of users in your income bracket. Based on your inputs, your path to retirement is {score > 60 ? "accelerated" : "delayed"}.</p>
-                </div>
-
-                {!emailSubmitted ? (
-                  <div className="bg-light p-4 rounded-4 border text-start">
-                    <h5 className="fw-bold mb-2">Unlock Your Full Report</h5>
-                    <p className="small text-muted mb-4">We've generated a 5-page PDF with personalized steps to increase your score by 15 points in 90 days. Where should we send it?</p>
-                    <div className="input-group mb-2">
-                      <input type="email" className="form-control" placeholder="your@email.com" />
-                      <button className="btn btn-teal px-4" onClick={() => setEmailSubmitted(true)}>Send Report</button>
+          <div className="col-lg-8">
+            <div className="col-lg-9 mx-auto">
+              {!isCalculated ? (
+                <div className="ls-card p-4 p-md-5 bg-white shadow-lg rounded-4 border-0">
+                  <div className="text-center mb-5">
+                    <div className="mb-3 d-inline-flex align-items-center justify-content-center bg-teal text-white rounded-circle" style={{ width: "64px", height: "64px" }}>
+                      <i className="bi bi-lightning-charge-fill fs-3"></i>
                     </div>
-                    <span className="extra-small text-muted"><i className="bi bi-lock me-1"></i> No spam. Private financial intelligence only.</span>
+                    <h1 className="ls-heading ls-heading-lg mb-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>LifeScore Calculator</h1>
+                    <p className="text-muted">Analyze your trajectory in 60 seconds.</p>
+                    
+                    {/* Progress Bar */}
+                    <div className="progress mt-4" style={{ height: "6px" }}>
+                      <div className="progress-bar bg-teal" style={{ width: `${(step / 2) * 100}%` }}></div>
+                    </div>
                   </div>
-                ) : (
-                  <div className="bg-teal bg-opacity-10 p-4 rounded-4 border border-teal text-center">
-                    <i className="bi bi-check-circle-fill text-teal fs-2 mb-3 d-block"></i>
-                    <h5 className="fw-bold text-teal">Report Sent!</h5>
-                    <p className="small text-dark mb-0">Check your inbox. We've also added you to our weekly intelligence briefing.</p>
-                  </div>
-                )}
-                
-                <div className="mt-5 pt-4 border-top">
-                  <Link to="/" className="text-decoration-none fw-bold text-muted">← Back to Dashboard</Link>
+
+                  {renderStep()}
                 </div>
-              </div>
-            )}
+              ) : (
+                <div className="ls-card p-4 p-md-5 bg-white shadow-lg rounded-4 border-0 text-center animate-in">
+                  <div className="mb-4">
+                    <span className="badge bg-teal bg-opacity-10 text-teal px-3 py-2 rounded-pill fw-bold small text-uppercase">Analysis Complete</span>
+                  </div>
+                  <h1 className="ls-heading ls-heading-lg mb-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>Your LifeScore is</h1>
+                  
+                  <div className="my-5 position-relative d-inline-block">
+                    <svg width="200" height="200" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="var(--border)" strokeWidth="8" />
+                      <circle 
+                        cx="50" cy="50" r="45" fill="none" stroke="var(--teal)" strokeWidth="8" 
+                        strokeDasharray="283"
+                        strokeDashoffset={283 - (283 * score) / 100}
+                        strokeLinecap="round"
+                        style={{ transition: "stroke-dashoffset 1.5s ease-out" }}
+                      />
+                    </svg>
+                    <div className="position-absolute top-50 start-50 translate-middle">
+                      <span className="display-3 fw-black text-dark">{score}</span>
+                    </div>
+                  </div>
+
+                  <div className="mb-5">
+                    <h4 className="fw-bold mb-3">{score > 70 ? "Excellent Trajectory!" : score > 40 ? "Steady Growth" : "Critical Improvements Needed"}</h4>
+                    <p className="text-muted">You are outperforming {score + 5}% of users in your income bracket. Based on your inputs, your path to retirement is {score > 60 ? "accelerated" : "delayed"}.</p>
+                  </div>
+
+                  {!emailSubmitted ? (
+                    <div className="bg-light p-4 rounded-4 border text-start">
+                      <h5 className="fw-bold mb-2">Unlock Your Full Report</h5>
+                      <p className="small text-muted mb-4">We've generated a 5-page PDF with personalized steps to increase your score by 15 points in 90 days. Where should we send it?</p>
+                      <div className="input-group mb-2">
+                        <input type="email" className="form-control" placeholder="your@email.com" />
+                        <button className="btn btn-teal px-4" onClick={() => setEmailSubmitted(true)}>Send Report</button>
+                      </div>
+                      <span className="extra-small text-muted"><i className="bi bi-lock me-1"></i> No spam. Private financial intelligence only.</span>
+                    </div>
+                  ) : (
+                    <div className="bg-teal bg-opacity-10 p-4 rounded-4 border border-teal text-center">
+                      <i className="bi bi-check-circle-fill text-teal fs-2 mb-3 d-block"></i>
+                      <h5 className="fw-bold text-teal">Report Sent!</h5>
+                      <p className="small text-dark mb-0">Check your inbox. We've also added you to our weekly intelligence briefing.</p>
+                    </div>
+                  )}
+                  
+                  <div className="mt-5 pt-4 border-top">
+                    <Link to="/" className="text-decoration-none fw-bold text-muted">← Back to Dashboard</Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <RelatedArticlesCTA category="Financial Planning" />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client';
 
 export const sanityClient = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 't18y5tol', // Hardened fallback for zero-config deployments
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'o8lo52g5', // Hardened fallback for zero-config deployments
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
   useCdn: true, // `false` if you want to ensure fresh data
   apiVersion: '2024-05-06', // use current date (YYYY-MM-DD) to target the latest API version

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
+import RelatedArticlesCTA from './RelatedArticlesCTA';
 
 export default function ToolPageLayout({ 
   title, 
@@ -9,6 +10,7 @@ export default function ToolPageLayout({
   keyword, 
   faq, 
   articleContent, 
+  category,
   children 
 }) {
   return (
@@ -83,6 +85,8 @@ export default function ToolPageLayout({
                   </div>
                 </div>
               )}
+              
+              {category && <RelatedArticlesCTA category={category} />}
             </div>
 
             {/* Related Tools Sidebar */}

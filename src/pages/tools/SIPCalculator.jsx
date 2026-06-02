@@ -44,6 +44,7 @@ export default function SIPCalculator() {
       keyword="SIP Return Calculator"
       faq={faq}
       articleContent={articleContent}
+      category="Investing"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>Calculate SIP Returns</h3>
       <div className="mb-4">

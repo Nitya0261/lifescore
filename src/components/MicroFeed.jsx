@@ -11,12 +11,14 @@ export default function MicroFeed() {
 
   // Initialize state from local storage or default to MICRO_ACTIONS with all done=false
   const [items, setItems] = useState(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Failed to parse daily actions from local storage", e);
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error("Failed to parse daily actions from local storage", e);
+        }
       }
     }
     return MICRO_ACTIONS.map((a, i) => ({ ...a, id: i, done: false }));

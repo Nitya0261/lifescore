@@ -51,6 +51,7 @@ export default function NetWorthTracker() {
       keyword="Net Worth Tracker"
       faq={faq}
       articleContent={articleContent}
+      category="Net Worth"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>Calculate Your Net Worth</h3>
       

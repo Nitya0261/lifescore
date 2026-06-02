@@ -277,9 +277,195 @@ export const BLOG_POSTS = [
     featured: false,
     tags: ["Retirement", "FIRE", "Lifestyle"],
   },
+  {
+    id: 15,
+    cat: "Investing",
+    catColor: "#1a3a5c",
+    catBg: "#e8f0f8",
+    title: "High-Yield Savings Accounts vs. Market Returns: Which Beats Inflation in 2026?",
+    slug: "hysa-vs-market-inflation-2026",
+    deck: "With inflation at 3% in the US, 2.5% in the UK, and 2.8% in Canada, here is how high-yield savings accounts and stock market returns stack up for your money in 2026.",
+    author: "Elena Rostova",
+    avatar: "ER",
+    date: "Jun 2, 2026",
+    readTime: "8 min read",
+    icon: "📈",
+    image: "/src/assets/images/savings_vs_market.png",
+    bg: "linear-gradient(135deg,#1a3a5c,#042c53)",
+    featured: false,
+    tags: ["Savings", "Investing", "Inflation", "2026"],
+    quote: {
+      text: "In 2026, the question is no longer just high-yield savings accounts vs. the market. It's about allocating the right money to the right place at the right time.",
+      author: "Elena Rostova",
+      title: "Founder & Chief Editor, LifeScore"
+    },
+    sources: [
+      { label: "U.S. Bureau of Labor Statistics", url: "https://bls.gov", type: "Federal Data", year: "2026" },
+      { label: "Office for National Statistics (UK)", url: "https://ons.gov.uk", type: "Federal Data", year: "2026" },
+      { label: "Statistics Canada", url: "https://statcan.gc.ca", type: "Federal Data", year: "2026" }
+    ],
+    highlights: [
+      { label: "US HYSA Yield", value: "4.5%", trend: 5, desc: "Average APY for premium online bank accounts" },
+      { label: "UK HYSA Yield", value: "5.8%", trend: 15, desc: "Record high easy-access AER in 2026" },
+      { label: "Canada HYSA Yield", value: "4.2%", trend: 8, desc: "Average tax-free TFSA wrapper rate" }
+    ]
+  },
+  {
+    id: 16,
+    cat: "Financial Planning",
+    catColor: "#c0392b",
+    catBg: "#fdf0ef",
+    title: "How to Track Your Net Worth: A Complete Guide (2026)",
+    slug: "how-to-track-net-worth-2026",
+    deck: "Your net worth is the ultimate scoreboard for your financial health. Here is a step-by-step guide to calculating, tracking, and improving your net worth in 2026.",
+    author: "James Patel",
+    avatar: "JP",
+    date: "Jun 2, 2026",
+    readTime: "6 min read",
+    icon: "⚖️",
+    image: "/src/assets/images/net_worth_tracker.png",
+    bg: "linear-gradient(135deg,#c0392b,#8e44ad)",
+    featured: false,
+    tags: ["Planning", "Checklist", "Net Worth"],
+    quote: {
+      text: "Tracking your net worth isn't about bragging rights. It's about having an honest, data-driven conversation with yourself about your financial trajectory.",
+      author: "James Patel",
+      title: "Senior Wealth Advisor, LifeScore"
+    },
+    sources: [
+      { label: "Federal Reserve Survey of Consumer Finances", url: "https://federalreserve.gov", type: "Federal Data", year: "2025" },
+      { label: "Bank of Canada Financial System Review", url: "https://bankofcanada.ca", type: "Federal Data", year: "2026" }
+    ],
+    highlights: [
+      { label: "Calculation Frequency", value: "Quarterly", trend: 0, desc: "Recommended cadence for optimal financial tracking" },
+      { label: "US Median Net Worth", value: "$192k", trend: 4, desc: "Median net worth for US households" },
+      { label: "UK Average Net Worth", value: "£302k", trend: 2, desc: "Average household wealth in the United Kingdom" }
+    ]
+  },
+  {
+    id: 17,
+    cat: "Emergency Fund",
+    catColor: "#b06a00",
+    catBg: "#fdf4e3",
+    title: "Emergency Fund Calculator: How Much Money You Really Need (2026)",
+    slug: "emergency-fund-calculator-2026",
+    deck: "An emergency fund is your financial shield against job loss, medical issues, and unexpected bills. Learn how to calculate your personalized targets in 2026.",
+    author: "Sarah Mitchell",
+    avatar: "SM",
+    date: "Jun 2, 2026",
+    readTime: "7 min read",
+    icon: "🛡️",
+    image: "/src/assets/images/emergency_shield.png",
+    bg: "linear-gradient(135deg,#b06a00,#4a2a00)",
+    featured: false,
+    tags: ["Savings", "Emergency", "Calculator"],
+    quote: {
+      text: "An emergency fund isn't just about money; it's buying options. It's the difference between a minor disruption and a complete financial derailment.",
+      author: "Sarah Mitchell",
+      title: "Senior Financial Planner, LifeScore"
+    },
+    sources: [
+      { label: "U.S. Federal Reserve", url: "https://federalreserve.gov", type: "Economic Data", year: "2025" },
+      { label: "NHS Expenditure Report", url: "https://england.nhs.uk", type: "Health Cost Analysis", year: "2026" }
+    ],
+    highlights: [
+      { label: "Basic Coverage", value: "3-6 Mos", trend: 0, desc: "Standard recommendation for stable households" },
+      { label: "Unemployment Avg", value: "19 Wks", trend: 5, desc: "Average duration of unemployment in 2026" },
+      { label: "US Median Saving", value: "$8.5k", trend: -2, desc: "Median emergency cash reserve per household" }
+    ]
+  },
+  {
+    id: 18,
+    cat: "Financial Planning",
+    catColor: "#c0392b",
+    catBg: "#fdf0ef",
+    title: "Best Financial Goals for 2026: Simple Steps to Set & Achieve Money Targets",
+    slug: "best-financial-goals-2026",
+    deck: "Setting clear financial goals is the key to building wealth. Learn the SMART way to define and achieve your money milestones in the US, UK, and Canada for 2026.",
+    author: "Sarah Mitchell",
+    avatar: "SM",
+    date: "Jun 2, 2026",
+    readTime: "9 min read",
+    icon: "🎯",
+    image: "/src/assets/images/financial_goals.png",
+    bg: "linear-gradient(135deg,#c0392b,#8e44ad)",
+    featured: false,
+    tags: ["Planning", "Checklist", "Goals"],
+    quote: {
+      text: "Vague goals produce vague results. The magic of financial planning lies in shifting from 'I want to save more' to detailed, time-bound targets.",
+      author: "Sarah Mitchell",
+      title: "Senior Financial Planner, LifeScore"
+    },
+    sources: [
+      { label: "Vanguard Investment Survey", url: "https://vanguard.com", type: "Market Research", year: "2026" },
+      { label: "UK Financial Conduct Authority", url: "https://fca.org.uk", type: "Regulatory Report", year: "2026" }
+    ],
+    highlights: [
+      { label: "SMART Success", value: "+40%", trend: 15, desc: "Higher achievement rate with specific targets" },
+      { label: "Target Savings", value: "20%", trend: 0, desc: "Recommended minimum monthly savings rate" },
+      { label: "Max ISA (UK)", value: "£20k", trend: 0, desc: "Tax-free ISA contribution limit for 2026" }
+    ]
+  },
+  {
+    id: 19,
+    cat: "Budgeting",
+    catColor: "#1a7a5e",
+    catBg: "#e8f5f0",
+    title: "Budgeting Apps 2026: Top 10 Money Management Tools Compared",
+    slug: "budgeting-apps-2026",
+    deck: "In 2026 budgeting apps have changed a lot from just tracking expenses to being like smart money managers.",
+    author: "Elena Rostova",
+    avatar: "ER",
+    date: "Jun 2, 2026",
+    readTime: "10 min read",
+    icon: "📱",
+    image: "/src/assets/images/budgeting_apps.png",
+    bg: "linear-gradient(135deg,#1a7a5e,#085041)",
+    featured: false,
+    tags: ["Budgeting", "Apps", "Reviews"],
+    quote: {
+      text: "Choosing the right budgeting app can fundamentally change your relationship with money.",
+      author: "Elena Rostova",
+      title: "Founder & Chief Editor, LifeScore"
+    },
+    sources: [
+      { label: "LifeScore Product Review", url: "#", type: "Review", year: "2026" }
+    ],
+    highlights: [
+      { label: "Time Saved", value: "10 hrs", trend: 5, desc: "Estimated monthly time saved using automated apps" }
+    ]
+  }
 ];
 
 export const TRENDING = [
+  {
+    id: 18,
+    title: "Best Financial Goals for 2026: Simple Steps to Set & Achieve Money Targets",
+    slug: "best-financial-goals-2026",
+    date: "Today",
+    time: "9 min",
+  },
+  {
+    id: 17,
+    title: "Emergency Fund Calculator: How Much Money You Really Need (2026)",
+    slug: "emergency-fund-calculator-2026",
+    date: "Today",
+    time: "7 min",
+  },
+  {
+    id: 16,
+    title: "How to Track Your Net Worth: A Complete Guide (2026)",
+    slug: "how-to-track-net-worth-2026",
+    date: "Today",
+    time: "6 min",
+  },
+  {
+    id: 15,
+    title: "High-Yield Savings Accounts vs. Market Returns: Which Beats Inflation in 2026?",
+    slug: "hysa-vs-market-inflation-2026",
+    date: "Today",
+    time: "8 min",
+  },
   {
     id: 1,
     title: "Why High-Yield Savings Accounts Are Beating the Market Right Now",

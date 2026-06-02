@@ -1,8 +1,6 @@
-import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
 import { createClient } from '@sanity/client';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,11 +51,15 @@ const STATIC_ROUTES = [
   '/article/stop-subscription-creep',
   '/article/tax-loss-harvesting-guide',
   '/article/salary-negotiation-script',
-  '/article/what-is-barista-fire'
+  '/article/what-is-barista-fire',
+  '/article/hysa-vs-market-inflation-2026',
+  '/article/how-to-track-net-worth-2026',
+  '/article/emergency-fund-calculator-2026',
+  '/article/best-financial-goals-2026'
 ];
 
 const sanityClient = createClient({
-  projectId: 't18y5tol',
+  projectId: 'o8lo52g5',
   dataset: 'production',
   useCdn: false,
   apiVersion: '2024-05-06',
@@ -73,19 +75,6 @@ async function getDynamicRoutes() {
   }
 }
 
-const MIME_TYPES = {
-  '.html': 'text/html',
-  '.js': 'application/javascript',
-  '.css': 'text/css',
-  '.json': 'application/json',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.woff': 'font/woff',
-  '.woff2': 'font/woff2'
-};
-
 async function generateIndexedPages() {
   console.log('🚀 Initiating automated production indexed pages build & pre-rendering crawler...');
 
@@ -94,106 +83,79 @@ async function generateIndexedPages() {
     process.exit(1);
   }
 
-  const baseUrl = 'https://lifesscore.live';
-
-  if (process.env.VERCEL || process.env.CI) {
-    console.log('⚠️ Running in a CI/Vercel environment. Skipping heavy Puppeteer pre-rendering to prevent deployment failures.');
-    
-    const dynamicRoutes = await getDynamicRoutes();
-    const allRoutes = [...STATIC_ROUTES, ...dynamicRoutes];
-    const sitemapUrls = allRoutes.map(route => `${baseUrl}${route}`);
-    
-    console.log('🗺️ Assembling complete production sitemap.xml structure...');
-    const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapUrls
-  .map(
-    (url) => `  <url>
-    <loc>${url}</loc>
-    <changefreq>daily</changefreq>
-    <priority>${url === baseUrl + '/' ? '1.0' : '0.8'}</priority>
-  </url>`
-  )
-  .join('\n')}
-</urlset>`;
-
-    const sitemapPath = path.join(distDir, 'sitemap.xml');
-    fs.writeFileSync(sitemapPath, sitemapXml, 'utf-8');
-    console.log(`📜 Validated sitemap output successfully -> ${path.relative(rootDir, sitemapPath)}`);
-    console.log('🎉 Production build complete! Static sitemap generated successfully on Vercel.');
-    return;
+  const serverEntryPath = path.join(distDir, 'server', 'entry-server.js');
+  if (!fs.existsSync(serverEntryPath)) {
+    console.error('❌ Server entry point not found. Make sure "vite build --ssr" succeeded.');
+    process.exit(1);
   }
 
-  // 1. Spin up a fast static fileserver for dist/
-  const server = http.createServer((req, res) => {
-    // Basic route mapping
-    let cleanUrl = req.url.split('?')[0].split('#')[0];
-    let filePath = path.join(distDir, cleanUrl);
+  // Import the render function from the compiled server entry.
+  // We use file:// to avoid path parsing issues on Windows/Mac in Node dynamic ESM imports.
+  const serverEntryUrl = `file://${serverEntryPath}`;
+  const { render } = await import(serverEntryUrl);
 
-    // If request has an extension, serve file directly
-    const ext = path.extname(filePath);
-    if (ext) {
-      if (fs.existsSync(filePath)) {
-        res.writeHead(200, { 'Content-Type': MIME_TYPES[ext] || 'application/octet-stream' });
-        fs.createReadStream(filePath).pipe(res);
-      } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Not found');
-      }
-      return;
-    }
-
-    // Default SPA fallback: Serve dist/index.html
-    const indexPath = path.join(distDir, 'index.html');
-    if (fs.existsSync(indexPath)) {
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      fs.createReadStream(indexPath).pipe(res);
-    } else {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('dist/index.html missing');
-    }
-  });
-
-  // Start listening on a free random/fixed local port
-  const PORT = 38491;
-  await new Promise((resolve) => server.listen(PORT, '127.0.0.1', resolve));
-  console.log(`📡 Local preview host live at http://127.0.0.1:${PORT}`);
-
-  // 2. Launch Puppeteer browser instance
-  console.log('🤖 Initializing high-speed static DOM generation engine (Puppeteer)...');
-  const { default: puppeteer } = await import('puppeteer');
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  const baseUrl = 'https://lifesscore.live';
+  const templatePath = path.join(distDir, 'index.html');
+  const template = fs.readFileSync(templatePath, 'utf-8');
 
   // Track canonical entries for sitemap generation
   const sitemapUrls = [];
 
-  // 3. Pre-render individual scope routes
+  // Fetch all routes to pre-render
   const dynamicRoutes = await getDynamicRoutes();
   const allRoutes = [...STATIC_ROUTES, ...dynamicRoutes];
-  
-  for (const route of allRoutes) {
-    const targetUrl = `http://127.0.0.1:${PORT}${route}`;
-    console.log(`🌐 Crawling target route: ${route}`);
 
-    const page = await browser.newPage();
-    // Forward virtual console outputs if debugging needed
-    await page.setViewport({ width: 1280, height: 800 });
+  console.log(`🌐 Found ${allRoutes.length} total routes to pre-render. Starting SSR compilation...`);
+
+  for (const route of allRoutes) {
+    console.log(`⚙️ Pre-rendering route: ${route}`);
 
     try {
-      await page.goto(targetUrl, { waitUntil: 'networkidle0', timeout: 25000 });
-      
-      // Wait extra 500ms to guarantee Client-Side hydration microtasks settle completely
-      await new Promise(r => setTimeout(r, 500));
+      let { html: appHtml } = render(route, {});
 
-      // Extract full rendered HTML payload
-      const htmlContent = await page.content();
+      let headTagsList = [];
+
+      // Extract and remove <title> tags
+      appHtml = appHtml.replace(/<title[^>]*>([\s\S]*?)<\/title>/gi, (match) => {
+        headTagsList.push(match);
+        return '';
+      });
+
+      // Extract and remove <meta> tags
+      appHtml = appHtml.replace(/<meta[^>]*\/?>/gi, (match) => {
+        headTagsList.push(match);
+        return '';
+      });
+
+      // Extract and remove <link> tags
+      appHtml = appHtml.replace(/<link[^>]*\/?>/gi, (match) => {
+        headTagsList.push(match);
+        return '';
+      });
+
+      // Extract and remove JSON-LD scripts
+      appHtml = appHtml.replace(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi, (match) => {
+        headTagsList.push(match);
+        return '';
+      });
+
+      const headTags = headTagsList.join('\n');
+
+      // Remove default React Helmet placeholder tags from template
+      let html = template
+        .replace(/<title[^>]*data-rh="true"[^>]*>.*?<\/title>/gi, '')
+        .replace(/<meta[^>]*data-rh="true"[^>]*\/?>/gi, '');
+
+      // Inject the route-specific head tags
+      html = html.replace('</head>', `${headTags}\n</head>`);
+
+      // Inject the rendered application HTML markup
+      html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
 
       // Determine output filesystem destination
       let targetFilePath;
       if (route === '/') {
+        // We write to index.html directly
         targetFilePath = path.join(distDir, 'index.html');
       } else {
         const routeDir = path.join(distDir, route.replace(/^\//, ''));
@@ -204,19 +166,17 @@ ${sitemapUrls
       }
 
       // Write fully hydrated DOM string to production artifact
-      fs.writeFileSync(targetFilePath, htmlContent, 'utf-8');
+      fs.writeFileSync(targetFilePath, html, 'utf-8');
       console.log(`✅ Fully-hydrated HTML generated -> ${path.relative(rootDir, targetFilePath)}`);
 
       // Push to canonical absolute mapping list
       sitemapUrls.push(`${baseUrl}${route}`);
     } catch (err) {
-      console.error(`⚠️ Failed to generate indexing wrapper for route ${route}:`, err.message);
-    } finally {
-      await page.close();
+      console.error(`⚠️ Failed to generate indexing wrapper for route ${route}:`, err);
     }
   }
 
-  // 4. Construct canonical automated XML sitemap file
+  // Construct canonical automated XML sitemap file
   console.log('🗺️ Assembling complete production sitemap.xml structure...');
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -235,9 +195,17 @@ ${sitemapUrls
   fs.writeFileSync(sitemapPath, sitemapXml, 'utf-8');
   console.log(`📜 Validated sitemap output successfully to -> ${path.relative(rootDir, sitemapPath)}`);
 
-  // Cleanup active resources
-  await browser.close();
-  server.close();
+  const publicSitemapPath = path.join(rootDir, 'public', 'sitemap.xml');
+  fs.writeFileSync(publicSitemapPath, sitemapXml, 'utf-8');
+  console.log(`📜 Saved sitemap to public folder -> ${path.relative(rootDir, publicSitemapPath)}`);
+
+  // Clean up server build folder from dist so Vercel doesn't deploy it
+  const serverBuildDir = path.join(distDir, 'server');
+  if (fs.existsSync(serverBuildDir)) {
+    fs.rmSync(serverBuildDir, { recursive: true, force: true });
+    console.log('🧹 Cleaned up temporary server bundle successfully.');
+  }
+
   console.log('🎉 Production prerendering complete! Ecosystem static distribution is ready for search engine crawling.');
 }
 

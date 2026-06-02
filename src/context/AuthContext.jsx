@@ -43,48 +43,62 @@ export const XP_REWARDS = {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
-  
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('lifescore_user');
-    if (savedUser) {
-      try { return JSON.parse(savedUser); } catch(e){}
-    }
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState({ role: "guest" });
+  const [xp, setXp] = useState(0);
+
+  const [xpLog, setXpLog] = useState([]); // History of XP-earning actions
+  const [notifications, setNotifications] = useState([]); // In-app toast notifications
+  const [lastNotifTime, setLastNotifTime] = useState(Date.now());
+
+  const isLoaded = React.useRef(false);
+
+  // Load from localStorage on mount
+  React.useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
+      setToken(storedToken);
+    }
+    const savedUser = localStorage.getItem('lifescore_user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {}
+    } else if (storedToken) {
       const role = storedToken.includes("admin") ? "admin" : storedToken.includes("premium") || storedToken.includes("g_token") ? "premium" : "standard";
-      return {
+      setUser({
         id: "local_user_init",
         firstName: "Demo",
         lastName: role.charAt(0).toUpperCase() + role.slice(1),
         email: `demo.${role}@lifesscore.live`,
         role,
         bookmarks: []
-      };
+      });
     }
-    return { role: "guest" };
-  });
-
-  const [xp, setXp] = useState(() => {
     const savedXp = localStorage.getItem('lifescore_xp');
-    return savedXp !== null ? Number(savedXp) : (localStorage.getItem('token') ? 250 : 0);
-  });
-
-  const [xpLog, setXpLog] = useState([]); // History of XP-earning actions
-  const [notifications, setNotifications] = useState([]); // In-app toast notifications
-  const [lastNotifTime, setLastNotifTime] = useState(Date.now());
+    if (savedXp !== null) {
+      setXp(Number(savedXp));
+    } else if (storedToken) {
+      setXp(250);
+    }
+    isLoaded.current = true;
+  }, []);
 
   // Auto-sync XP state back to localStorage whenever it changes
   React.useEffect(() => {
-    localStorage.setItem('lifescore_xp', xp);
+    if (isLoaded.current) {
+      localStorage.setItem('lifescore_xp', xp);
+    }
   }, [xp]);
 
   // Auto-sync User session object back to localStorage
   React.useEffect(() => {
-    if (user && user.role !== "guest") {
-      localStorage.setItem('lifescore_user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('lifescore_user');
+    if (isLoaded.current) {
+      if (user && user.role !== "guest") {
+        localStorage.setItem('lifescore_user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('lifescore_user');
+      }
     }
   }, [user]);
 

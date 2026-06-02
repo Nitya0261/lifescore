@@ -41,7 +41,10 @@ export default function GlossaryIndex() {
   const [activeCat, setActiveCat] = useState('All');
   const [activeLevel, setActiveLevel] = useState('All');
   const [savedTerms, setSavedTerms] = useState(() => {
-    return JSON.parse(localStorage.getItem("ls_saved_terms") || "[]");
+    if (typeof window !== 'undefined') {
+      return JSON.parse(localStorage.getItem("ls_saved_terms") || "[]");
+    }
+    return [];
   });
 
   // Toggle internal bookmark state

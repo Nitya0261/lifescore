@@ -65,6 +65,7 @@ export default function TaxEstimator() {
       keyword="Income Tax Estimator"
       faq={faq}
       articleContent={articleContent}
+      category="Taxes"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>Estimate Federal Taxes</h3>
       

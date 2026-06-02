@@ -7,8 +7,8 @@
     "dev": "vite",
     "server": "node backend/server.js",
     "start": "node backend/server.js",
-    "build": "vite build",
-    "postbuild": "node scripts/generate-indexed-pages.js",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist/server",
+    "postbuild": "node scripts/generate-indexed-pages.js && node scripts/generate-rss.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

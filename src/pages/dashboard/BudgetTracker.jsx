@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../config/api';
 import SEO from '../../components/SEO';
+import RelatedArticlesCTA from '../../components/RelatedArticlesCTA';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -369,6 +370,7 @@ export default function BudgetTracker() {
           </div>
         </div>
       </div>
+      <RelatedArticlesCTA category="Saving Money" />
     </div>
   );
 }

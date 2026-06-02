@@ -3,7 +3,7 @@ import fs from 'fs';
 
 // Configuration - Ensure VITE_SANITY_WRITE_TOKEN is set in your .env or environment
 const client = createClient({
-  projectId: 't18y5tol',
+  projectId: 'o8lo52g5',
   dataset: 'production',
   useCdn: false,
   token: process.env.SANITY_WRITE_TOKEN, // CRITICAL: Need a write token from Sanity Manage

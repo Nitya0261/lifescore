@@ -39,6 +39,7 @@ export default function RetirementNumber() {
       keyword="Retirement Number Calculator"
       faq={faq}
       articleContent={articleContent}
+      category="Retirement"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>Calculate Your FIRE Number</h3>
       <div className="mb-4">

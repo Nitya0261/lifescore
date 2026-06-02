@@ -66,7 +66,7 @@ export default function AuthorProfile() {
     "@type": "Person",
     "name": author.name,
     "description": author.bio ? author.bio.map(b => b.children[0].text).join(' ') : "",
-    "url": window.location.href,
+    "url": typeof window !== 'undefined' ? window.location.href : '',
     "sameAs": author.socialLinks ? [author.socialLinks.twitter, author.socialLinks.linkedin].filter(Boolean) : []
   };
 

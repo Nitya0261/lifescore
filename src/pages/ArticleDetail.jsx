@@ -9,16 +9,15 @@ import BookmarkButton from '../components/BookmarkButton';
 import RelatedToolCTA from '../components/RelatedToolCTA';
 import { ExpertQuote, ArticleSource, DataHighlight } from '../components/CredibilitySignals';
 import SEO from '../components/SEO';
+import { ARTICLE_CONTENTS } from '../data/articleContent';
 
 export default function ArticleDetail() {
   const { slug } = useParams();
   const location = useLocation();
-  const [post, setPost] = useState(null);
+  const post = BLOG_POSTS.find(p => p.slug === slug);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const found = BLOG_POSTS.find(p => p.slug === slug);
-    setPost(found);
     window.scrollTo(0, 0);
   }, [slug]);
 
@@ -143,39 +142,45 @@ export default function ArticleDetail() {
               )}
 
               <div className="article-content ls-text-muted" style={{ fontSize: '1.15rem', lineHeight: 1.8 }}>
-                <p>
-                  In the rapidly evolving financial landscape of 2026, managing your money effectively requires more than just traditional wisdom. 
-                  As inflation fluctuates and new digital asset classes emerge, the strategy outlined in <strong>"{post.title}"</strong> 
-                  provides a critical roadmap for stability and growth.
-                </p>
-                
-                {post.quote && (
-                  <ExpertQuote 
-                    quote={post.quote.text} 
-                    author={post.quote.author} 
-                    title={post.quote.title} 
-                  />
+                {ARTICLE_CONTENTS[post.slug] ? (
+                  ARTICLE_CONTENTS[post.slug]
+                ) : (
+                  <>
+                    <p>
+                      In the rapidly evolving financial landscape of 2026, managing your money effectively requires more than just traditional wisdom. 
+                      As inflation fluctuates and new digital asset classes emerge, the strategy outlined in <strong>"{post.title}"</strong> 
+                      provides a critical roadmap for stability and growth.
+                    </p>
+                    
+                    {post.quote && (
+                      <ExpertQuote 
+                        quote={post.quote.text} 
+                        author={post.quote.author} 
+                        title={post.quote.title} 
+                      />
+                    )}
+
+                    <h3 className="ls-heading ls-heading-md mt-5 mb-3">The Fundamentals of {post.cat}</h3>
+                    <p>
+                      Most experts agree that the first step toward financial intelligence is awareness. By understanding the core mechanics of 
+                      how money flows in and out of your accounts, you gain the "LifeScore" necessary to make informed decisions under pressure. 
+                      Whether you are focused on {post.cat} or broader wealth building, the principles remain the same: discipline, 
+                      automation, and continuous education.
+                    </p>
+
+                    <div className="ls-card p-4 my-5 bg-light border-0" style={{ borderLeft: '5px solid var(--teal) !important' }}>
+                      <h5 className="ls-heading ls-heading-sm mb-2">Key Takeaway</h5>
+                      <p className="mb-0 italic">"Financial freedom isn't about how much you earn, but how much you keep and how effectively that money works for you while you sleep."</p>
+                    </div>
+
+                    <h3 className="ls-heading ls-heading-md mt-5 mb-3">Implementation Strategy</h3>
+                    <p>
+                      To apply these concepts effectively, we recommend starting with small, measurable "Micro-Actions." 
+                      These daily habits build the psychological momentum needed for long-term success. Over the next 30 days, 
+                      try to track every transaction related to {post.cat.toLowerCase()} and look for patterns of inefficiency.
+                    </p>
+                  </>
                 )}
-
-                <h3 className="ls-heading ls-heading-md mt-5 mb-3">The Fundamentals of {post.cat}</h3>
-                <p>
-                  Most experts agree that the first step toward financial intelligence is awareness. By understanding the core mechanics of 
-                  how money flows in and out of your accounts, you gain the "LifeScore" necessary to make informed decisions under pressure. 
-                  Whether you are focused on {post.cat} or broader wealth building, the principles remain the same: discipline, 
-                  automation, and continuous education.
-                </p>
-
-                <div className="ls-card p-4 my-5 bg-light border-0" style={{ borderLeft: '5px solid var(--teal) !important' }}>
-                  <h5 className="ls-heading ls-heading-sm mb-2">Key Takeaway</h5>
-                  <p className="mb-0 italic">"Financial freedom isn't about how much you earn, but how much you keep and how effectively that money works for you while you sleep."</p>
-                </div>
-
-                <h3 className="ls-heading ls-heading-md mt-5 mb-3">Implementation Strategy</h3>
-                <p>
-                  To apply these concepts effectively, we recommend starting with small, measurable "Micro-Actions." 
-                  These daily habits build the psychological momentum needed for long-term success. Over the next 30 days, 
-                  try to track every transaction related to {post.cat.toLowerCase()} and look for patterns of inefficiency.
-                </p>
 
                 {post.sources && <ArticleSource sources={post.sources} />}
                 

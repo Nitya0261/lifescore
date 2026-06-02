@@ -67,6 +67,7 @@ export default function EmergencyFund() {
       keyword="Emergency Fund Calculator"
       faq={faq}
       articleContent={articleContent}
+      category="Emergency Fund"
     >
       <h3 style={{ fontWeight: 800, marginBottom: "1.5rem" }}>
         <i className="bi bi-shield-lock-fill text-teal me-2"></i>Emergency Fund Calculator

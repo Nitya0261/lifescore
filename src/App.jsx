@@ -8,7 +8,7 @@ import ReadingProgressBar from "./components/ReadingProgressBar";
 import XPToast from "./components/XPToast";
 import ExitIntentPopup from "./components/ExitIntentPopup";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 
@@ -68,7 +68,7 @@ const AppContent = ({ canvasRef }) => {
   const { authModalOpen, toggleAuthModal } = useAuth();
   
   return (
-    <Router>
+    <>
       <AuthModal isOpen={authModalOpen} onClose={() => toggleAuthModal(false)} />
       <canvas id="bg-canvas" ref={canvasRef}></canvas>
       <div id="root-content" style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -113,7 +113,7 @@ const AppContent = ({ canvasRef }) => {
               <Route path="/compare/:slug" element={<ComparisonPage />} />
               <Route path="/advisor" element={<FindAdvisor />} />
               <Route path="/calculate-lifescore" element={<LifeScoreCalculator />} />
-          <Route path="/article/:slug" element={<ArticleDetail />} />
+              <Route path="/article/:slug" element={<ArticleDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<Profile />} />
@@ -135,7 +135,7 @@ const AppContent = ({ canvasRef }) => {
         <XPToast />
         <ExitIntentPopup />
       </div>
-    </Router>
+    </>
   );
 };
 

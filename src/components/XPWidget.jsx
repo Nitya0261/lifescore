@@ -8,7 +8,10 @@ export default function XPWidget() {
   
   const todayDateStr = new Date().toDateString();
   const [claimed, setClaimed] = useState(() => {
-    return localStorage.getItem("daily_claim_date") === todayDateStr;
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem("daily_claim_date") === todayDateStr;
+    }
+    return false;
   });
 
   // Use active auth context XP if available, fallback to user.xp

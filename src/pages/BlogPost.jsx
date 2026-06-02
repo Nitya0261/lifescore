@@ -16,6 +16,18 @@ export default function BlogPost() {
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [tocOpen, setTocOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const shareUrl = typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : '';
+  const shareTitle = post ? encodeURIComponent(post.title) : '';
 
   useEffect(() => {
     // Graceful redirect to mock ArticleDetail route if slug matches a pre-loaded local mock article
@@ -171,9 +183,57 @@ export default function BlogPost() {
                   <strong>Accuracy Guarantee:</strong> This article follows our <Link to="/editorial-policy" className="text-teal text-decoration-none fw-bold">Editorial Standards</Link> for financial reporting.
                 </div>
                 
-                <h1 style={{ fontFamily: "var(--serif)", fontWeight: 900, marginBottom: "2rem", color: "var(--ink)" }}>
+                <h1 style={{ fontFamily: "var(--serif)", fontWeight: 900, marginBottom: "1rem", color: "var(--ink)" }}>
                   {post.title}
                 </h1>
+
+                {/* Social Share Bar */}
+                <div className="d-flex align-items-center gap-3 mb-4 py-2 border-top border-bottom" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
+                  <span className="text-muted small fw-bold text-uppercase" style={{ fontSize: "0.75rem", letterSpacing: "0.5px" }}>Share:</span>
+                  <a 
+                    href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-sm btn-outline-dark rounded-circle d-flex align-items-center justify-content-center"
+                    style={{ width: "32px", height: "32px", padding: 0 }}
+                    title="Share on X"
+                  >
+                    <i className="bi bi-twitter-x"></i>
+                  </a>
+                  <a 
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-sm btn-outline-dark rounded-circle d-flex align-items-center justify-content-center"
+                    style={{ width: "32px", height: "32px", padding: 0 }}
+                    title="Share on LinkedIn"
+                  >
+                    <i className="bi bi-linkedin"></i>
+                  </a>
+                  <a 
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn btn-sm btn-outline-dark rounded-circle d-flex align-items-center justify-content-center"
+                    style={{ width: "32px", height: "32px", padding: 0 }}
+                    title="Share on Facebook"
+                  >
+                    <i className="bi bi-facebook"></i>
+                  </a>
+                  <button 
+                    onClick={handleCopyLink} 
+                    className="btn btn-sm btn-outline-dark rounded-circle d-flex align-items-center justify-content-center position-relative"
+                    style={{ width: "32px", height: "32px", padding: 0 }}
+                    title="Copy Link"
+                  >
+                    <i className={`bi ${copied ? 'bi-check-lg text-success' : 'bi-link-45deg'}`}></i>
+                    {copied && (
+                      <span className="position-absolute bg-dark text-white px-2 py-1 rounded small" style={{ top: "-35px", left: "50%", transform: "translateX(-50%)", whiteSpace: "nowrap", fontSize: "0.75rem", zIndex: 10 }}>
+                        Copied!
+                      </span>
+                    )}
+                  </button>
+                </div>
 
                 {/* Mobile TOC (Hidden on desktop) */}
                 {toc.length > 0 && (
